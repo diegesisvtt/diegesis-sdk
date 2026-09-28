@@ -30,8 +30,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@diegesis/dice-core": "workspace:*",
-    "@diegesis/dice-notation-core": "workspace:*"
+    "@diegesis/dice-core": "^0.1.1",
+    "@diegesis/dice-notation-core": "^0.1.1"
   },
   "devDependencies": {
     "tsup": "^8.4.0",

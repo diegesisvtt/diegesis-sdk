@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@diegesis/canvas": "workspace:*",
+    "@diegesis/canvas": "^0.2.1",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {

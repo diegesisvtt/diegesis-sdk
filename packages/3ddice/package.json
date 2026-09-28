@@ -30,13 +30,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@diegesis/assets": "workspace:*",
-    "@diegesis/audio": "workspace:*",
-    "@diegesis/dice-core": "workspace:*",
-    "@diegesis/dice-notation": "workspace:*",
-    "@diegesis/events": "workspace:*",
-    "@diegesis/physics": "workspace:*",
-    "@diegesis/render3d": "workspace:*",
+    "@diegesis/assets": "^0.1.2",
+    "@diegesis/audio": "^0.2.1",
+    "@diegesis/dice-core": "^0.1.1",
+    "@diegesis/dice-notation": "^0.1.1",
+    "@diegesis/events": "^0.2.1",
+    "@diegesis/physics": "^0.1.1",
+    "@diegesis/render3d": "^0.1.1",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {

@@ -30,8 +30,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@diegesis/audio": "workspace:*",
-    "@diegesis/canvas": "workspace:*",
+    "@diegesis/audio": "^0.2.1",
+    "@diegesis/canvas": "^0.2.1",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {

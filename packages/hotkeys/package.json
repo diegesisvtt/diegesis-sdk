@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@diegesis/events": "workspace:*",
+    "@diegesis/events": "^0.2.1",
     "uuid": "^11.1.1",
     "valibot": "^1.4.2"
   },

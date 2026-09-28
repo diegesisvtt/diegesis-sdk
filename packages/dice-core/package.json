@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@diegesis/formula": "workspace:*",
+    "@diegesis/formula": "^0.1.1",
     "seedrandom": "^3.0.5",
     "uuid": "^11.1.1",
     "valibot": "^1.4.2"

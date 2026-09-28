@@ -30,8 +30,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@diegesis/canvas": "workspace:*",
-    "@diegesis/roll-tables": "workspace:*",
+    "@diegesis/canvas": "^0.2.1",
+    "@diegesis/roll-tables": "^0.2.1",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
