@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-lights",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Ambient light plugin for @diegesis/canvas — light documents, AmbientLight placeable, light tool and light:sources contributions.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -43,5 +45,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "plugin", "light", "lighting", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "plugin",
+    "light",
+    "lighting",
+    "vtt",
+    "tabletop"
+  ]
 }

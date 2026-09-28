@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-drawings",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Drawings document plugin for @diegesis/canvas — Drawing placeable, freehand brush tool and shape tool.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -43,5 +45,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "plugin", "drawing", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "plugin",
+    "drawing",
+    "vtt",
+    "tabletop"
+  ]
 }

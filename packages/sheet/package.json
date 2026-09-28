@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/sheet",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Effect-oriented character sheet engine for Diegesis — the document is minimal, the effect pipeline is the heart: collect, filter, sort by UUID v7, apply, derive, emit.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -42,5 +44,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "sheet", "effects", "active-effects", "vtt", "rpg", "foundry"]
+  "keywords": [
+    "diegesis",
+    "sheet",
+    "effects",
+    "active-effects",
+    "vtt",
+    "rpg",
+    "foundry"
+  ]
 }

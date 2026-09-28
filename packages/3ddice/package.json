@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/dice",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Framework-agnostic 3D dice roller for Diegesis (three.js + cannon-es worker physics).",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -52,5 +54,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "dice", "3d", "vtt", "three.js", "cannon-es"]
+  "keywords": [
+    "diegesis",
+    "dice",
+    "3d",
+    "vtt",
+    "three.js",
+    "cannon-es"
+  ]
 }

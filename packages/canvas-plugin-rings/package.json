@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-rings",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Colored ring markers for tokens on @diegesis/canvas — presets, custom styles, dash/glow/pulse, event-driven and hook-extensible.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -47,5 +49,15 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "plugin", "ring", "marker", "token", "condition", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "plugin",
+    "ring",
+    "marker",
+    "token",
+    "condition",
+    "vtt",
+    "tabletop"
+  ]
 }

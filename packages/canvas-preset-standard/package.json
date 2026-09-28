@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-preset-standard",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Standard preset for @diegesis/canvas — bundles the core plugins (grid, maps, tiles, drawings, walls, templates, tokens, rings, lights, measure, lighting, fog) in one import.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -60,5 +62,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "preset", "plugins", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "preset",
+    "plugins",
+    "vtt",
+    "tabletop"
+  ]
 }
