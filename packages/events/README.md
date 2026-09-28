@@ -1,42 +1,25 @@
 # @diegesis/events
 
-Mature, schema-validated **event + hook bus** for Diegesis — the foundation of the
-Diegesis hook system. A capable, reliable foundation for events and hooks that
-stays drop-in simple, **cross-VTT interoperable**, and friendly to
-**browser extensions** and injected scripts.
+> Mature, schema-validated event & hook bus for Diegesis — cross-VTT interoperability and browser-extension friendly.
+
+The foundation of the Diegesis hook system: typed, validated events and extensible hook pipelines that stay drop-in simple and friendly to browser extensions and injected scripts.
 
 - **Events** (notifications, fire-and-forget) — powered by [`mitt`](https://github.com/developit/mitt): typed, wildcard-capable.
-- **Hooks** (interception / pipelines) — powered by [`tapable`](https://github.com/webpack/tapable): `sync`, `syncBail`, `syncWaterfall`, `asyncSeries`, `asyncSeriesBail`, `asyncSeriesWaterfall`, `asyncParallel`, `asyncParallelBail`.
-- **Validation** — every event/hook payload is validated with [`valibot`](https://valibot.dev) schemas.
-- **IDs** — UUID **v7** (time-ordered, sortable) for every event/correlation.
+- **Hooks** (interception / pipelines) — powered by [`tapable`](https://github.com/webpack/tapable): eight strategies from `sync` to `asyncParallelBail`.
+- **Validation** — every event/hook payload is validated with [Valibot](https://valibot.dev) schemas (`v.GenericSchema` accepted directly).
+- **IDs** — UUID **v7** (time-ordered, sortable) for every event/correlation id.
 - **Bridge** — exposes the bus to `globalThis.__DIEGESIS_EVENTS__` and dispatches DOM `CustomEvent`s, so content scripts and extensions can participate with plain `addEventListener`.
 - **Broadcast** — optional cross-tab propagation via `BroadcastChannel`.
 - **Robust** — a throwing handler never crashes the bus; errors are isolated and observable.
 - SSR-safe (no `window`/`document` access at import time), ESM + CJS, tree-shakeable.
 
-## Install
+## Installation
 
 ```bash
-bun add @diegesis/events
+npm install @diegesis/events
 ```
 
 ## Quick start
-
-### Freeform (no contract)
-
-```ts
-import { createBus } from '@diegesis/events';
-
-const bus = createBus();
-
-const off = bus.on('scene:ready', (payload, meta) => {
-  console.log(meta.id, meta.timestamp); // uuid v7 id
-});
-bus.emit('scene:ready', { id: 'forest' });
-off();
-```
-
-### Typed + validated contract (recommended)
 
 ```ts
 import * as v from 'valibot';
@@ -55,16 +38,44 @@ const contract = defineContract({
 const bus = createBus(contract);
 
 bus.on('rolled', (payload, meta) => {
-  console.log('rolled', payload.result, meta.id);
+  console.log('rolled', payload.result, meta.id); // meta.id is a UUID v7
 });
 
-bus.tap('beforeRoll', 'physics', (ctx) => ({ ...ctx, sides: ctx.sides })); // waterfall returns the (transformed) value
+bus.tap('beforeRoll', 'physics', (ctx) => ctx); // waterfall taps return the (transformed) value
 
 const result = bus.call('beforeRoll', { sides: 20 }); // → { sides: 20 }
 bus.emit('rolled', { result: 42 }); // validated against the schema
 ```
 
-## Events (notify)
+Freeform usage without a contract also works:
+
+```ts
+import { createBus } from '@diegesis/events';
+
+const bus = createBus();
+const off = bus.on('scene:ready', (payload, meta) => {
+  console.log(meta.id, meta.timestamp);
+});
+bus.emit('scene:ready', { id: 'forest' });
+off();
+```
+
+## API
+
+### `createBus(contract?, options?)` / `new EventBus(contract?, options?)`
+
+`contract: { namespace?, events?, hooks? }` — `events` maps name → Valibot schema; `hooks` maps name → `{ strategy, schema? }`. Build typed contracts with `defineContract({ namespace, events, hooks })`.
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `validate` | `'throw' \| 'warn' \| 'off'` | `'throw'` | Payload validation behaviour. |
+| `unknownEvents` | `'allow' \| 'reject'` | `'allow'` | Reject emits for events not in the contract. |
+| `bridge` | `boolean \| BridgeOptions` | `false` | Expose the bus to extensions/scripts. |
+| `broadcast` | `boolean \| BroadcastOptions` | `false` | Cross-tab `BroadcastChannel`. |
+| `debug` | `boolean \| ((...a) => void)` | `false` | Debug logging. |
+| `sourceId` | `string` | uuid v7 | Unique instance id used for broadcast de-dup. |
+
+### Events (notify)
 
 ```ts
 bus.on(name, (payload, meta) => {});        // subscribe → returns unsubscribe fn
@@ -78,10 +89,9 @@ bus.onError((err, ctx) => {});              // observe handler/validation errors
 - `emit` is **synchronous** and returns the `EventMeta` (so you get the event `id` for correlation).
 - A handler that throws is **isolated**: it is reported via `onError` and the remaining handlers still run.
 
-## Hooks (pipelines)
+### Hooks (pipelines)
 
-Hooks are extensible pipeline points where plugins can intercept, transform, or
-short-circuit a process.
+Hooks are extensible pipeline points where plugins can intercept, transform, or short-circuit a process.
 
 ```ts
 bus.tap(name, 'plugin-name', (value) => value);           // sync tap
@@ -89,6 +99,28 @@ bus.tapPromise(name, 'plugin-name', async (value) => {}); // async tap
 bus.call(name, value);        // invoke a SYNC hook (sync / syncBail / syncWaterfall)
 bus.callAsync(name, value);   // invoke ANY hook (required for async* strategies)
 ```
+
+Hook inputs are validated against the hook's `schema` before any tap runs.
+
+### Runtime registration
+
+```ts
+bus.registerEvent('spawned', v.object({ tokenId: v.string() }));
+bus.registerHook('damage', { strategy: 'syncWaterfall', schema: v.object({ amount: v.number() }) });
+```
+
+### Validation
+
+Validation mode is set per-bus via `validate: 'throw' | 'warn' | 'off'` (default `'throw'`).
+
+- Events without a schema and hooks without a `schema` are **never** validated (freeform-friendly).
+- On `'throw'`, invalid payloads raise an `EventValidationError` listing every issue.
+
+### Errors
+
+`EventBusError`, `EventValidationError`, `UnknownEventError`, `UnknownHookError`, `HookError` — all carry a typed `code`.
+
+## Hook strategies
 
 | Strategy                 | Runs   | Behaviour                                                                  |
 | ------------------------ | ------ | -------------------------------------------------------------------------- |
@@ -100,20 +132,6 @@ bus.callAsync(name, value);   // invoke ANY hook (required for async* strategies
 | `asyncSeriesWaterfall`   | async  | Sequential; each tap receives the previous resolved value.                 |
 | `asyncParallel`          | async  | All taps run concurrently.                                                 |
 | `asyncParallelBail`      | async  | Concurrent; resolves with the first non-`undefined`.                       |
-
-Hook inputs are validated against the hook's `schema` before any tap runs.
-
-## Validation
-
-Validation mode is set per-bus via `validate: 'throw' | 'warn' | 'off'` (default `'throw'`).
-
-- Events without a schema and hooks without a `schema` are **never** validated (freeform-friendly).
-- On `'throw'`, invalid payloads raise an `EventValidationError` listing every issue.
-
-```ts
-bus.registerEvent('spawned', v.object({ tokenId: v.string() })); // add at runtime
-bus.registerHook('damage', { strategy: 'syncWaterfall', schema: v.object({ amount: v.number() }) });
-```
 
 ## Browser extensions & external scripts (the bridge)
 
@@ -169,31 +187,6 @@ re-broadcast (no loops). Inbound payloads that fail validation are reported via
 Because the bus is VTT-agnostic and namespaced, you can wire several adapters
 against the same bus to translate between platforms.
 
-## API reference
+---
 
-### `createBus(contract?, options?)` / `new EventBus(contract?, options?)`
-
-`contract: { namespace?, events?, hooks? }` — `events` maps name → valibot
-schema; `hooks` maps name → `{ strategy, schema? }`.
-
-`options:`
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `validate` | `'throw' \| 'warn' \| 'off'` | `'throw'` | Payload validation behaviour. |
-| `unknownEvents` | `'allow' \| 'reject'` | `'allow'` | Reject emits for events not in the contract. |
-| `bridge` | `boolean \| BridgeOptions` | `false` | Expose the bus to extensions/scripts. |
-| `broadcast` | `boolean \| BroadcastOptions` | `false` | Cross-tab `BroadcastChannel`. |
-| `debug` | `boolean \| ((...a) => void)` | `false` | Debug logging. |
-| `sourceId` | `string` | uuid v7 | Unique instance id used for broadcast de-dup. |
-
-### Event & hook methods
-
-See the [Events](#events-notify) and [Hooks](#hooks-pipelines) sections.
-
-### Errors
-
-`EventBusError`, `EventValidationError`, `UnknownEventError`, `UnknownHookError`, `HookError` — all carry a typed `code`.
-
-## License
-
-MIT
+Part of [diegesis-sdk](https://github.com/diegesisvtt/diegesis-sdk). MIT.
