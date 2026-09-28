@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-audio",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Spatial audio plugin for @diegesis/canvas — ambient sound placeables, camera/token listener and sound:sources contributions.",
   "type": "module",
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/render3d",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Three.js rendering toolkit for Diegesis: post-processing composer, HDR/cubemap environments, normal map generation.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -39,5 +41,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "three.js", "postprocessing", "hdr", "vtt", "rendering"]
+  "keywords": [
+    "diegesis",
+    "three.js",
+    "postprocessing",
+    "hdr",
+    "vtt",
+    "rendering"
+  ]
 }

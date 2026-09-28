@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/dice-notation-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Dialect-parametrized lexer, parser and serializer core for Diegesis dice notations — shared machinery behind @diegesis/dice-notation, @diegesis/dice-foundry-notation and @diegesis/dice-roll20-notation.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -37,5 +39,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "dice", "notation", "parser", "serializer", "lexer", "vtt"]
+  "keywords": [
+    "diegesis",
+    "dice",
+    "notation",
+    "parser",
+    "serializer",
+    "lexer",
+    "vtt"
+  ]
 }

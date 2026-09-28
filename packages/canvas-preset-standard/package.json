@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-preset-standard",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Standard preset for @diegesis/canvas — bundles the core plugins (grid, maps, tiles, drawings, walls, templates, tokens, rings, lights, measure, lighting, fog) in one import.",
   "type": "module",
   "license": "MIT",

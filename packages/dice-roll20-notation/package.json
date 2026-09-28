@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/dice-roll20-notation",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Roll20 dice notation parser and serializer for the Diegesis dice IR — maps Roll20 sigils (kh, r, ro, !, !!, !p, d%, dF, @{attr}) to canonical modifier operations.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -38,5 +40,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "dice", "notation", "parser", "roll20", "vtt"]
+  "keywords": [
+    "diegesis",
+    "dice",
+    "notation",
+    "parser",
+    "roll20",
+    "vtt"
+  ]
 }

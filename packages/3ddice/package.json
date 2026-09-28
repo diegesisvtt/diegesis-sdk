@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/dice",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Framework-agnostic 3D dice roller for Diegesis (three.js + cannon-es worker physics).",
   "type": "module",
   "license": "MIT",

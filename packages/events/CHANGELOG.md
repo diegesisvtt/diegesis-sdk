@@ -1,5 +1,11 @@
 # @diegesis/events
 
+## 0.2.1
+
+### Patch Changes
+
+- cb568ac: Add a package README to every published package: npm-page documentation, verified quick starts and API references, LLM-friendly signatures.
+
 ## 0.2.0
 
 ### Minor Changes

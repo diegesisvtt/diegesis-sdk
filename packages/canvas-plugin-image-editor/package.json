@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-image-editor",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Image editor plugin for @diegesis/canvas — crop (pan/zoom/rotate/flip), advanced masks and ring overlay for token art; built-in customizable UI plus a headless API for custom interfaces.",
   "type": "module",
   "license": "MIT",

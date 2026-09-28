@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-grid-hex",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Hex grid plugins for @diegesis/canvas — vertical (pointy-top) and horizontal (flat-top) hex-grid scenes.",
   "type": "module",
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/audio",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Howler-based audio engine for Diegesis: channels with mute/solo, fades, random groups, spatial sound and timelines.",
   "type": "module",
   "license": "MIT",

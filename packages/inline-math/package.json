@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/inline-math",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Zero-dependency inline math commands for numeric inputs — apply +5, -5, *2, /2 or =10 against a current value.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -34,5 +36,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["inline-math", "math-input", "numeric-input", "calculator", "vtt"]
+  "keywords": [
+    "inline-math",
+    "math-input",
+    "numeric-input",
+    "calculator",
+    "vtt"
+  ]
 }

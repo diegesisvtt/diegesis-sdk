@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-rings",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Colored ring markers for tokens on @diegesis/canvas — presets, custom styles, dash/glow/pulse, event-driven and hook-extensible.",
   "type": "module",
   "license": "MIT",

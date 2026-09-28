@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-drawings",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Drawings document plugin for @diegesis/canvas — Drawing placeable, freehand brush tool and shape tool.",
   "type": "module",
   "license": "MIT",
