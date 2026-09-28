@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-grid-square",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Square grid plugin for @diegesis/canvas — renders and configures square-grid scenes.",
   "type": "module",
   "license": "MIT",

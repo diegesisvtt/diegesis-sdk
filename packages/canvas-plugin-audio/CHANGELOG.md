@@ -1,5 +1,14 @@
 # @diegesis/canvas-plugin-audio
 
+## 0.2.1
+
+### Patch Changes
+
+- cb568ac: Add a package README to every published package: npm-page documentation, verified quick starts and API references, LLM-friendly signatures.
+- Updated dependencies [cb568ac]
+  - @diegesis/audio@0.2.1
+  - @diegesis/canvas@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

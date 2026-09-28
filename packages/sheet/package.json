@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/sheet",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Effect-oriented character sheet engine for Diegesis — the document is minimal, the effect pipeline is the heart: collect, filter, sort by UUID v7, apply, derive, emit.",
   "type": "module",
   "license": "MIT",

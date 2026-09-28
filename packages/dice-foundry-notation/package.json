@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/dice-foundry-notation",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Foundry VTT dice notation parser and serializer for the Diegesis dice IR — maps Foundry sigils (kh, r, rr, x, xo, cs, cf, df, d%, df-as-fate, dc, @path) to canonical modifier operations.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -38,5 +40,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "dice", "notation", "parser", "foundry", "vtt"]
+  "keywords": [
+    "diegesis",
+    "dice",
+    "notation",
+    "parser",
+    "foundry",
+    "vtt"
+  ]
 }

@@ -1,5 +1,31 @@
 # @diegesis/canvas-preset-standard
 
+## 0.2.1
+
+### Patch Changes
+
+- cb568ac: Add a package README to every published package: npm-page documentation, verified quick starts and API references, LLM-friendly signatures.
+- Updated dependencies [cb568ac]
+  - @diegesis/canvas@0.2.1
+  - @diegesis/canvas-plugin-drawings@0.1.2
+  - @diegesis/canvas-plugin-fog@0.2.1
+  - @diegesis/canvas-plugin-grid@0.2.1
+  - @diegesis/canvas-plugin-grid-hex@0.2.1
+  - @diegesis/canvas-plugin-grid-isometric@0.2.1
+  - @diegesis/canvas-plugin-grid-square@0.2.1
+  - @diegesis/canvas-plugin-image-editor@0.2.1
+  - @diegesis/canvas-plugin-lighting@0.1.2
+  - @diegesis/canvas-plugin-lights@0.1.2
+  - @diegesis/canvas-plugin-maps@0.2.1
+  - @diegesis/canvas-plugin-measure@0.2.1
+  - @diegesis/canvas-plugin-ranges@0.2.1
+  - @diegesis/canvas-plugin-rings@0.2.1
+  - @diegesis/canvas-plugin-templates@0.2.1
+  - @diegesis/canvas-plugin-tiles@0.1.2
+  - @diegesis/canvas-plugin-tokens@0.2.1
+  - @diegesis/canvas-plugin-walls@0.1.2
+  - @diegesis/canvas-plugin-window@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

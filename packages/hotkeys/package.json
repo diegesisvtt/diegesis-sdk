@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/hotkeys",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Declarative, context-aware hotkey management for Diegesis — rebindable keymaps, conflict detection and schema-validated persistence.",
   "type": "module",
   "license": "MIT",

@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/dice-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Canonical dice IR + seeded evaluator for Diegesis — Valibot-validated, dialect-neutral, side-effect-free except for an injectable RNG.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -41,5 +43,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "dice", "vtt", "foundry", "roll20", "seedrandom", "ir"]
+  "keywords": [
+    "diegesis",
+    "dice",
+    "vtt",
+    "foundry",
+    "roll20",
+    "seedrandom",
+    "ir"
+  ]
 }

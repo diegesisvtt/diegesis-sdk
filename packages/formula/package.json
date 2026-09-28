@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/formula",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Tiny, jsep-powered formula IR for Diegesis — json-logic-shaped AST that travels over the event bus, persists to documents, and runs with no eval.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -38,5 +40,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "formula", "jsep", "json-logic", "vtt", "ast", "ir"]
+  "keywords": [
+    "diegesis",
+    "formula",
+    "jsep",
+    "json-logic",
+    "vtt",
+    "ast",
+    "ir"
+  ]
 }

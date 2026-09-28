@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-grid",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Grid plugin for @diegesis/canvas — renders the scene grid (square, hex, isometric) and contributes grid configuration via context menu.",
   "type": "module",
   "license": "MIT",

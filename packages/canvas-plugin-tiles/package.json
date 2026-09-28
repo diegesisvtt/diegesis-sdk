@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-tiles",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Tile document plugin for @diegesis/canvas — Tile placeable and drag-to-place tile tool.",
   "type": "module",
   "license": "MIT",

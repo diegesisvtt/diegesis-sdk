@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/physics",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Rigid-body physics (cannon-es) for Diegesis, with Web Worker host and main-thread fallback.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +23,9 @@
       "import": "./dist/physics.worker.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -42,5 +44,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "physics", "cannon-es", "web-worker", "vtt"]
+  "keywords": [
+    "diegesis",
+    "physics",
+    "cannon-es",
+    "web-worker",
+    "vtt"
+  ]
 }

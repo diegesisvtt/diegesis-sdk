@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-measure",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Measuring plugin for @diegesis/canvas — ruler tool with waypoints and the measure event.",
   "type": "module",
   "license": "MIT",

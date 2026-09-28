@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Framework-agnostic, PixiJS-powered game canvas for Diegesis — Foundry-inspired Canvas/Layer/PlaceableObject API.",
   "type": "module",
   "license": "MIT",

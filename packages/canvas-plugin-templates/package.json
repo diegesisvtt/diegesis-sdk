@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-templates",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Area of effect templates plugin for @diegesis/canvas — circle/cone/ray template documents, placeable, tool and geometry helpers.",
   "type": "module",
   "license": "MIT",

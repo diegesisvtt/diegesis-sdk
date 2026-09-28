@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-walls",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Walls document plugin for @diegesis/canvas — walls, doors and bezier curves with movement/sight blocking.",
   "type": "module",
   "license": "MIT",
