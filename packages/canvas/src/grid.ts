@@ -23,7 +23,7 @@ const GRID_KEYS = ['type', 'size', 'color', 'alpha', 'lineWidth', 'offsetX', 'of
 /**
  * Estado do grid como serviço do core: plugins leem `canvas.grid` para
  * conversões célula/pixel e snapping; a renderização do grid é contribuída
- * pelo plugin `@openvtt/canvas-plugin-grid`, que observa `grid:change`.
+ * pelo plugin `@diegesis/canvas-plugin-grid`, que observa `grid:change`.
  */
 export class GridService implements GridConfig {
   type: GridType;

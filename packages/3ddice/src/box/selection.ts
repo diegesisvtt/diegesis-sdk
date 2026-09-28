@@ -1,14 +1,14 @@
 import * as THREE from 'three';
 import type { OutlinePass } from 'three/addons/postprocessing/OutlinePass.js';
 
-import type { DiceMesh, DiceResult } from '../services/dice-mesh';
+import type { DiceMesh } from '../services/dice-mesh';
 
 export interface SelectionDeps {
-  getDice: () => THREE.Object3D[];
+  getDice: () => DiceMesh[];
   getCamera: () => THREE.Camera | undefined;
   getOutlinePass: () => OutlinePass | undefined;
   requestRender: () => void;
-  onDieClick: (id: number, value: DiceResult | undefined) => void;
+  onDieClick: (id: string, value: number) => void;
 }
 
 export class SelectionController {
@@ -17,7 +17,7 @@ export class SelectionController {
   #listener?: (event: MouseEvent) => void;
   #canvas?: HTMLCanvasElement;
 
-  selectedIds = new Set<number>();
+  selectedIds = new Set<string>();
 
   constructor(private deps: SelectionDeps) {}
 
@@ -36,7 +36,7 @@ export class SelectionController {
     this.#listener = undefined;
   }
 
-  select(ids: number[]): void {
+  select(ids: string[]): void {
     this.selectedIds = new Set(ids);
     this.#syncOutline();
     this.deps.requestRender();
@@ -52,7 +52,7 @@ export class SelectionController {
     const outline = this.deps.getOutlinePass();
     if (!outline) return;
     const dice = this.deps.getDice();
-    outline.selectedObjects = [...this.selectedIds].map((id) => dice[id]).filter(Boolean);
+    outline.selectedObjects = dice.filter((die) => this.selectedIds.has(die.dieId));
   }
 
   #handleClick(event: MouseEvent): void {
@@ -70,13 +70,13 @@ export class SelectionController {
     if (intersects.length === 0) return;
 
     let target: THREE.Object3D | null = intersects[0].object;
-    while (target && !dice.includes(target)) {
+    while (target && !dice.includes(target as DiceMesh)) {
       target = target.parent;
     }
     if (!target) return;
 
-    const id = dice.indexOf(target);
-    const value = (target as Partial<DiceMesh>).getLastValue?.();
-    this.deps.onDieClick(id, value);
+    const die = target as DiceMesh;
+    if (!die.dieId) return;
+    this.deps.onDieClick(die.dieId, die.forcedValue);
   }
 }

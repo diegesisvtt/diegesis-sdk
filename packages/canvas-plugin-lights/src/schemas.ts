@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { LockableSchemaEntries } from '@openvtt/canvas';
+import { LockableSchemaEntries } from '@diegesis/canvas';
 
 export const LightDataSchema = v.object({
   ...LockableSchemaEntries,

@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { createFormulaSchema } from '@openvtt/formula';
+import { createFormulaSchema } from '@diegesis/formula';
 import { MODIFIER_OPS } from './ir';
 import type { ComparisonOp, ModifierOp } from './ir';
 

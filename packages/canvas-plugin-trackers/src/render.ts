@@ -1,5 +1,5 @@
 import { Container, Graphics, Text } from 'pixi.js';
-import type { PlaceableObject } from '@openvtt/canvas';
+import type { PlaceableObject } from '@diegesis/canvas';
 import { colorToNumber } from './color';
 import type { ResolvedTracker, TrackerUiState } from './resolve';
 import type { TrackerInset, TrackerSide } from './schemas';

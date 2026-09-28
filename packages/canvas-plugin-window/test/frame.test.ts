@@ -5,7 +5,7 @@ import type { WindowFrameElement, ResizeDir } from '../src/frame';
 GlobalRegistrator.register();
 
 const { defineWindowElements, WINDOW_FRAME_TAG } = await import('../src/frame');
-const { createCanvasBus } = await import('@openvtt/canvas');
+const { createCanvasBus } = await import('@diegesis/canvas');
 const { WindowManager } = await import('../src/manager');
 
 interface PointerInit {

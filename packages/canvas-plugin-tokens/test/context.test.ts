@@ -1,17 +1,17 @@
 import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
 
-type Canvas = import('@openvtt/canvas').Canvas;
-type HistoryManager = import('@openvtt/canvas').HistoryManager;
-type ContextMenuItem = import('@openvtt/canvas').ContextMenuItem;
-type ContextMenuToggle = import('@openvtt/canvas').ContextMenuToggle;
-type ContextMenuContext = import('@openvtt/canvas').ContextMenuContext;
+type Canvas = import('@diegesis/canvas').Canvas;
+type HistoryManager = import('@diegesis/canvas').HistoryManager;
+type ContextMenuItem = import('@diegesis/canvas').ContextMenuItem;
+type ContextMenuToggle = import('@diegesis/canvas').ContextMenuToggle;
+type ContextMenuContext = import('@diegesis/canvas').ContextMenuContext;
 type Token = import('../src/placeables/Token').Token;
 
 let canvas: Canvas;
 let tokensPlugin: import('../src/plugin').TokensPlugin;
 
 beforeAll(async () => {
-  const { Canvas: CanvasCtor, HistoryManager: HistoryManagerCtor } = await import('@openvtt/canvas');
+  const { Canvas: CanvasCtor, HistoryManager: HistoryManagerCtor } = await import('@diegesis/canvas');
   const { TokensPlugin: Plugin } = await import('../src/plugin');
   canvas = new CanvasCtor({} as HTMLElement);
   tokensPlugin = new Plugin();

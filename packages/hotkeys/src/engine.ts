@@ -1,4 +1,4 @@
-import type { EventBus } from '@openvtt/events';
+import type { EventBus } from '@diegesis/events';
 import type { HotkeyEventMap, HotkeyHookMap } from './schema';
 import type { KeyBind } from './schema';
 import type { ActionRegistry, HotkeyEventContext, RegisteredAction } from './registry';

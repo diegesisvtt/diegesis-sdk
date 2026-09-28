@@ -1,4 +1,4 @@
-import type { Modifier, RollExpr } from '@openvtt/dice-core';
+import type { Modifier, RollExpr } from '@diegesis/dice-core';
 
 export type ValueOp = 'set' | 'add' | 'multiply' | 'upgrade' | 'downgrade' | 'append' | 'remove';
 

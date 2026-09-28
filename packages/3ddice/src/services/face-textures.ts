@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import { heightCanvasToNormalCanvas } from '@openvtt/render3d';
+import { heightCanvasToNormalCanvas } from '@diegesis/render3d';
 import { createCanvas } from './platform';
 import type { DiceShape } from '../constants/dice';
 

@@ -1,5 +1,5 @@
-import { MENU_ORDER, menu, menuControls, menuWhen } from '@openvtt/canvas';
-import type { ContextMenuContext, ContextMenuItem, PluginContext } from '@openvtt/canvas';
+import { MENU_ORDER, menu, menuControls, menuWhen } from '@diegesis/canvas';
+import type { ContextMenuContext, ContextMenuItem, PluginContext } from '@diegesis/canvas';
 import type { MapPlaceable } from './placeables/MapPlaceable';
 import type { MapData } from './schemas';
 

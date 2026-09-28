@@ -6,8 +6,8 @@ import type {
   PhysicsHost,
   SpawnPayload,
   StepResult,
-} from '@openvtt/physics';
-import { createPhysicsHost } from '@openvtt/physics';
+} from '@diegesis/physics';
+import { createPhysicsHost } from '@diegesis/physics';
 
 import { PHYSICS } from '../constants/physics';
 import { MATERIALS } from '../constants/materials';
@@ -102,7 +102,7 @@ export class PhysicsController {
     const payloads: SpawnPayload[] = [];
     for (let i = 0; i < dice.length; i++) {
       const dicemesh = dice[i];
-      const vectordata = dicemesh.notation;
+      const vectordata = dicemesh.throw;
       const shape = factory.getShapeDescriptor(vectordata.type);
       if (!shape) continue;
       payloads.push({
@@ -114,6 +114,34 @@ export class PhysicsController {
         velocity: vectordata.velocity,
         angle: vectordata.angle,
         axis: vectordata.axis,
+      });
+    }
+    return payloads;
+  }
+
+  buildSettledPayloads(dice: DiceMesh[], factory: Pick<DiceFactory, 'getShapeDescriptor'>): SpawnPayload[] {
+    const payloads: SpawnPayload[] = [];
+    for (let i = 0; i < dice.length; i++) {
+      const dicemesh = dice[i];
+      const shape = factory.getShapeDescriptor(dicemesh.throw.type);
+      if (!shape) continue;
+
+      const q = dicemesh.quaternion;
+      const w = Math.min(1, Math.max(-1, q.w));
+      const s = Math.sqrt(Math.max(0, 1 - w * w));
+      const axis = s < 1e-6
+        ? { x: 1, y: 0, z: 0, a: 0 }
+        : { x: q.x / s, y: q.y / s, z: q.z / s, a: (2 * Math.acos(w)) / (Math.PI * 2) };
+
+      payloads.push({
+        index: i,
+        shape,
+        mass: dicemesh.mass,
+        shapeTag: dicemesh.shape,
+        pos: { x: dicemesh.position.x, y: dicemesh.position.y, z: dicemesh.position.z },
+        velocity: { x: 0, y: 0, z: 0 },
+        angle: { x: 0, y: 0, z: 0 },
+        axis,
       });
     }
     return payloads;
@@ -135,7 +163,6 @@ export class PhysicsController {
   markAllKinematic(dice: DiceMesh[]): void {
     for (const dicemesh of dice) {
       if (dicemesh?.body) {
-        dicemesh.rerolling = false;
         dicemesh.body.type = BODY_TYPE_KINEMATIC;
       }
     }

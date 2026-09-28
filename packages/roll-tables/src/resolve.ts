@@ -1,7 +1,7 @@
-import { evaluateRoll, type Rng, type RollResult } from '@openvtt/dice-core';
-import { fromFormula } from '@openvtt/dice-notation';
+import { evaluateRoll, type Rng, type RollResult } from '@diegesis/dice-core';
+import { fromFormula } from '@diegesis/dice-notation';
 import { v7 as uuidv7 } from 'uuid';
-import type { Scope } from '@openvtt/formula';
+import type { Scope } from '@diegesis/formula';
 import type { TableEntry } from './entry';
 import type { DocumentRef, EntryType } from './schema';
 import { TableError } from './errors';

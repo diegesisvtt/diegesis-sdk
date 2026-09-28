@@ -1,7 +1,7 @@
-import { evaluateRoll, createRng, type Rng, type RollExpr, type RollResult } from '@openvtt/dice-core';
+import { evaluateRoll, createRng, type Rng, type RollExpr, type RollResult } from '@diegesis/dice-core';
 import { v7 as uuidv7 } from 'uuid';
 import * as v from 'valibot';
-import type { Scope } from '@openvtt/formula';
+import type { Scope } from '@diegesis/formula';
 import {
   rollTableSchema,
   type ReshufflePolicy,

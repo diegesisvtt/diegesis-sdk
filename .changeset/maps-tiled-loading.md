@@ -1,10 +1,10 @@
 ---
-'@openvtt/canvas-plugin-maps': minor
-'@openvtt/canvas-preset-standard': minor
+'@diegesis/canvas-plugin-maps': minor
+'@diegesis/canvas-preset-standard': minor
 ---
 
-Add `@openvtt/canvas-plugin-maps`: streaming tiled map loading for
-`@openvtt/canvas`, following the Warp Core approach (Owlbear Rodeo 2.3).
+Add `@diegesis/canvas-plugin-maps`: streaming tiled map loading for
+`@diegesis/canvas`, following the Warp Core approach (Owlbear Rodeo 2.3).
 
 - `map` document type (Valibot-validated) with `image` (any URL/data URL) or
   `tiled` (`{z}/{x}/{y}` template + dimensions) sources; `scene.maps` and

@@ -6,5 +6,5 @@ export default defineConfig({
   dts: true,
   sourcemap: true,
   clean: true,
-  external: ['three', 'cannon-es', 'valibot', '@openvtt/assets', '@openvtt/dice-core', '@openvtt/dice-notation', '@openvtt/events', '@openvtt/physics', '@openvtt/render3d'],
+  external: ['three', 'cannon-es', 'valibot', '@diegesis/assets', '@diegesis/dice-core', '@diegesis/dice-notation', '@diegesis/events', '@diegesis/physics', '@diegesis/render3d'],
 });

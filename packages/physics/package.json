@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/physics",
+  "name": "@diegesis/physics",
   "version": "0.1.0",
-  "description": "Rigid-body physics (cannon-es) for OpenVTT, with Web Worker host and main-thread fallback.",
+  "description": "Rigid-body physics (cannon-es) for Diegesis, with Web Worker host and main-thread fallback.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/physics"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -37,5 +42,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "physics", "cannon-es", "web-worker", "vtt"]
+  "keywords": ["diegesis", "physics", "cannon-es", "web-worker", "vtt"]
 }

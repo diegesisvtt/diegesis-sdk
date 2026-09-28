@@ -1,6 +1,6 @@
 import { v7 } from 'uuid';
 import { safeParse as vSafeParse } from 'valibot';
-import { dynamicBus, type CanvasBus, type PluginContext, type WindowConstraints, type WindowDockEdge, type WindowDockTarget, type WindowStateKind } from '@openvtt/canvas';
+import { dynamicBus, type CanvasBus, type PluginContext, type WindowConstraints, type WindowDockEdge, type WindowDockTarget, type WindowStateKind } from '@diegesis/canvas';
 import { WindowFrameElement, defineWindowElements, type FramePointerDetail, type ResizeDir } from './frame';
 import { WindowOverlay } from './overlay';
 import { WindowHandle, type WindowHandleEvent } from './handle';
@@ -269,7 +269,7 @@ export class WindowManager {
     this.handles.set(id, new WindowHandle(id, this));
 
     if (this.overlay && this.dom) {
-      const frame = document.createElement('openvtt-window-frame') as WindowFrameElement;
+      const frame = document.createElement('diegesis-window-frame') as WindowFrameElement;
       entry.frame = frame;
       frame.setTitle(entry.title);
       frame.setAttribute('mode', 'float');

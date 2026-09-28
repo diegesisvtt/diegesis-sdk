@@ -3,10 +3,10 @@ import { FakeHowler, installHowlerMock } from '../../audio/test/helpers/howler-m
 
 installHowlerMock();
 
-const { AudioEngine } = await import('@openvtt/audio');
+const { AudioEngine } = await import('@diegesis/audio');
 const { ListenerController, gridMapper } = await import('../src/listener');
 
-import type { PluginContext } from '@openvtt/canvas';
+import type { PluginContext } from '@diegesis/canvas';
 
 let engine: InstanceType<typeof AudioEngine>;
 

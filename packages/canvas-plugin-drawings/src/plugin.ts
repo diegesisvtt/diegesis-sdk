@@ -1,4 +1,4 @@
-import { definePlugin, type PluginContext } from '@openvtt/canvas';
+import { definePlugin, type PluginContext } from '@diegesis/canvas';
 import { Drawing } from './placeables/Drawing';
 import { DrawTool } from './tools/DrawTool';
 import { ShapeTool } from './tools/ShapeTool';

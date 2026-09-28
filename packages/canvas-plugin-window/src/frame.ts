@@ -1,4 +1,4 @@
-export const WINDOW_FRAME_TAG = 'openvtt-window-frame';
+export const WINDOW_FRAME_TAG = 'diegesis-window-frame';
 
 export type WindowFrameState = 'normal' | 'minimized' | 'maximized' | 'collapsed';
 export type WindowFrameMode = 'float' | 'dock';

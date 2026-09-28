@@ -1,4 +1,4 @@
-import { definePlugin, type PluginContext } from '@openvtt/canvas';
+import { definePlugin, type PluginContext } from '@diegesis/canvas';
 import { RangeOverlayLayer } from './layer/RangeOverlayLayer';
 import { bindController, RangesController, unbindController, type ActiveRange, type PlaceRangeInput } from './controller';
 

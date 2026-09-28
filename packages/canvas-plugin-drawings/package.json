@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-drawings",
+  "name": "@diegesis/canvas-plugin-drawings",
   "version": "0.1.0",
-  "description": "Drawings document plugin for @openvtt/canvas — Drawing placeable, freehand brush tool and shape tool.",
+  "description": "Drawings document plugin for @diegesis/canvas — Drawing placeable, freehand brush tool and shape tool.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-drawings"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -38,5 +43,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "drawing", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "drawing", "vtt", "tabletop"]
 }

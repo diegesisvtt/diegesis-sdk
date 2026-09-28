@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/dice-notation-core",
+  "name": "@diegesis/dice-notation-core",
   "version": "0.1.0",
-  "description": "Dialect-parametrized lexer, parser and serializer core for OpenVTT dice notations — shared machinery behind @openvtt/dice-notation, @openvtt/dice-foundry-notation and @openvtt/dice-roll20-notation.",
+  "description": "Dialect-parametrized lexer, parser and serializer core for Diegesis dice notations — shared machinery behind @diegesis/dice-notation, @diegesis/dice-foundry-notation and @diegesis/dice-roll20-notation.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/dice-notation-core"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/dice-core": "workspace:*"
+    "@diegesis/dice-core": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.4.0",
@@ -32,5 +37,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "dice", "notation", "parser", "serializer", "lexer", "vtt"]
+  "keywords": ["diegesis", "dice", "notation", "parser", "serializer", "lexer", "vtt"]
 }

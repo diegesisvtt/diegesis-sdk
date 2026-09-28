@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-measure",
+  "name": "@diegesis/canvas-plugin-measure",
   "version": "0.1.0",
-  "description": "Measuring plugin for @openvtt/canvas — ruler tool with waypoints and the measure event.",
+  "description": "Measuring plugin for @diegesis/canvas — ruler tool with waypoints and the measure event.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-measure"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -40,5 +45,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "measure", "ruler", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "measure", "ruler", "vtt", "tabletop"]
 }

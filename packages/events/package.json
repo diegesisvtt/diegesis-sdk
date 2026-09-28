@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/events",
+  "name": "@diegesis/events",
   "version": "0.1.0",
-  "description": "Mature, schema-validated event & hook bus for OpenVTT — cross-VTT interoperability and browser-extension friendly.",
+  "description": "Mature, schema-validated event & hook bus for Diegesis — cross-VTT interoperability and browser-extension friendly.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/events"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -35,5 +40,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "events", "hooks", "vtt", "eventemitter", "pubsub"]
+  "keywords": ["diegesis", "events", "hooks", "vtt", "eventemitter", "pubsub"]
 }

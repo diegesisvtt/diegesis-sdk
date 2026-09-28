@@ -21,8 +21,8 @@ describe('notify events', () => {
     expect(received).toHaveLength(1);
     expect(received[0].payload).toEqual({ a: 1 });
     expect(meta.id).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[0-9a-f]{4}-[0-9a-f]{12}$/);
-    expect(meta.wireName).toBe('openvtt:hello');
-    expect(meta.namespace).toBe('openvtt');
+    expect(meta.wireName).toBe('diegesis:hello');
+    expect(meta.namespace).toBe('diegesis');
   });
 
   it('unsubscribe via the returned disposer', () => {

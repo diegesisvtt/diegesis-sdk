@@ -1,6 +1,6 @@
-# @openvtt/render3d
+# @diegesis/render3d
 
-Three.js rendering toolkit used across the openvtt monorepo. It bundles a configurable post-processing pipeline (outline, bloom, SMAA/MSAA antialiasing), image-based-lighting environment loading with named presets and HDR/cubemap sources, a height-map to normal-map converter, and a small asset-path resolver. The package targets `three` with `three/addons` imports.
+Three.js rendering toolkit used across the diegesis monorepo. It bundles a configurable post-processing pipeline (outline, bloom, SMAA/MSAA antialiasing), image-based-lighting environment loading with named presets and HDR/cubemap sources, a height-map to normal-map converter, and a small asset-path resolver. The package targets `three` with `three/addons` imports.
 
 **Version:** 0.1.0
 **Peer dependencies:** `three`
@@ -8,11 +8,11 @@ Three.js rendering toolkit used across the openvtt monorepo. It bundles a config
 ## Installation
 
 ```bash
-bun add @openvtt/render3d three
+bun add @diegesis/render3d three
 ```
 
 ```ts
-import { PostFX, loadEnvironment, heightCanvasToNormalCanvas } from '@openvtt/render3d';
+import { PostFX, loadEnvironment, heightCanvasToNormalCanvas } from '@diegesis/render3d';
 ```
 
 See the [assets and rendering guide](../guides/assets-and-rendering.md) for usage in context.
@@ -142,7 +142,7 @@ Behavior:
 - Results are cached module-wide by resolved URL and shared via reference counting; each call returns a handle that must be released with `dispose()`. The shared texture is destroyed when the last handle is released.
 
 ```ts
-import { loadEnvironment, disposeEnvironmentCache } from '@openvtt/render3d';
+import { loadEnvironment, disposeEnvironmentCache } from '@diegesis/render3d';
 
 const env = await loadEnvironment(renderer, 'tavern', '/', (url) =>
   assetManager.resolveUrl(url),
@@ -202,4 +202,4 @@ resolveAssetPath('/assets/', 'https://cdn.example.com/a.png'); // passthrough
 - [Assets and rendering guide](../guides/assets-and-rendering.md)
 - [3D dice guide](../guides/3d-dice.md)
 - [Getting started](../guides/getting-started.md)
-- [@openvtt/dice](./dice.md), [@openvtt/assets](./assets.md)
+- [@diegesis/dice](./dice.md), [@diegesis/assets](./assets.md)

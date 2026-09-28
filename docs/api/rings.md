@@ -1,37 +1,37 @@
-# @openvtt/canvas-plugin-rings
+# @diegesis/canvas-plugin-rings
 
-Colored-Rings-style token markers for `@openvtt/canvas`: concentric rings rendered under tokens, driven by a preset registry and custom Valibot-validated styles (color, width, alpha, shape `circle|square`, dash, pulse, glow). Rings live on the document layer, so undo/redo is free, and they round-trip through scenes via `scene.rings`. Every mutation emits semantic events, and a `syncWaterfall` style-resolution hook lets other plugins restyle rings (for example, making the active combatant's ring pulse).
+Colored-Rings-style token markers for `@diegesis/canvas`: concentric rings rendered under tokens, driven by a preset registry and custom Valibot-validated styles (color, width, alpha, shape `circle|square`, dash, pulse, glow). Rings live on the document layer, so undo/redo is free, and they round-trip through scenes via `scene.rings`. Every mutation emits semantic events, and a `syncWaterfall` style-resolution hook lets other plugins restyle rings (for example, making the active combatant's ring pulse).
 
 **Version:** 0.1.0
-**Dependencies:** `@openvtt/canvas`, `valibot`
+**Dependencies:** `@diegesis/canvas`, `valibot`
 **Peer dependencies:** `pixi.js`, `pixi-filters`
 
 ## Installation
 
 ```bash
-bun add @openvtt/canvas-plugin-rings
+bun add @diegesis/canvas-plugin-rings
 ```
 
 ```ts
-import { RingsPlugin, ringsPlugin } from '@openvtt/canvas-plugin-rings';
+import { RingsPlugin, ringsPlugin } from '@diegesis/canvas-plugin-rings';
 ```
 
 The plugin depends on the tokens plugin and must be installed after it:
 
 ```ts
-import { Canvas } from '@openvtt/canvas';
-import { tokensPlugin } from '@openvtt/canvas-plugin-tokens';
-import { ringsPlugin } from '@openvtt/canvas-plugin-rings';
+import { Canvas } from '@diegesis/canvas';
+import { tokensPlugin } from '@diegesis/canvas-plugin-tokens';
+import { ringsPlugin } from '@diegesis/canvas-plugin-rings';
 
 const canvas = new Canvas(container);
 await canvas.use(tokensPlugin);
 await canvas.use(ringsPlugin);
 ```
 
-It also ships in `@openvtt/canvas-preset-standard`, registered in `standardPlugins` right after `tokensPlugin`:
+It also ships in `@diegesis/canvas-preset-standard`, registered in `standardPlugins` right after `tokensPlugin`:
 
 ```ts
-import { createStandardCanvas } from '@openvtt/canvas-preset-standard';
+import { createStandardCanvas } from '@diegesis/canvas-preset-standard';
 
 const canvas = createStandardCanvas(container);
 ```
@@ -85,7 +85,7 @@ interface RingData {
 The schemas are exported and reusable in apps that validate scene payloads:
 
 ```ts
-import { RingDataSchema, RingStyleSchema, HexColorSchema, parseRing } from '@openvtt/canvas-plugin-rings';
+import { RingDataSchema, RingStyleSchema, HexColorSchema, parseRing } from '@diegesis/canvas-plugin-rings';
 
 const ring = parseRing(raw); // validates unknown input, throws on invalid
 ```
@@ -282,10 +282,10 @@ interface Arc { start: number; end: number }
 
 ## Events and hooks
 
-All events flow through the canvas bus (an `@openvtt/events` `EventBus`, see the [Events and hooks guide](../guides/events-and-hooks.md)). Use the `ringsBus` port for typed access:
+All events flow through the canvas bus (an `@diegesis/events` `EventBus`, see the [Events and hooks guide](../guides/events-and-hooks.md)). Use the `ringsBus` port for typed access:
 
 ```ts
-import { ringsBus } from '@openvtt/canvas-plugin-rings';
+import { ringsBus } from '@diegesis/canvas-plugin-rings';
 
 const port = ringsBus(canvas.bus);
 ```
@@ -398,8 +398,8 @@ A complete setup: canvas with the standard preset, a scene with tokens and rings
 
 ```ts
 import { v7 } from 'uuid';
-import { createStandardCanvas } from '@openvtt/canvas-preset-standard';
-import { RingsPlugin, ringsBus } from '@openvtt/canvas-plugin-rings';
+import { createStandardCanvas } from '@diegesis/canvas-preset-standard';
+import { RingsPlugin, ringsBus } from '@diegesis/canvas-plugin-rings';
 
 const heroId = v7();
 const foeId = v7();
@@ -447,6 +447,6 @@ ringsBus(canvas.bus).onRingAdded(({ ring, tokenId }) => {
 ## See also
 
 - [Events and hooks guide](../guides/events-and-hooks.md)
-- [@openvtt/events](./events.md)
-- `@openvtt/canvas` and `@openvtt/canvas-plugin-tokens` — canvas core and the tokens plugin
-- `@openvtt/canvas-preset-standard` — ships `ringsPlugin` in `standardPlugins`
+- [@diegesis/events](./events.md)
+- `@diegesis/canvas` and `@diegesis/canvas-plugin-tokens` — canvas core and the tokens plugin
+- `@diegesis/canvas-preset-standard` — ships `ringsPlugin` in `standardPlugins`

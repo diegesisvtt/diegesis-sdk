@@ -1,4 +1,4 @@
-import { Tool, type CanvasPointerInfo, type Point, type StateNodeConstructor } from '@openvtt/canvas';
+import { Tool, type CanvasPointerInfo, type Point, type StateNodeConstructor } from '@diegesis/canvas';
 import type { FogOfWarLayer } from '../FogOfWarLayer';
 
 export interface FogToolOptions {

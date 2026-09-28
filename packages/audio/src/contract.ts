@@ -1,6 +1,6 @@
 import * as v from 'valibot';
-import { defineContract, type Contract } from '@openvtt/events';
-import type { EventBus } from '@openvtt/events';
+import { defineContract, type Contract } from '@diegesis/events';
+import type { EventBus } from '@diegesis/events';
 import { UnitIntervalSchema } from './schemas';
 
 export const audioEvents = {

@@ -1,4 +1,4 @@
-import { Tool, type CanvasPointerInfo } from '@openvtt/canvas';
+import { Tool, type CanvasPointerInfo } from '@diegesis/canvas';
 import type { TokenToolOptions } from '../plugin';
 
 export class TokenTool extends Tool {

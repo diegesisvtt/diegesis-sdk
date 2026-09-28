@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-rings",
+  "name": "@diegesis/canvas-plugin-rings",
   "version": "0.1.0",
-  "description": "Colored ring markers for tokens on @openvtt/canvas — presets, custom styles, dash/glow/pulse, event-driven and hook-extensible.",
+  "description": "Colored ring markers for tokens on @diegesis/canvas — presets, custom styles, dash/glow/pulse, event-driven and hook-extensible.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-rings"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -42,5 +47,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "ring", "marker", "token", "condition", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "ring", "marker", "token", "condition", "vtt", "tabletop"]
 }

@@ -6,7 +6,7 @@ import {
   type ContextMenuItem,
   type PluginContext,
   type PlaceablesLayer,
-} from '@openvtt/canvas';
+} from '@diegesis/canvas';
 import { Wall } from './placeables/Wall';
 import { WallTool } from './tools/WallTool';
 import { WallDataSchema, type WallData, type WallDataInput, type WallSegmentData } from './schemas';

@@ -1,4 +1,4 @@
-import { Tool, toHex, type CanvasPointerInfo } from '@openvtt/canvas';
+import { Tool, toHex, type CanvasPointerInfo } from '@diegesis/canvas';
 import type { RollTablesRegistry } from '../registry';
 import type { RollTableToolOptions } from '../plugin';
 

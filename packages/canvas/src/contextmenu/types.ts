@@ -1,7 +1,7 @@
 import * as v from 'valibot';
 import type { PlaceableObject } from '../placeables/PlaceableObject';
 
-export const CONTEXT_MENU_TAG = 'openvtt-context-menu';
+export const CONTEXT_MENU_TAG = 'diegesis-context-menu';
 
 export type ContextMenuCloseReason = 'action' | 'outside' | 'escape' | 'canvas' | 'replace' | 'destroy';
 
@@ -34,7 +34,7 @@ export interface ContextMenuContext {
 
 /**
  * Itens são valores imutáveis: construa novos via os builders puros em
- * `menu` (`@openvtt/canvas`) em vez de mutar instâncias existentes. O
+ * `menu` (`@diegesis/canvas`) em vez de mutar instâncias existentes. O
  * estado visual de toggles é rastreado pelo próprio menu.
  */
 export interface ContextMenuItemBase {

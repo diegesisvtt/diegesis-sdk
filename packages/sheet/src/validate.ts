@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { parseFormula } from '@openvtt/formula';
+import { parseFormula } from '@diegesis/formula';
 import { systemPackSchema } from './schema';
 import { PackValidationError } from './errors';
 import {

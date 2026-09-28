@@ -1,6 +1,6 @@
-# @openvtt/hotkeys
+# @diegesis/hotkeys
 
-Declarative, context-aware **hotkey management** for OpenVTT — rebindable keymaps,
+Declarative, context-aware **hotkey management** for Diegesis — rebindable keymaps,
 conflict detection, layout-independent matching and schema-validated persistence.
 Everything Foundry VTT's keybind system offers, plus contexts, conflict reporting
 and an observable event bus.
@@ -12,19 +12,19 @@ and an observable event bus.
 - **Deterministic resolution** — higher `precedence` first, registration order breaks ties; a handler returning `true` claims the event (`preventDefault` + `stopPropagation`), otherwise dispatch falls through.
 - **Layout-independent** — matches on `event.code` (`KeyA`, `Digit1`, `Numpad3`), so binds behave the same on any keyboard layout.
 - **Rebind management** — `editable` locks actions, overrides are diffed against defaults, and `serialize()`/`applyProfile()` round-trip user profiles (Valibot-validated, UUID v7 bind ids).
-- **Observable** — built on [`@openvtt/events`](../events): `hotkeyTriggered`, `bindsChanged`, `contextsChanged`, `hotkeyError` events and a `beforeHotkey` veto hook.
+- **Observable** — built on [`@diegesis/events`](../events): `hotkeyTriggered`, `bindsChanged`, `contextsChanged`, `hotkeyError` events and a `beforeHotkey` veto hook.
 - Input-field aware (`skipInputs`, per-action `allowInInputs`), repeat handling, reserved modifiers, SSR-safe (no `window` at import time), ESM + CJS, tree-shakeable.
 
 ## Install
 
 ```bash
-bun add @openvtt/hotkeys
+bun add @diegesis/hotkeys
 ```
 
 ## Quick start
 
 ```ts
-import { createHotkeyManager } from '@openvtt/hotkeys';
+import { createHotkeyManager } from '@diegesis/hotkeys';
 
 const hotkeys = createHotkeyManager();
 
@@ -107,7 +107,7 @@ hotkeys.bus.tap('beforeHotkey', 'guard', (ctx) =>
 
 | Option | Default | Description |
 | --- | --- | --- |
-| `namespace` | `'openvtt'` | Namespace for the internal event bus. |
+| `namespace` | `'diegesis'` | Namespace for the internal event bus. |
 | `bus` | auto | Reuse an existing `EventBus<HotkeyEventMap, HotkeyHookMap>` instead of creating one. |
 | `skipInputs` | `true` | Ignore keys while typing in form fields. |
 | `autoPreventDefault` | `true` | Call `preventDefault`/`stopPropagation` when a handler claims the event. |

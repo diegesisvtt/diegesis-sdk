@@ -5,7 +5,7 @@ import type { ContextMenuCloseReason, ContextMenuContext } from '../src/contextm
 GlobalRegistrator.register();
 
 const { defineCanvasElements } = await import('../src/ui');
-const { CONTEXT_MENU_TAG, OpenVTTContextMenu } = await import('../src/ui/context-menu');
+const { CONTEXT_MENU_TAG, DiegesisContextMenu } = await import('../src/ui/context-menu');
 const { menu } = await import('../src/contextmenu/builders');
 
 function menuCtx(): ContextMenuContext {
@@ -23,7 +23,7 @@ function menuCtx(): ContextMenuContext {
   };
 }
 
-describe('OpenVTTContextMenu (DOM)', () => {
+describe('DiegesisContextMenu (DOM)', () => {
   let host: HTMLElement;
 
   beforeAll(() => {
@@ -37,10 +37,10 @@ describe('OpenVTTContextMenu (DOM)', () => {
   });
 
   function openMenu(
-    items: Parameters<OpenVTTContextMenu['open']>[0]['items'],
+    items: Parameters<DiegesisContextMenu['open']>[0]['items'],
     onClose: (reason: ContextMenuCloseReason) => void = () => {},
-  ): OpenVTTContextMenu {
-    const el = document.createElement(CONTEXT_MENU_TAG) as OpenVTTContextMenu;
+  ): DiegesisContextMenu {
+    const el = document.createElement(CONTEXT_MENU_TAG) as DiegesisContextMenu;
     host.appendChild(el);
     el.open({ items, x: 10, y: 10, context: menuCtx(), onClose });
     return el;

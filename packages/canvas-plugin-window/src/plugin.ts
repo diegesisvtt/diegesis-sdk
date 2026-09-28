@@ -1,9 +1,9 @@
-import type { PluginContext, WindowContribution, WindowRegistrar } from '@openvtt/canvas';
+import type { PluginContext, WindowContribution, WindowRegistrar } from '@diegesis/canvas';
 import { WindowManager } from './manager';
 import { WINDOW_EVENT_SCHEMAS } from './state';
 
 /**
- * Window manager para `@openvtt/canvas`: janelas flutuantes/modais com
+ * Window manager para `@diegesis/canvas`: janelas flutuantes/modais com
  * fechar, mover, minimizar (taskbar), maximizar, redimensionar, docking por
  * borda, snapping e persistência. Plugins declaram janelas com
  * `ctx.registerWindow({ id, title, factory, ... })` e o host integra via

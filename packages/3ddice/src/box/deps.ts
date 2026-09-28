@@ -2,7 +2,6 @@ import type { DiceBus } from '../bus';
 import type { DiceRegistries } from '../registries';
 import type { DiceColors } from '../services/colors';
 import type { DiceFactory } from '../services/factory';
-import type { NotationParser } from '../services/notation';
 import type { DicePresetRegistry } from '../services/preset-registry';
 import type { LayoutController } from './layout';
 import type { PhysicsController } from './physics-controller';
@@ -18,7 +17,7 @@ export interface DiceBoxDeps {
   bus?: DiceBus;
   registries?: DiceRegistries;
   presets?: DicePresetRegistry;
-  parser?: NotationParser;
+  rng?: () => number;
   colors?: DiceColors;
   factory?: DiceFactory;
   sounds?: SoundManager;

@@ -1,5 +1,5 @@
-import type { AudioEngine } from '@openvtt/audio';
-import type { PluginContext } from '@openvtt/canvas';
+import type { AudioEngine } from '@diegesis/audio';
+import type { PluginContext } from '@diegesis/canvas';
 
 export type ListenerMode = 'camera' | 'token';
 

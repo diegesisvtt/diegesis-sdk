@@ -1,4 +1,4 @@
-import { Tool, toHex, type CanvasPointerInfo } from '@openvtt/canvas';
+import { Tool, toHex, type CanvasPointerInfo } from '@diegesis/canvas';
 import type { LightToolOptions } from '../plugin';
 
 export class LightTool extends Tool {

@@ -1,6 +1,6 @@
 import './globals';
 import { describe, expect, it, mock } from 'bun:test';
-import { createBus } from '@openvtt/events';
+import { createBus } from '@diegesis/events';
 import {
   onTrackersEvents,
   tapTrackersHooks,

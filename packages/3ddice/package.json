@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/dice",
+  "name": "@diegesis/dice",
   "version": "0.1.0",
-  "description": "Framework-agnostic 3D dice roller for OpenVTT (three.js + cannon-es worker physics).",
+  "description": "Framework-agnostic 3D dice roller for Diegesis (three.js + cannon-es worker physics).",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/3ddice"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,12 +28,13 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/assets": "workspace:*",
-    "@openvtt/dice-core": "workspace:*",
-    "@openvtt/dice-notation": "workspace:*",
-    "@openvtt/events": "workspace:*",
-    "@openvtt/physics": "workspace:*",
-    "@openvtt/render3d": "workspace:*",
+    "@diegesis/assets": "workspace:*",
+    "@diegesis/audio": "workspace:*",
+    "@diegesis/dice-core": "workspace:*",
+    "@diegesis/dice-notation": "workspace:*",
+    "@diegesis/events": "workspace:*",
+    "@diegesis/physics": "workspace:*",
+    "@diegesis/render3d": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -46,5 +52,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "dice", "3d", "vtt", "three.js", "cannon-es"]
+  "keywords": ["diegesis", "dice", "3d", "vtt", "three.js", "cannon-es"]
 }

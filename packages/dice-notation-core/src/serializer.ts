@@ -5,7 +5,7 @@ import type {
   Modifier,
   Pool,
   RollExpr,
-} from '@openvtt/dice-core';
+} from '@diegesis/dice-core';
 import { EXPLODE_OPS, FAILURE_OPS, KEEP_DROP_OPS } from './keywords';
 import type { DialectConfig } from './dialect';
 

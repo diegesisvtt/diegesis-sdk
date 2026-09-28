@@ -2,7 +2,7 @@ import type { Canvas } from '../canvas';
 import type { StateEventName, StateNode, StateNodeConstructor } from '../state/StateNode';
 import { RootState } from './RootState';
 import type { ToolContribution } from '../plugins/types';
-import type { HotkeyHandler } from '@openvtt/hotkeys';
+import type { HotkeyHandler } from '@diegesis/hotkeys';
 import { SelectTool } from './select';
 import { HandTool } from './hand';
 import { EraserTool } from './eraser';
@@ -25,7 +25,7 @@ const HOTKEY_NAMESPACE = 'canvas';
  * Tools de plugins são contribuídas via `canvas.registerTool()` (ou
  * `PluginContext.registerTool`) antes do `initialize()`. Os atalhos de
  * troca de tool, undo/redo, ping e pan por espaço são registrados como
- * ações do `@openvtt/hotkeys` em `canvas.hotkeys` (rebindáveis).
+ * ações do `@diegesis/hotkeys` em `canvas.hotkeys` (rebindáveis).
  */
 export class ToolManager {
   readonly options: ToolOptions = {};

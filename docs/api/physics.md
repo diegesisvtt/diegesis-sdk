@@ -1,6 +1,6 @@
-# @openvtt/physics
+# @diegesis/physics
 
-Rigid-body physics powered by cannon-es, exposed behind a `PhysicsHost` interface with two interchangeable backends: a Web Worker host that keeps the main thread free, and a synchronous main-thread host used as a fallback. The package provides the world model used by `@openvtt/dice` (a static desk plane with four wall barriers), batched body spawning, fixed-timestep simulation with sleep detection, collision-event reporting, and typed-array state serialization for cheap worker/main-thread transfer.
+Rigid-body physics powered by cannon-es, exposed behind a `PhysicsHost` interface with two interchangeable backends: a Web Worker host that keeps the main thread free, and a synchronous main-thread host used as a fallback. The package provides the world model used by `@diegesis/dice` (a static desk plane with four wall barriers), batched body spawning, fixed-timestep simulation with sleep detection, collision-event reporting, and typed-array state serialization for cheap worker/main-thread transfer.
 
 **Version:** 0.1.0
 **Peer dependencies:** `cannon-es`
@@ -8,11 +8,11 @@ Rigid-body physics powered by cannon-es, exposed behind a `PhysicsHost` interfac
 ## Installation
 
 ```bash
-bun add @openvtt/physics cannon-es
+bun add @diegesis/physics cannon-es
 ```
 
 ```ts
-import { createPhysicsHost } from '@openvtt/physics';
+import { createPhysicsHost } from '@diegesis/physics';
 ```
 
 The package exposes two entry points: `'.'` (API) and `'./worker'` (the worker script entry, used when supplying a custom `workerUrl`).
@@ -22,7 +22,7 @@ See the [3D dice guide](../guides/3d-dice.md) for how this package fits into the
 ## Quick start
 
 ```ts
-import { createPhysicsHost, deserializeStates } from '@openvtt/physics';
+import { createPhysicsHost, deserializeStates } from '@diegesis/physics';
 
 const host = await createPhysicsHost({
   gravity: -9.8 * 400,
@@ -242,4 +242,4 @@ for (const body of states) {
 
 - [3D dice guide](../guides/3d-dice.md)
 - [Getting started](../guides/getting-started.md)
-- [@openvtt/dice](./dice.md)
+- [@diegesis/dice](./dice.md)

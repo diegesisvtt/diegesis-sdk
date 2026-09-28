@@ -1,4 +1,4 @@
-import type { FormulaExpr } from '@openvtt/formula';
+import type { FormulaExpr } from '@diegesis/formula';
 
 export type ComparisonOp = '=' | '>' | '>=' | '<' | '<=';
 

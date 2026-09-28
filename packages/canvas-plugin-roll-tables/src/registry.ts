@@ -9,7 +9,7 @@ import {
   type RollTablesBus,
   type TableDef,
   type TableResolver,
-} from '@openvtt/roll-tables';
+} from '@diegesis/roll-tables';
 
 export class RollTablesRegistry {
   readonly bus: RollTablesBus = createRollTablesBus();

@@ -6,5 +6,5 @@ export default defineConfig({
   dts: true,
   sourcemap: true,
   clean: true,
-  external: ['valibot', '@openvtt/events'],
+  external: ['valibot', '@diegesis/events'],
 });

@@ -1,4 +1,4 @@
-import { GridRenderer, type GridConfig, type Point } from '@openvtt/canvas';
+import { GridRenderer, type GridConfig, type Point } from '@diegesis/canvas';
 import { bboxOf, conePoints, rayPoints } from './geometry';
 
 export interface TemplateFootprint {

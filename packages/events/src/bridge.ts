@@ -1,6 +1,6 @@
 import type { EventMeta } from './tracing';
 
-export const GLOBAL_KEY = '__OPENVTT_EVENTS__';
+export const GLOBAL_KEY = '__DIEGESIS_EVENTS__';
 export const BRIDGE_VERSION = 1;
 
 export type ExternalHandler = (payload: unknown, meta: EventMeta) => void;

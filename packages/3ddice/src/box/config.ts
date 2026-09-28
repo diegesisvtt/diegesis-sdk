@@ -1,8 +1,9 @@
 import * as v from 'valibot';
-import type { AntialiasMode, EnvironmentSpec, PostFXOptions } from '@openvtt/render3d';
-import type { AssetManager } from '@openvtt/assets';
+import type { AntialiasMode, EnvironmentSpec, PostFXOptions } from '@diegesis/render3d';
+import type { AssetManager } from '@diegesis/assets';
 
 import type { DiceBoxDeps } from './deps';
+import { DiceError } from '../errors';
 
 export type ShadowQuality = 'none' | 'low' | 'medium' | 'high';
 export type QueueMode = 'serial' | 'replace' | 'parallel';
@@ -43,6 +44,7 @@ export interface DiceBoxOptions {
   baseScale?: number;
   timestep?: number;
   iterationLimit?: number;
+  cascadeDelay?: number;
   maxPixelRatio?: number;
   queueMode?: QueueMode;
   dracoPath?: string;
@@ -94,6 +96,7 @@ export interface NormalizedConfig {
   baseScale: number;
   timestep: number;
   iterationLimit: number;
+  cascadeDelay: number;
   maxPixelRatio: number;
   queueMode: QueueMode;
   dracoPath?: string;
@@ -138,7 +141,21 @@ const PostFXOptionsSchema = v.looseObject({
   antialias: v.optional(AntialiasSchema),
 });
 
-const CustomColorsetSchema = v.union([v.null(), v.looseObject({})]);
+const ColorOrListSchema = v.union([v.string(), v.array(v.string())]);
+
+const CustomColorsetSchema = v.union([
+  v.null(),
+  v.looseObject({
+    id: v.optional(v.string()),
+    foreground: ColorOrListSchema,
+    background: ColorOrListSchema,
+    outline: v.optional(ColorOrListSchema),
+    edge: v.optional(ColorOrListSchema),
+    font: v.optional(v.string()),
+    fontOffsetY: v.optional(v.number()),
+    emissive: v.optional(v.boolean()),
+  }),
+]);
 
 const AssetsOptionsSchema = v.looseObject({
   manager: v.optional(v.any()),
@@ -170,6 +187,7 @@ export const DiceBoxOptionsSchema = v.looseObject({
   baseScale: v.optional(v.number()),
   timestep: v.optional(v.number()),
   iterationLimit: v.optional(v.number()),
+  cascadeDelay: v.optional(v.number()),
   maxPixelRatio: v.optional(v.number()),
   queueMode: v.optional(QueueModeSchema),
   dracoPath: v.optional(v.string()),
@@ -188,15 +206,14 @@ export const DiceBoxOptionsSchema = v.looseObject({
 });
 
 export function validateOptions(options: unknown): DiceBoxOptions {
-  const result = v.safeParse(DiceBoxOptionsSchema, options ?? {});
-  if (!result.success) {
-    console.warn(
-      '[dice] Invalid DiceBoxOptions:',
-      result.issues.map((issue) => `${issue.path?.map((p) => p.key).join('.')}: ${issue.message}`).join('; ')
+  try {
+    return v.parse(DiceBoxOptionsSchema, options ?? {}) as DiceBoxOptions;
+  } catch (error) {
+    throw new DiceError(
+      `Invalid DiceBoxOptions: ${error instanceof Error ? error.message : String(error)}`,
+      'INVALID_OPTIONS'
     );
-    return (options ?? {}) as DiceBoxOptions;
   }
-  return result.output as DiceBoxOptions;
 }
 
 const warnedDeprecations = new Set<string>();
@@ -254,6 +271,7 @@ export function normalizeOptions(rawOptions: DiceBoxOptions): NormalizedConfig {
     baseScale: options.baseScale ?? 100,
     timestep: pick(options.timestep, options.framerate, 'framerate', 'timestep') ?? 1 / 60,
     iterationLimit: options.iterationLimit ?? 1000,
+    cascadeDelay: options.cascadeDelay ?? 900,
     maxPixelRatio: options.maxPixelRatio ?? 2,
     queueMode: options.queueMode ?? 'serial',
     dracoPath: options.dracoPath,
@@ -288,6 +306,7 @@ export function configToOptions(c: NormalizedConfig): DiceBoxOptions {
     baseScale: c.baseScale,
     timestep: c.timestep,
     iterationLimit: c.iterationLimit,
+    cascadeDelay: c.cascadeDelay,
     maxPixelRatio: c.maxPixelRatio,
     queueMode: c.queueMode,
     dracoPath: c.dracoPath,

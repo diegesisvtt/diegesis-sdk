@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { LockableSchemaEntries } from '@openvtt/canvas';
+import { LockableSchemaEntries } from '@diegesis/canvas';
 
 export const HexColorSchema = v.pipe(v.string(), v.regex(/^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/));
 

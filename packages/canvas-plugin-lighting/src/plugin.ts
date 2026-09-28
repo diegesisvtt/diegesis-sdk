@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { definePlugin, type PluginContext } from '@openvtt/canvas';
+import { definePlugin, type PluginContext } from '@diegesis/canvas';
 import { LightingFxLayer } from './LightingFxLayer';
 
 export const lightingPlugin = definePlugin({

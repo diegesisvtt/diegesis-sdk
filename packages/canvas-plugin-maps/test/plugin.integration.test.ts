@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
-import type { Canvas } from '@openvtt/canvas';
-import { dynamicBus } from '@openvtt/canvas';
+import type { Canvas } from '@diegesis/canvas';
+import { dynamicBus } from '@diegesis/canvas';
 import { Texture } from 'pixi.js';
 import { MapsPlugin } from '../src/plugin';
 import { MapSourceRegistry } from '../src/MapSourceRegistry';
@@ -54,7 +54,7 @@ let canvas: Canvas;
 let plugin: MapsPlugin;
 
 beforeAll(async () => {
-  ({ Canvas: CanvasCtor } = await import('@openvtt/canvas'));
+  ({ Canvas: CanvasCtor } = await import('@diegesis/canvas'));
   const registry = new MapSourceRegistry((source, hooks) => {
     if (source.type === 'image' && source.src.startsWith('data:text')) return new BrokenMapSource();
     return new FakeMapSource(hooks);

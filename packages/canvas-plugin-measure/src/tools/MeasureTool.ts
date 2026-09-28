@@ -1,4 +1,4 @@
-import { Tool, dynamicBus, type CanvasPointerInfo, type Point } from '@openvtt/canvas';
+import { Tool, dynamicBus, type CanvasPointerInfo, type Point } from '@diegesis/canvas';
 import { buildMeasurePayload, formatMetrics, pathLength, resolveMeasureOptions } from '../resolve';
 
 class MeasureIdle extends Tool {

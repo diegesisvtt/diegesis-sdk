@@ -1,5 +1,5 @@
 import { Graphics } from 'pixi.js';
-import { PlaceableObject, toHex, type CanvasLike } from '@openvtt/canvas';
+import { PlaceableObject, toHex, type CanvasLike } from '@diegesis/canvas';
 import type { LightData } from '../schemas';
 
 export class AmbientLight extends PlaceableObject<LightData> {

@@ -23,4 +23,4 @@ export {
   hexHorizontalVertices,
 } from './masks';
 export type { MaskShape } from './masks';
-export { OpenVTTImageEditor, IMAGE_EDITOR_TAG, defineImageEditorElements } from './ui/image-editor';
+export { DiegesisImageEditor, IMAGE_EDITOR_TAG, defineImageEditorElements } from './ui/image-editor';

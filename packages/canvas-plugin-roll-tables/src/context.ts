@@ -6,8 +6,8 @@ import {
   type ContextMenuContext,
   type ContextMenuItem,
   type PluginContext,
-} from '@openvtt/canvas';
-import { TableError, type DrawResult } from '@openvtt/roll-tables';
+} from '@diegesis/canvas';
+import { TableError, type DrawResult } from '@diegesis/roll-tables';
 import { flattenDraw, type RollTablesRegistry } from './registry';
 import type { RollTableAnchorData } from './schemas';
 

@@ -36,7 +36,7 @@ export function defineContract<E extends EventMap = EventMap, H extends HookMap 
   def: ContractDef<E, H>,
 ): Contract<E, H> {
   return {
-    namespace: def.namespace ?? 'openvtt',
+    namespace: def.namespace ?? 'diegesis',
     events: (def.events ?? {}) as E,
     hooks: (def.hooks ?? {}) as H,
   };

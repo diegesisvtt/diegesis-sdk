@@ -1,4 +1,4 @@
-import { definePlugin, type PluginContext } from '@openvtt/canvas';
+import { definePlugin, type PluginContext } from '@diegesis/canvas';
 import { AoETemplate } from './placeables/AoETemplate';
 import { TemplateTool } from './tools/TemplateTool';
 import { registerTemplatesContextMenu } from './context';

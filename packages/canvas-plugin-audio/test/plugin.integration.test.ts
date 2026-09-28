@@ -7,8 +7,8 @@ const { AudioPlugin } = await import('../src/plugin');
 const { soundsBus } = await import('../src/bus');
 const { gridMapper } = await import('../src/listener');
 
-import type { Canvas } from '@openvtt/canvas';
-import { dynamicBus, PlaceableObject, definePlugin } from '@openvtt/canvas';
+import type { Canvas } from '@diegesis/canvas';
+import { dynamicBus, PlaceableObject, definePlugin } from '@diegesis/canvas';
 import * as v from 'valibot';
 import type { SoundData } from '../src/schemas';
 
@@ -17,7 +17,7 @@ let canvas: Canvas;
 let plugin: AudioPlugin;
 
 beforeAll(async () => {
-  ({ Canvas: CanvasCtor } = await import('@openvtt/canvas'));
+  ({ Canvas: CanvasCtor } = await import('@diegesis/canvas'));
 });
 
 beforeEach(async () => {

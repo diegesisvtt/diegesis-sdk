@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-fog",
+  "name": "@diegesis/canvas-plugin-fog",
   "version": "0.1.0",
-  "description": "Fog of war plugin for @openvtt/canvas — token-vision reveal, manual paint/reveal tools and control panel.",
+  "description": "Fog of war plugin for @diegesis/canvas — token-vision reveal, manual paint/reveal tools and control panel.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-fog"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -38,5 +43,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "fog", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "fog", "vtt", "tabletop"]
 }

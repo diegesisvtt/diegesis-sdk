@@ -1,4 +1,4 @@
-import { NotationErrorBase, type NotationErrorOptions } from '@openvtt/dice-notation-core';
+import { NotationErrorBase, type NotationErrorOptions } from '@diegesis/dice-notation-core';
 
 export type { NotationErrorOptions };
 

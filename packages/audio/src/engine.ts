@@ -1,6 +1,6 @@
 import { Howl, Howler } from 'howler';
 import * as v from 'valibot';
-import { createBus, newId } from '@openvtt/events';
+import { createBus, newId } from '@diegesis/events';
 import { ChannelMixer, DEFAULT_CHANNELS } from './channels';
 import { GroupRegistry } from './groups';
 import { audioContract } from './contract';

@@ -1,27 +1,23 @@
-export interface DieResult {
-  type: string;
-  sides: number;
-  id: number;
-  value: number;
-  label: string | number;
-  reason: string;
-  [key: string]: unknown;
-}
+import type { FacesSpec } from '@diegesis/dice-core';
 
-export interface RollSetResult {
-  num: number;
-  type: string;
-  sides: number;
-  rolls: DieResult[];
-  total: number;
-  [key: string]: unknown;
-}
-
-export interface RollResult {
+export interface RolledDie {
   id: string;
-  notation: string;
-  sets: RollSetResult[];
-  modifier: number;
-  total: number;
-  [key: string]: unknown;
+  value: number;
+  faces: FacesSpec;
+}
+
+export interface RolledTerm {
+  id: string;
+  dice: RolledDie[];
+}
+
+export interface RollOutcome {
+  id: string;
+  terms: RolledTerm[];
+  dice: RolledDie[];
+}
+
+export interface RerollRequest {
+  id: string;
+  value: number;
 }

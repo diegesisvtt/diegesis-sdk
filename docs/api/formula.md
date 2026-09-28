@@ -1,4 +1,4 @@
-# @openvtt/formula
+# @diegesis/formula
 
 jsep-powered formula parser producing a json-logic-shaped intermediate representation (IR), with a safe tree-walking evaluator, a canonical serializer, a JIT compiler, and a memoizing evaluator. No `eval` is ever used for the standard evaluator; formulas are pure data until you explicitly evaluate or compile them.
 
@@ -8,11 +8,11 @@ jsep-powered formula parser producing a json-logic-shaped intermediate represent
 ## Installation
 
 ```bash
-bun add @openvtt/formula
+bun add @diegesis/formula
 ```
 
 ```ts
-import { parseFormula, evaluateFormula, toFormula } from '@openvtt/formula';
+import { parseFormula, evaluateFormula, toFormula } from '@diegesis/formula';
 ```
 
 See the [Formulas guide](../guides/formulas.md) for usage patterns in game systems.
@@ -61,7 +61,7 @@ type PureFormula = FormulaExpr<never>;
 type FormulaLeaf<E> = Exclude<E, FormulaExpr>;
 ```
 
-The `E` type parameter is an extension slot: `@openvtt/dice-core` uses it to embed dice terms inside arithmetic expressions. `PureFormula` (the default) forbids leaves, giving a closed, fully evaluable tree.
+The `E` type parameter is an extension slot: `@diegesis/dice-core` uses it to embed dice terms inside arithmetic expressions. `PureFormula` (the default) forbids leaves, giving a closed, fully evaluable tree.
 
 ## Constants
 
@@ -96,7 +96,7 @@ function parseFormula<E = never>(source: string): FormulaExpr<E>;
 Grammar: numbers, booleans, `+ - * / %`, comparisons, `&& || !` plus word aliases `and`/`or`/`not`, ternary `?:`, dotted paths (`a.b.c` becomes `{ var: 'a.b.c' }`), and function calls limited to `FUNC_OPS`. The parser rejects strings, `null`, regexes, computed member access, bitwise operators, `===`, and unknown functions. It throws `FormulaError` with the offending `position`.
 
 ```ts
-import { parseFormula } from '@openvtt/formula';
+import { parseFormula } from '@diegesis/formula';
 
 parseFormula('floor((str - 10) / 2)');
 // { floor: [ { '/': [ { '-': [ { var: 'str' }, 10 ] }, 2 ] } ] }
@@ -153,7 +153,7 @@ type LeafHandler<E> = (leaf: E, scope: Scope) => number | boolean;
 `and`/`or` short-circuit. Division or modulo by zero throws `FormulaError`. Unknown (extension) nodes delegate to `onLeaf`; without a handler they throw.
 
 ```ts
-import { parseFormula, evaluateFormula } from '@openvtt/formula';
+import { parseFormula, evaluateFormula } from '@diegesis/formula';
 
 const expr = parseFormula('floor((str - 10) / 2)');
 evaluateFormula(expr, { scope: { str: 16 } }); // 3
@@ -162,7 +162,7 @@ evaluateFormula(expr, { scope: { str: 16 } }); // 3
 ### Custom leaves
 
 ```ts
-import { evaluateFormula } from '@openvtt/formula';
+import { evaluateFormula } from '@diegesis/formula';
 
 type Leaf = { roll: { sides: number } };
 const expr = { '+': [1, { roll: { sides: 6 } }] } as FormulaExpr<Leaf>;
@@ -195,7 +195,7 @@ A recursive Valibot schema (via `v.lazy`) that validates formula IR. Pass an `ex
 
 ```ts
 import * as v from 'valibot';
-import { formulaSchema } from '@openvtt/formula';
+import { formulaSchema } from '@diegesis/formula';
 
 const expr = v.parse(formulaSchema, JSON.parse(jsonFromDisk));
 ```
@@ -212,7 +212,7 @@ function compileFormula(expr: PureFormula): CompiledFormula;
 Throws for extension leaf nodes — only `PureFormula` trees can be compiled.
 
 ```ts
-import { parseFormula, compileFormula, evaluateFormula } from '@openvtt/formula';
+import { parseFormula, compileFormula, evaluateFormula } from '@diegesis/formula';
 
 const expr = parseFormula('floor((str - 10) / 2)');
 const fast = compileFormula(expr);
@@ -231,7 +231,7 @@ function createMemoizedEvaluator<E = never>(options?: {
 ```
 
 ```ts
-import { parseFormula, createMemoizedEvaluator } from '@openvtt/formula';
+import { parseFormula, createMemoizedEvaluator } from '@diegesis/formula';
 
 const evaluate = createMemoizedEvaluator();
 const expr = parseFormula('str * 2 + con');
@@ -259,5 +259,5 @@ class FormulaError extends Error {
 ## Related
 
 - [Formulas guide](../guides/formulas.md)
-- [@openvtt/dice-core](./dice-core.md) — embeds dice terms as formula leaves.
-- [@openvtt/dice-notation](./dice-notation.md) — parses dice notation into `RollExpr`.
+- [@diegesis/dice-core](./dice-core.md) — embeds dice terms as formula leaves.
+- [@diegesis/dice-notation](./dice-notation.md) — parses dice notation into `RollExpr`.

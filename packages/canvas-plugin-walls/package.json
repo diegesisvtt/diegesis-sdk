@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-walls",
+  "name": "@diegesis/canvas-plugin-walls",
   "version": "0.1.0",
-  "description": "Walls document plugin for @openvtt/canvas — walls, doors and bezier curves with movement/sight blocking.",
+  "description": "Walls document plugin for @diegesis/canvas — walls, doors and bezier curves with movement/sight blocking.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-walls"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -38,5 +43,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "wall", "door", "curves", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "wall", "door", "curves", "vtt", "tabletop"]
 }

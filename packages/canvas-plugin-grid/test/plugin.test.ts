@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
-import type { Canvas } from '@openvtt/canvas';
+import type { Canvas } from '@diegesis/canvas';
 import { createGridTypePlugin } from '../src/plugin';
 import { gridMenuItems } from '../src/context';
 import { GridLayer } from '../src/GridLayer';
@@ -10,7 +10,7 @@ let square: GridLayer;
 let hex: GridLayer;
 
 beforeAll(async () => {
-  ({ Canvas: CanvasCtor } = await import('@openvtt/canvas'));
+  ({ Canvas: CanvasCtor } = await import('@diegesis/canvas'));
   canvas = new CanvasCtor({} as HTMLElement);
   const squarePlugin = createGridTypePlugin({ type: 'square' });
   const hexPlugin = createGridTypePlugin({ type: 'hex-vertical' });

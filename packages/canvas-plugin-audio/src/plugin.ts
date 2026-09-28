@@ -1,6 +1,6 @@
 import * as v from 'valibot';
-import { AudioEngine, type SpatialAttrs } from '@openvtt/audio';
-import { dynamicBus, type PlaceablesLayer, type PluginContext } from '@openvtt/canvas';
+import { AudioEngine, type SpatialAttrs } from '@diegesis/audio';
+import { dynamicBus, type PlaceablesLayer, type PluginContext } from '@diegesis/canvas';
 import { AmbientSound } from './placeables/AmbientSound';
 import { SoundTool } from './tools/SoundTool';
 import { ListenerController, type CoordinateMapper, type ListenerMode } from './listener';

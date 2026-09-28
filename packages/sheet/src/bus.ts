@@ -1,6 +1,6 @@
 import * as v from 'valibot';
-import { createBus, defineContract } from '@openvtt/events';
-import type { BusOptions, EventBus, EventMap } from '@openvtt/events';
+import { createBus, defineContract } from '@diegesis/events';
+import type { BusOptions, EventBus, EventMap } from '@diegesis/events';
 import { SheetError } from './errors';
 
 const instanceRef = v.looseObject({

@@ -18,19 +18,19 @@ bun install
 ## Repository layout
 
 ```
-openvtt/
+diegesis/
 ├── packages/           # Publishable libraries
-│   ├── events/               # @openvtt/events      — event bus + hooks
-│   ├── formula/              # @openvtt/formula     — expression language + AST
-│   ├── dice-core/            # @openvtt/dice-core   — dice IR + evaluator
-│   ├── dice-notation/        # @openvtt/dice-notation        — canonical parser
-│   ├── dice-foundry-notation/# @openvtt/dice-foundry-notation — Foundry dialect
-│   ├── dice-roll20-notation/ # @openvtt/dice-roll20-notation  — Roll20 dialect
-│   ├── sheet/                # @openvtt/sheet       — character sheet engine
-│   ├── 3ddice/               # @openvtt/dice        — 3D dice roller (DiceBox)
-│   ├── physics/              # @openvtt/physics     — cannon-es worker physics
-│   ├── render3d/             # @openvtt/render3d    — three.js toolkit
-│   └── assets/               # @openvtt/assets      — asset manager
+│   ├── events/               # @diegesis/events      — event bus + hooks
+│   ├── formula/              # @diegesis/formula     — expression language + AST
+│   ├── dice-core/            # @diegesis/dice-core   — dice IR + evaluator
+│   ├── dice-notation/        # @diegesis/dice-notation        — canonical parser
+│   ├── dice-foundry-notation/# @diegesis/dice-foundry-notation — Foundry dialect
+│   ├── dice-roll20-notation/ # @diegesis/dice-roll20-notation  — Roll20 dialect
+│   ├── sheet/                # @diegesis/sheet       — character sheet engine
+│   ├── 3ddice/               # @diegesis/dice        — 3D dice roller (DiceBox)
+│   ├── physics/              # @diegesis/physics     — cannon-es worker physics
+│   ├── render3d/             # @diegesis/render3d    — three.js toolkit
+│   └── assets/               # @diegesis/assets      — asset manager
 └── apps/
     └── playground/     # Vite demo app for the 3D dice roller
 ```
@@ -51,8 +51,8 @@ All commands run from the repo root and are delegated to Turborepo, which fans t
 To scope a command to a single package, use `--filter` with the package name:
 
 ```bash
-bun run test --filter=@openvtt/dice-core
-bun run build --filter=@openvtt/events
+bun run test --filter=@diegesis/dice-core
+bun run build --filter=@diegesis/events
 ```
 
 ## Run the playground
@@ -70,8 +70,8 @@ Vite prints a local URL (usually `http://localhost:5173`). The app serves dice a
 The headless path uses the canonical notation parser plus the dice-core evaluator — no browser, no WebGL, fully deterministic when seeded.
 
 ```ts
-import { fromFormula } from '@openvtt/dice-notation';
-import { evaluateRoll } from '@openvtt/dice-core';
+import { fromFormula } from '@diegesis/dice-notation';
+import { evaluateRoll } from '@diegesis/dice-core';
 
 const expr = fromFormula('1d20 + @abilities.str.mod');
 
@@ -92,14 +92,14 @@ What happened:
 
 ## Your first 3D roll (60 seconds)
 
-The 3D path uses `@openvtt/dice` (package source in `packages/3ddice`). It needs a container element and served assets:
+The 3D path uses `@diegesis/dice` (package source in `packages/3ddice`). It needs a container element and served assets:
 
 ```html
 <div id="dice-container" style="width: 100%; height: 400px"></div>
 ```
 
 ```ts
-import { DiceBox } from '@openvtt/dice';
+import { DiceBox } from '@diegesis/dice';
 
 const container = document.querySelector<HTMLDivElement>('#dice-container')!;
 

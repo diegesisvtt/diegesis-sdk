@@ -1,6 +1,6 @@
 # Character sheets
 
-`@openvtt/sheet` is a rules-engine for character sheets. It is built on a deliberately minimal philosophy:
+`@diegesis/sheet` is a rules-engine for character sheets. It is built on a deliberately minimal philosophy:
 
 > A character document stores only **base values** and **effect instances**. Everything else — final stats, derived values, flags, roll bonuses — is recomputed by a pure pipeline whenever anything changes.
 
@@ -14,7 +14,7 @@ That means no denormalized state to keep in sync, a complete audit trail for eve
 A **system pack** describes the rules of a game system. Everything a character can be flows from it:
 
 ```ts
-import type { SystemPack } from '@openvtt/sheet';
+import type { SystemPack } from '@diegesis/sheet';
 
 const pack: SystemPack = {
   id: 'mini-dnd',
@@ -56,12 +56,12 @@ const pack: SystemPack = {
 | `rollTemplates` | Named `RollExpr`s with optional `tags`, consumed by `buildRoll` |
 | `definitions` | Effect definitions: changes, durations, triggers, conditions, stacking |
 
-`RollTemplate.expr` is a `RollExpr` — usually parsed once with `fromFormula` from `@openvtt/dice-notation`.
+`RollTemplate.expr` is a `RollExpr` — usually parsed once with `fromFormula` from `@diegesis/dice-notation`.
 
 ## Documents
 
 ```ts
-import { createDocument } from '@openvtt/sheet';
+import { createDocument } from '@diegesis/sheet';
 
 const doc = createDocument(pack, {
   identity: { name: 'Aria' },
@@ -86,7 +86,7 @@ The mutator receives a working clone of the current base and returns the next ba
 ## The engine
 
 ```ts
-import { SheetEngine } from '@openvtt/sheet';
+import { SheetEngine } from '@diegesis/sheet';
 
 const engine = new SheetEngine(doc, {
   pack,
@@ -335,7 +335,7 @@ Pass a bus (ideally `createSheetBus()`, which ships the matching contract) and t
 
 ```ts
 import * as v from 'valibot';
-import { createSheetBus } from '@openvtt/sheet';
+import { createSheetBus } from '@diegesis/sheet';
 
 const bus = createSheetBus({
   events: {
@@ -354,7 +354,7 @@ Gameplay events (`round:end`, `turn:start`, `clock:tick`, ...) are not part of t
 ## Validating packs
 
 ```ts
-import { validatePack, defineSystemPack, PackValidationError } from '@openvtt/sheet';
+import { validatePack, defineSystemPack, PackValidationError } from '@diegesis/sheet';
 
 try {
   const validPack = validatePack(pack);   // schema + formula refs + ordinal refs + cycles
@@ -368,7 +368,7 @@ try {
 ## Path utilities
 
 ```ts
-import { getPath, setPath, flatten, diffFlattened } from '@openvtt/sheet';
+import { getPath, setPath, flatten, diffFlattened } from '@diegesis/sheet';
 
 getPath(values, 'abilities.str.mod');              // deep read
 setPath(values, 'hp.current', 12);                 // deep write (creates objects)
@@ -382,12 +382,12 @@ diffFlattened(before, after);                      // SheetPatch[] { path, previ
 
 ```ts
 import * as v from 'valibot';
-import { fromFormula } from '@openvtt/dice-notation';
-import { evaluateRoll } from '@openvtt/dice-core';
+import { fromFormula } from '@diegesis/dice-notation';
+import { evaluateRoll } from '@diegesis/dice-core';
 import {
   createDocument, createSheetBus, validatePack, SheetEngine,
   type SystemPack,
-} from '@openvtt/sheet';
+} from '@diegesis/sheet';
 
 const pack: SystemPack = {
   id: 'mini-dnd',

@@ -1,19 +1,19 @@
 import './globals';
 import { installDocumentFake, removeDocumentFake } from './globals';
 import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
-import type { Canvas, ContextMenuContribution, ContextMenuContext, ContextMenuItem, ResizeRect, TransformAdapter } from '@openvtt/canvas';
+import type { Canvas, ContextMenuContribution, ContextMenuContext, ContextMenuItem, ResizeRect, TransformAdapter } from '@diegesis/canvas';
 import { templatesPlugin } from '../src/plugin';
 import { registerTemplatesContextMenu } from '../src/context';
 import type { TemplateData } from '../src/schemas';
 
 let CanvasCtor: typeof Canvas;
-let dynamicBusMod: typeof import('@openvtt/canvas');
+let dynamicBusMod: typeof import('@diegesis/canvas');
 let canvas: Canvas;
 let adapter: TransformAdapter<TemplateData>;
 
 beforeAll(async () => {
   installDocumentFake();
-  dynamicBusMod = await import('@openvtt/canvas');
+  dynamicBusMod = await import('@diegesis/canvas');
   ({ Canvas: CanvasCtor } = dynamicBusMod);
 
   canvas = new CanvasCtor({} as HTMLElement);

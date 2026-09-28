@@ -7,5 +7,5 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  external: ['howler', 'mitt', 'tapable', 'valibot', 'uuid', '@openvtt/events'],
+  external: ['howler', 'mitt', 'tapable', 'valibot', 'uuid', '@diegesis/events'],
 });

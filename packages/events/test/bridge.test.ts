@@ -60,7 +60,7 @@ describe('bridge CustomEvent dispatch', () => {
   });
 
   it('GLOBAL_KEY constant is exposed', () => {
-    expect(GLOBAL_KEY).toBe('__OPENVTT_EVENTS__');
+    expect(GLOBAL_KEY).toBe('__DIEGESIS_EVENTS__');
     expect((globalThis as Record<string, unknown>)[GLOBAL_KEY]).toBeDefined();
   });
 });

@@ -7,5 +7,5 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  external: ['@openvtt/formula', 'seedrandom', 'uuid', 'valibot'],
+  external: ['@diegesis/formula', 'seedrandom', 'uuid', 'valibot'],
 });

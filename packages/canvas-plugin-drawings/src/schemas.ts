@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { LockableSchemaEntries } from '@openvtt/canvas';
+import { LockableSchemaEntries } from '@diegesis/canvas';
 
 export const DrawingTypeSchema = v.picklist(['rect', 'ellipse', 'polygon', 'brush', 'text']);
 export type DrawingType = v.InferOutput<typeof DrawingTypeSchema>;

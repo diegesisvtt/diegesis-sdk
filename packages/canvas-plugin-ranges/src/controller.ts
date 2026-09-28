@@ -1,4 +1,4 @@
-import { dynamicBus, newId, type Canvas, type Point } from '@openvtt/canvas';
+import { dynamicBus, newId, type Canvas, type Point } from '@diegesis/canvas';
 import { RangeOverlayLayer, type DrawnRange, type RangeGuide } from './layer/RangeOverlayLayer';
 import { containingRing, formatDistance, resolveRings } from './resolve';
 import { RANGE_TOOL_DEFAULTS, type RangeToolOptions } from './options';

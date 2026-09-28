@@ -97,7 +97,7 @@ function renderIcon(icon: string | undefined): string {
  * aninhados e itens custom com render DOM arbitrário. Navegável por
  * teclado (setas/Enter/Esc) e tematizável via CSS custom properties.
  */
-export class OpenVTTContextMenu extends HTMLElement {
+export class DiegesisContextMenu extends HTMLElement {
   private options: ContextMenuOpenOptions | null = null;
   private rootMenu: HTMLDivElement | null = null;
   private submenus: HTMLDivElement[] = [];

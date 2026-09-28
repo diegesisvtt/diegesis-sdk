@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'bun:test';
-import type { Canvas, PluginContext, ToolContribution } from '@openvtt/canvas';
-import { dynamicBus } from '@openvtt/canvas';
+import type { Canvas, PluginContext, ToolContribution } from '@diegesis/canvas';
+import { dynamicBus } from '@diegesis/canvas';
 import { MeasurePlugin } from '../src/plugin';
 import { MEASURE_TOOL_DEFAULTS } from '../src/options';
 import { DND5E_METRIC_PRESET } from '../src/presets';
@@ -11,7 +11,7 @@ let canvas: Canvas;
 let plugin: MeasurePlugin;
 
 beforeAll(async () => {
-  ({ Canvas: CanvasCtor } = await import('@openvtt/canvas'));
+  ({ Canvas: CanvasCtor } = await import('@diegesis/canvas'));
   canvas = new CanvasCtor({} as HTMLElement);
   plugin = new MeasurePlugin();
   await canvas.use(plugin);

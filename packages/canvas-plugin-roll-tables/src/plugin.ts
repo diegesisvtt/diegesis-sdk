@@ -1,5 +1,5 @@
-import { definePlugin, type PluginContext } from '@openvtt/canvas';
-import { RandomTable, type TableDef } from '@openvtt/roll-tables';
+import { definePlugin, type PluginContext } from '@diegesis/canvas';
+import { RandomTable, type TableDef } from '@diegesis/roll-tables';
 import { RollTableAnchor } from './placeables/RollTableAnchor';
 import { RollTableTool } from './tools/RollTableTool';
 import { RollTablesRegistry } from './registry';

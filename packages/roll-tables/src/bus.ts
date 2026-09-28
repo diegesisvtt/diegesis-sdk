@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { createBus } from '@openvtt/events';
+import { createBus } from '@diegesis/events';
 import type { TableEntry } from './entry';
 import type { DrawnEntry } from './resolve';
 

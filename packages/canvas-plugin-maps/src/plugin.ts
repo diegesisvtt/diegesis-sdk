@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import type { CanvasLike, CanvasPlugin, PluginContext } from '@openvtt/canvas';
+import type { CanvasLike, CanvasPlugin, PluginContext } from '@diegesis/canvas';
 import { MapPlaceable } from './placeables/MapPlaceable';
 import { MapSourceRegistry } from './MapSourceRegistry';
 import { MapDataSchema, type MapData } from './schemas';

@@ -1,5 +1,5 @@
 import { Graphics } from 'pixi.js';
-import { PlaceableObject, CONFIG, type CanvasLike } from '@openvtt/canvas';
+import { PlaceableObject, CONFIG, type CanvasLike } from '@diegesis/canvas';
 import { flattenSegment } from '../geometry';
 import type { WallData, WallSegmentData } from '../schemas';
 

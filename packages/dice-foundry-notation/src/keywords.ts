@@ -1,8 +1,8 @@
-import type { ModifierOp } from '@openvtt/dice-core';
-import { buildModifierPatterns, type ModPattern } from '@openvtt/dice-notation-core';
+import type { ModifierOp } from '@diegesis/dice-core';
+import { buildModifierPatterns, type ModPattern } from '@diegesis/dice-notation-core';
 
 export type { ModPattern };
-export { FUNCTIONS } from '@openvtt/dice-notation-core';
+export { FUNCTIONS } from '@diegesis/dice-notation-core';
 
 const FOUNDRY_SIGILS: Readonly<Record<string, ModifierOp>> = {
   rr: 'reroll-recursive',

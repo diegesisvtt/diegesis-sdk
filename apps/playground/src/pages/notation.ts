@@ -1,8 +1,8 @@
-import { evaluateRoll, type DieRoll, type RollExpr } from '@openvtt/dice-core';
+import { evaluateRoll, type DieRoll, type RollExpr } from '@diegesis/dice-core';
 import { hotkeys } from '../hotkeys';
-import { fromFormula as parseCanonical, toFormula as printCanonical } from '@openvtt/dice-notation';
-import { fromFormula as parseFoundry, toFormula as printFoundry } from '@openvtt/dice-foundry-notation';
-import { fromFormula as parseRoll20, toFormula as printRoll20 } from '@openvtt/dice-roll20-notation';
+import { fromFormula as parseCanonical, toFormula as printCanonical } from '@diegesis/dice-notation';
+import { fromFormula as parseFoundry, toFormula as printFoundry } from '@diegesis/dice-foundry-notation';
+import { fromFormula as parseRoll20, toFormula as printRoll20 } from '@diegesis/dice-roll20-notation';
 
 type DialectId = 'canonical' | 'foundry' | 'roll20';
 
@@ -20,7 +20,7 @@ const DIALECTS: Dialect[] = [
   {
     id: 'canonical',
     label: 'Canonical',
-    pkg: '@openvtt/dice-notation',
+    pkg: '@diegesis/dice-notation',
     parse: parseCanonical,
     print: printCanonical,
     samples: [
@@ -35,7 +35,7 @@ const DIALECTS: Dialect[] = [
   {
     id: 'foundry',
     label: 'Foundry',
-    pkg: '@openvtt/dice-foundry-notation',
+    pkg: '@diegesis/dice-foundry-notation',
     parse: parseFoundry,
     print: printFoundry,
     samples: [
@@ -51,7 +51,7 @@ const DIALECTS: Dialect[] = [
   {
     id: 'roll20',
     label: 'Roll20',
-    pkg: '@openvtt/dice-roll20-notation',
+    pkg: '@diegesis/dice-roll20-notation',
     parse: parseRoll20,
     print: printRoll20,
     samples: [
@@ -86,7 +86,7 @@ export function renderNotation(root: HTMLElement): () => void {
     <div class="stage notation-stage">
       <div class="notation-grid">
         <section class="panel notation-pane" id="ir-pane">
-          <header>Dice IR <span class="pkg">@openvtt/dice-core</span></header>
+          <header>Dice IR <span class="pkg">@diegesis/dice-core</span></header>
           <pre id="ir"></pre>
         </section>
         <section class="panel notation-pane" id="roll-pane">

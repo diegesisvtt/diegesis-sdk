@@ -389,7 +389,7 @@ export class EventBus<E extends EventMap = EventMap, H extends HookMap = HookMap
   }
 
   private log(...args: unknown[]): void {
-    this.debug?.(`[@openvtt/events:${this.namespace}]`, ...args);
+    this.debug?.(`[@diegesis/events:${this.namespace}]`, ...args);
   }
 
   private createAdapter(): BridgeBusAdapter {

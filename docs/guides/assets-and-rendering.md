@@ -1,10 +1,10 @@
 # Assets and rendering
 
-This guide covers the three lower-level building blocks that `@openvtt/dice` is composed of. Most applications use them through `DiceBox` (see [3D dice](3d-dice.md)), but each is independently useful — and independently published:
+This guide covers the three lower-level building blocks that `@diegesis/dice` is composed of. Most applications use them through `DiceBox` (see [3D dice](3d-dice.md)), but each is independently useful — and independently published:
 
-- `@openvtt/assets` — manifest-driven asset loading, caching, and preloading
-- `@openvtt/physics` — cannon-es rigid-body physics in a Web Worker, with a main-thread fallback
-- `@openvtt/render3d` — three.js post-processing, environments, and texture utilities
+- `@diegesis/assets` — manifest-driven asset loading, caching, and preloading
+- `@diegesis/physics` — cannon-es rigid-body physics in a Web Worker, with a main-thread fallback
+- `@diegesis/render3d` — three.js post-processing, environments, and texture utilities
 
 API references: [assets](../api/assets.md), [physics](../api/physics.md), [render3d](../api/render3d.md)
 
@@ -15,7 +15,7 @@ API references: [assets](../api/assets.md), [physics](../api/physics.md), [rende
 Assets are declared in packs — named manifests validated with Valibot:
 
 ```ts
-import { defineManifest, parseManifest } from '@openvtt/assets';
+import { defineManifest, parseManifest } from '@diegesis/assets';
 
 const pack = defineManifest({
   name: 'dice-core',
@@ -47,7 +47,7 @@ const parsed = parseManifest(JSON.parse(remoteJson));
 ### AssetManager
 
 ```ts
-import { AssetManager } from '@openvtt/assets';
+import { AssetManager } from '@diegesis/assets';
 
 const assets = new AssetManager({ verifyHashes: true });
 assets.registerPack(pack);
@@ -105,12 +105,12 @@ The manager owns an `assets`-namespaced bus (or pass your own `bus`):
 
 ## Physics
 
-`@openvtt/physics` wraps cannon-es in a host interface that runs in a Web Worker by default and transparently falls back to the main thread.
+`@diegesis/physics` wraps cannon-es in a host interface that runs in a Web Worker by default and transparently falls back to the main thread.
 
 ### Configuration and creation
 
 ```ts
-import { createPhysicsHost } from '@openvtt/physics';
+import { createPhysicsHost } from '@diegesis/physics';
 
 const physics = await createPhysicsHost(
   {
@@ -137,14 +137,14 @@ const physics = await createPhysicsHost(
 | Option | Default | Description |
 |---|---|---|
 | `worker` | `true` | Use a Web Worker when available |
-| `workerFactory` / `workerUrl` | — | Custom worker construction; the default worker is the package's own entry `@openvtt/physics/worker` |
+| `workerFactory` / `workerUrl` | — | Custom worker construction; the default worker is the package's own entry `@diegesis/physics/worker` |
 | `timestep` | `1/60` | Fixed simulation step |
 | `onFallback` | — | Called with the error when worker creation/init fails, before the local host is used |
 
 If bundling the worker yourself, point your bundler at the worker entry:
 
 ```ts
-new Worker(new URL('@openvtt/physics/worker', import.meta.url), { type: 'module' });
+new Worker(new URL('@diegesis/physics/worker', import.meta.url), { type: 'module' });
 ```
 
 ### The PhysicsHost interface
@@ -200,7 +200,7 @@ Worker state transfer uses packed `Float32Array`s (`serializeStates`/`deserializ
 A thin composer over three.js post-processing:
 
 ```ts
-import { PostFX } from '@openvtt/render3d';
+import { PostFX } from '@diegesis/render3d';
 
 const postFX = new PostFX(renderer, scene, camera, {
   enabled: true,
@@ -224,7 +224,7 @@ postFX.dispose();
 ### Environments
 
 ```ts
-import { loadEnvironment, disposeEnvironmentCache } from '@openvtt/render3d';
+import { loadEnvironment, disposeEnvironmentCache } from '@diegesis/render3d';
 
 const handle = await loadEnvironment(renderer, 'tavern', '/');
 scene.environment = handle.texture;
@@ -246,7 +246,7 @@ handle.dispose();   // on teardown
 ### Texture utilities
 
 ```ts
-import { heightCanvasToNormalCanvas, resolveAssetPath } from '@openvtt/render3d';
+import { heightCanvasToNormalCanvas, resolveAssetPath } from '@diegesis/render3d';
 
 const normalCanvas = heightCanvasToNormalCanvas(heightCanvas, 2);  // Sobel height→normal
 const url = resolveAssetPath('/assets/', 'textures/bronze01.webp'); // '/assets/textures/bronze01.webp'
@@ -258,8 +258,8 @@ const url = resolveAssetPath('/assets/', 'textures/bronze01.webp'); // '/assets/
 
 `DiceBox` wires these together so you rarely have to:
 
-1. `@openvtt/assets` preloads the theme/texture/sound manifest and hands out cached object URLs.
-2. `@openvtt/physics` pre-simulates each throw in a worker until all bodies sleep, then steps interactively during the visual throw, emitting collide events for sounds.
-3. `@openvtt/render3d` provides the HDR environment, bloom/outline composer, and normal-map generation.
+1. `@diegesis/assets` preloads the theme/texture/sound manifest and hands out cached object URLs.
+2. `@diegesis/physics` pre-simulates each throw in a worker until all bodies sleep, then steps interactively during the visual throw, emitting collide events for sounds.
+3. `@diegesis/render3d` provides the HDR environment, bloom/outline composer, and normal-map generation.
 
 Reach for the standalone packages when you build something the box does not cover — a token mover with physics, a map renderer with HDR lighting, or an asset pipeline for non-dice content.

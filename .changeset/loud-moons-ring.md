@@ -1,9 +1,9 @@
 ---
-"@openvtt/canvas-plugin-rings": minor
+"@diegesis/canvas-plugin-rings": minor
 ---
 
-Add `@openvtt/canvas-plugin-rings`: concentric colored ring markers for
-tokens on `@openvtt/canvas` — an extensible take on Owlbear Rodeo's
+Add `@diegesis/canvas-plugin-rings`: concentric colored ring markers for
+tokens on `@diegesis/canvas` — an extensible take on Owlbear Rodeo's
 Colored Rings.
 
 - `ring` document type (undo/redo + scene round-trip via `scene.rings`),

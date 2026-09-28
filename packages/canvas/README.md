@@ -1,39 +1,39 @@
-# @openvtt/canvas
+# @diegesis/canvas
 
-Framework-agnostic, PixiJS-powered game canvas for OpenVTT — **plugin-first**. O core fornece apenas infraestrutura (stage, viewport, input, state machine de tools, layers, histórico, seleção, bus de eventos/hooks). **Todo tipo de documento e toda capacidade do canvas é contribuída por plugins.**
+Framework-agnostic, PixiJS-powered game canvas for Diegesis — **plugin-first**. O core fornece apenas infraestrutura (stage, viewport, input, state machine de tools, layers, histórico, seleção, bus de eventos/hooks). **Todo tipo de documento e toda capacidade do canvas é contribuída por plugins.**
 
 ## Arquitetura
 
 ```
-@openvtt/canvas (core)                    infra: stage/viewport/input/tools/layers/history/selection
+@diegesis/canvas (core)                    infra: stage/viewport/input/tools/layers/history/selection
 └─ canvas.use(plugin)                     PluginManager (deps, lifecycle, APIs)
    ├─ DocumentRegistry                    registerDocumentType() → layer + eventos + histórico
    ├─ Bus de capacidades (hooks)          movement/sight/vision/light/select/handles/scene
-   └─ @openvtt/events                     eventos dinâmicos registerEvent() por plugin
+   └─ @diegesis/events                     eventos dinâmicos registerEvent() por plugin
 
 Plugins (pacotes independentes):
-  @openvtt/canvas-plugin-tiles      tiles (fundo)
-  @openvtt/canvas-plugin-drawings   drawings (rect/ellipse/brush/text)
-  @openvtt/canvas-plugin-walls      walls, portas, curvas, blockers de movimento/visão
-  @openvtt/canvas-plugin-templates  templates de área (circle/cone/ray)
-  @openvtt/canvas-plugin-tokens     tokens, fontes de visão e luz
-  @openvtt/canvas-plugin-lights     luzes ambiente
-  @openvtt/canvas-plugin-measure    régua de medição
-  @openvtt/canvas-plugin-lighting   overlay de iluminação
-  @openvtt/canvas-plugin-fog        fog of war + painel de UI
+  @diegesis/canvas-plugin-tiles      tiles (fundo)
+  @diegesis/canvas-plugin-drawings   drawings (rect/ellipse/brush/text)
+  @diegesis/canvas-plugin-walls      walls, portas, curvas, blockers de movimento/visão
+  @diegesis/canvas-plugin-templates  templates de área (circle/cone/ray)
+  @diegesis/canvas-plugin-tokens     tokens, fontes de visão e luz
+  @diegesis/canvas-plugin-lights     luzes ambiente
+  @diegesis/canvas-plugin-measure    régua de medição
+  @diegesis/canvas-plugin-lighting   overlay de iluminação
+  @diegesis/canvas-plugin-fog        fog of war + painel de UI
 
-@openvtt/canvas-preset-standard          1 import com todos os plugins acima
+@diegesis/canvas-preset-standard          1 import com todos os plugins acima
 ```
 
 ## Boundary arquitetural
 
-Pixi é dono da scene tree; **nenhum objeto Pixi sai do canvas**. Tudo que cruza a fronteira passa pelo `@openvtt/events` como JSON puro, validado por Valibot — consumível por qualquer host (vanilla, React, worker, headless) e compatível com `@openvtt/formula`.
+Pixi é dono da scene tree; **nenhum objeto Pixi sai do canvas**. Tudo que cruza a fronteira passa pelo `@diegesis/events` como JSON puro, validado por Valibot — consumível por qualquer host (vanilla, React, worker, headless) e compatível com `@diegesis/formula`.
 
 ## Quick start
 
 ```ts
-import { createStandardCanvas } from '@openvtt/canvas-preset-standard';
-import { defineCanvasElements } from '@openvtt/canvas';
+import { createStandardCanvas } from '@diegesis/canvas-preset-standard';
+import { defineCanvasElements } from '@diegesis/canvas';
 
 defineCanvasElements();
 const canvas = createStandardCanvas(container);
@@ -54,9 +54,9 @@ Cena aceita chaves legadas (`tokens: [...]`, `walls: [...]`) ou o mapa `document
 ## Composição seletiva
 
 ```ts
-import { Canvas } from '@openvtt/canvas';
-import { tokensPlugin } from '@openvtt/canvas-plugin-tokens';
-import { wallsPlugin } from '@openvtt/canvas-plugin-walls';
+import { Canvas } from '@diegesis/canvas';
+import { tokensPlugin } from '@diegesis/canvas-plugin-tokens';
+import { wallsPlugin } from '@diegesis/canvas-plugin-walls';
 
 const canvas = new Canvas(container);
 await canvas.use(wallsPlugin);
@@ -70,7 +70,7 @@ Qualquer documento é um plugin: schema Valibot + placeable + (opcional) tool/tr
 
 ```ts
 import * as v from 'valibot';
-import { definePlugin, PlaceableObject, Tool } from '@openvtt/canvas';
+import { definePlugin, PlaceableObject, Tool } from '@diegesis/canvas';
 
 const NoteSchema = v.object({
   id: v.optional(v.pipe(v.string(), v.uuid())),
@@ -133,8 +133,8 @@ Canvas
 |    get(type, id) · layer(type) · types() · createFromScene(scene)
 ├─ layers: LayerManager            visible/opacity/locked/order, reordenação
 ├─ tools: ToolManager              options por tool (defaults dos plugins)
-├─ hotkeys: HotkeyManager          @openvtt/hotkeys — tool:*, undo, redo, ping, pan (rebindáveis)
-├─ bus: CanvasBus                  eventos + hooks (@openvtt/events)
+├─ hotkeys: HotkeyManager          @diegesis/hotkeys — tool:*, undo, redo, ping, pan (rebindáveis)
+├─ bus: CanvasBus                  eventos + hooks (@diegesis/events)
 ├─ select/clearSelection/selected  seleção genérica sobre o registry
 ├─ isMoveBlocked(from, to)         colisão via hook movement:segments
 ├─ grid: GridLayer                 square/hex-v/hex-h/isometric, snap
@@ -152,7 +152,7 @@ PlaceableObject                    id, document, x/y/rotation, bounds, getAABB, 
 | --- | --- |
 | IDs | `uuid` v7 (`newId`) |
 | Schemas | `valibot` (core + plugins) |
-| Eventos/hooks | `@openvtt/events` (`createBus`, `registerEvent`/`registerHook`) |
+| Eventos/hooks | `@diegesis/events` (`createBus`, `registerEvent`/`registerHook`) |
 | Câmera | `pixi-viewport` 6 |
 | Spatial index | `rbush` 4 |
 | Selection FX | `pixi-filters` 6 (`GlowFilter`) |

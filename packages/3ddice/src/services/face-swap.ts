@@ -1,4 +1,5 @@
 import { DICE } from '../constants/dice';
+import { DiceError } from '../errors';
 import type { DiceMaterial, DiceMesh, DiceObject } from './dice-mesh';
 
 export interface FaceSwapDeps {
@@ -13,29 +14,33 @@ export interface FaceSwapDeps {
 }
 
 export async function swapDiceFace(dicemesh: DiceMesh, result: number, deps: FaceSwapDeps): Promise<void> {
-  const diceobj = deps.getPreset(dicemesh.notation.type);
-
-  dicemesh.resultReason = 'forced';
+  const diceobj = deps.getPreset(dicemesh.throw.type);
 
   if (diceobj.shape == 'd4') {
     await swapDiceFaceD4(dicemesh, result, deps, diceobj);
     return;
   }
 
-  let value = parseInt(String(dicemesh.getLastValue().value));
-  let resultParsed: number = parseInt(String(result));
+  let value = dicemesh.getFaceValue().value;
+  let resultParsed = result;
 
-  if (dicemesh.notation.type == 'd10' && value == 0) value = 10;
-  if (dicemesh.notation.type == 'd100' && value == 0) value = 100;
-  if (dicemesh.notation.type == 'd100' && value > 0 && value < 10) value *= 10;
-  if (dicemesh.notation.type == 'd10' && resultParsed == 0) resultParsed = 10;
-  if (dicemesh.notation.type == 'd100' && resultParsed == 0) resultParsed = 100;
-  if (dicemesh.notation.type == 'd100' && resultParsed > 0 && resultParsed < 10) resultParsed *= 10;
+  if (dicemesh.throw.type == 'd10' && value == 0) value = 10;
+  if (dicemesh.throw.type == 'd100' && value == 0) value = 100;
+  if (dicemesh.throw.type == 'd100' && value > 0 && value < 10) value *= 10;
+  if (dicemesh.throw.type == 'd10' && resultParsed == 0) resultParsed = 10;
+  if (dicemesh.throw.type == 'd100' && resultParsed == 0) resultParsed = 100;
+  if (dicemesh.throw.type == 'd100' && resultParsed > 0 && resultParsed < 10) resultParsed *= 10;
 
   const valueindex = diceobj.values.indexOf(value);
   const resultindex = diceobj.values.indexOf(resultParsed);
 
-  if (valueindex < 0 || resultindex < 0) return;
+  if (resultindex < 0) {
+    throw new DiceError(
+      `Result ${resultParsed} is not representable on a ${dicemesh.throw.type}`,
+      'RESULT_OUT_OF_RANGE'
+    );
+  }
+  if (valueindex < 0) return;
   if (valueindex == resultindex) return;
 
   const geom = dicemesh.geometry.clone();
@@ -80,7 +85,6 @@ export async function swapDiceFace(dicemesh: DiceMesh, result: number, deps: Fac
   }
 
   dicemesh.geometry = geom;
-  dicemesh.result = [];
 }
 
 export async function swapDiceFaceD4(
@@ -89,8 +93,8 @@ export async function swapDiceFaceD4(
   deps: FaceSwapDeps,
   diceobj?: DiceObject
 ): Promise<void> {
-  const preset = diceobj ?? deps.getPreset(dicemesh.notation.type);
-  const value = parseInt(String(dicemesh.getLastValue().value));
+  const preset = diceobj ?? deps.getPreset(dicemesh.throw.type);
+  const value = dicemesh.getFaceValue().value;
 
   if (!(value >= 1 && value <= 4)) return;
 

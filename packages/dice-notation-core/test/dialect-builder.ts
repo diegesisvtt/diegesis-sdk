@@ -1,4 +1,4 @@
-import type { ModifierOp } from '@openvtt/dice-core';
+import type { ModifierOp } from '@diegesis/dice-core';
 import {
   buildModifierPatterns,
   canonicalToTokens,

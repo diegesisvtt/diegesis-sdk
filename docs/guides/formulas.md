@@ -1,6 +1,6 @@
 # Formulas
 
-`@openvtt/formula` is the expression engine underneath everything else in openvtt. Character sheet derived values, effect conditions, change values, and the arithmetic in dice expressions are all formulas. It has two faces:
+`@diegesis/formula` is the expression engine underneath everything else in diegesis. Character sheet derived values, effect conditions, change values, and the arithmetic in dice expressions are all formulas. It has two faces:
 
 - A **text language** (`1 + 2 * floor(x / 2)`, `a and not b`) parsed by `parseFormula`.
 - A **JSON-logic-shaped AST** (`FormulaExpr`) that is serializable, validatable with Valibot, and extensible with custom leaf nodes.
@@ -28,7 +28,7 @@ Literals are numbers and booleans. Variable paths are resolved against a scope o
 The AST is deliberately JSON-logic-shaped — every node is a literal, a `{ var: path }`, or a single-key object mapping an operator to its operands. That makes trees trivially serializable, diffable, and validatable.
 
 ```ts
-import { parseFormula } from '@openvtt/formula';
+import { parseFormula } from '@diegesis/formula';
 
 parseFormula('1 + 2 * 3');
 // { '+': [1, { '*': [2, 3] }] }
@@ -42,14 +42,14 @@ parseFormula('a > 0 ? a : -a');
 
 Node keys: the 11 binary operators, `and`, `or`, `!`, `if`, `var`, and the 7 functions (`floor`, `ceil`, `round`, `abs`, `min`, `max`, `clamp`). `min`/`max` take any number of args; `clamp` takes exactly three (value, lo, hi).
 
-`FormulaExpr<E>` is generic over an extension leaf type `E`. With `E = never` you get `PureFormula` — the closed language. `@openvtt/dice-core` plugs dice terms in as leaves (see [Custom leaf nodes](#custom-leaf-nodes)).
+`FormulaExpr<E>` is generic over an extension leaf type `E`. With `E = never` you get `PureFormula` — the closed language. `@diegesis/dice-core` plugs dice terms in as leaves (see [Custom leaf nodes](#custom-leaf-nodes)).
 
 ## Round-tripping: `toFormula`
 
 `toFormula(expr)` serializes an AST back to source text with correct precedence:
 
 ```ts
-import { parseFormula, toFormula } from '@openvtt/formula';
+import { parseFormula, toFormula } from '@diegesis/formula';
 
 const expr = parseFormula('1 + 2 * floor(x / 2)');
 toFormula(expr);   // "1 + 2 * floor(x / 2)"
@@ -60,7 +60,7 @@ toFormula(expr);   // "1 + 2 * floor(x / 2)"
 ## Evaluation: `evaluateFormula`
 
 ```ts
-import { evaluateFormula } from '@openvtt/formula';
+import { evaluateFormula } from '@diegesis/formula';
 
 evaluateFormula(parseFormula('floor((str - 10) / 2)'), {
   scope: { str: 16 },
@@ -80,7 +80,7 @@ Semantics worth knowing:
 These three helpers are exported so your own code can match engine semantics exactly:
 
 ```ts
-import { resolvePath, toNumber, isTruthy } from '@openvtt/formula';
+import { resolvePath, toNumber, isTruthy } from '@diegesis/formula';
 
 resolvePath({ a: { b: 2 } }, 'a.b');   // 2
 resolvePath({ a: {} }, 'a.b.c');       // undefined (no throw)
@@ -94,20 +94,20 @@ Note `resolvePath` first checks for an exact own-property match of the full path
 ## `extractVariables`
 
 ```ts
-import { extractVariables, parseFormula } from '@openvtt/formula';
+import { extractVariables, parseFormula } from '@diegesis/formula';
 
 extractVariables(parseFormula('str.mod + max(level, 1)'));
 // ['str.mod', 'level']
 ```
 
-This powers dependency analysis: `@openvtt/sheet` uses it to topologically order derived values and to detect effect-condition cycles.
+This powers dependency analysis: `@diegesis/sheet` uses it to topologically order derived values and to detect effect-condition cycles.
 
 ## `compileFormula` vs `evaluateFormula`
 
 `evaluateFormula` is a tree-walking interpreter — fine for occasional evaluation. `compileFormula` JIT-compiles a **pure** formula (no custom leaves) into a native function via `new Function`, which is dramatically faster in tight loops:
 
 ```ts
-import { compileFormula, parseFormula } from '@openvtt/formula';
+import { compileFormula, parseFormula } from '@diegesis/formula';
 
 const fn = compileFormula(parseFormula('floor((str - 10) / 2) + prof'));
 fn({ str: 16, prof: 3 });   // 6
@@ -120,7 +120,7 @@ Use `compileFormula` when the same formula is evaluated many times against chang
 Caches results per AST object, keyed on the current values of the variables the formula reads:
 
 ```ts
-import { createMemoizedEvaluator, parseFormula } from '@openvtt/formula';
+import { createMemoizedEvaluator, parseFormula } from '@diegesis/formula';
 
 const evaluate = createMemoizedEvaluator();
 const expr = parseFormula('expensive.path * 2');
@@ -138,14 +138,14 @@ Both are Valibot schemas you can embed in your own contracts:
 
 ```ts
 import * as v from 'valibot';
-import { formulaSchema, createFormulaSchema } from '@openvtt/formula';
+import { formulaSchema, createFormulaSchema } from '@diegesis/formula';
 
 const SaveFileSchema = v.object({
   version: v.number(),
   derived: v.record(v.string(), formulaSchema),          // pure formulas only
 });
 
-// accept dice leaves too (this is what @openvtt/dice-core's rollSchema does):
+// accept dice leaves too (this is what @diegesis/dice-core's rollSchema does):
 const rollExprSchema = createFormulaSchema(myDiceLeafSchema);
 ```
 
@@ -156,7 +156,7 @@ const rollExprSchema = createFormulaSchema(myDiceLeafSchema);
 `evaluateFormula<E>` accepts an `onLeaf` handler that is invoked for any node that is not a built-in operator. This is the extension point that turns the formula engine into a dice engine:
 
 ```ts
-import { evaluateFormula } from '@openvtt/formula';
+import { evaluateFormula } from '@diegesis/formula';
 
 interface Tile { type: 'tile'; suit: string; rank: number }
 
@@ -169,12 +169,12 @@ const value = evaluateFormula<Tile>(
 // 8
 ```
 
-`@openvtt/dice-core` uses exactly this: `RollExpr = FormulaExpr<DiceExpr>`, and its evaluator passes an `onLeaf` that rolls a `DieTerm`/`Pool` and returns its value. If a tree contains leaves and no `onLeaf` is provided, evaluation throws `FormulaError`.
+`@diegesis/dice-core` uses exactly this: `RollExpr = FormulaExpr<DiceExpr>`, and its evaluator passes an `onLeaf` that rolls a `DieTerm`/`Pool` and returns its value. If a tree contains leaves and no `onLeaf` is provided, evaluation throws `FormulaError`.
 
 ## Errors: `FormulaError`
 
 ```ts
-import { FormulaError, parseFormula } from '@openvtt/formula';
+import { FormulaError, parseFormula } from '@diegesis/formula';
 
 try {
   parseFormula('1 +');

@@ -1,4 +1,4 @@
-import { MENU_ORDER, menu, menuControls, menuWhen, type ContextMenuContext, type ContextMenuItem, type PluginContext } from '@openvtt/canvas';
+import { MENU_ORDER, menu, menuControls, menuWhen, type ContextMenuContext, type ContextMenuItem, type PluginContext } from '@diegesis/canvas';
 import type { LightData } from './schemas';
 
 const units = (v: number): string => `${v} u`;

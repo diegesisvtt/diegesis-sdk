@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-ranges",
+  "name": "@diegesis/canvas-plugin-ranges",
   "version": "0.1.0",
-  "description": "Range rings plugin for @openvtt/canvas — extensible presets, color-blind themes and sticky range overlays for distance checks at a glance.",
+  "description": "Range rings plugin for @diegesis/canvas — extensible presets, color-blind themes and sticky range overlays for distance checks at a glance.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-ranges"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -40,5 +45,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "ranges", "measure", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "ranges", "measure", "vtt", "tabletop"]
 }

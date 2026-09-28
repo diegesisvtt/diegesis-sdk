@@ -1,4 +1,4 @@
-import { Tool, toHex, type CanvasPointerInfo } from '@openvtt/canvas';
+import { Tool, toHex, type CanvasPointerInfo } from '@diegesis/canvas';
 import type { SoundToolOptions } from '../plugin';
 
 export class SoundTool extends Tool {

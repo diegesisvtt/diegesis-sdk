@@ -1,5 +1,5 @@
-import { MENU_ORDER, menu, menuControls, menuWhen, toHex } from '@openvtt/canvas';
-import type { Canvas, ContextMenuContribution, ContextMenuItem, GridType } from '@openvtt/canvas';
+import { MENU_ORDER, menu, menuControls, menuWhen, toHex } from '@diegesis/canvas';
+import type { Canvas, ContextMenuContribution, ContextMenuItem, GridType } from '@diegesis/canvas';
 
 const pct = (v: number): string => `${v}%`;
 const px = (v: number): string => `${Math.round(v)}px`;

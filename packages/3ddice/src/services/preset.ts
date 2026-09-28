@@ -35,6 +35,8 @@ const DEFAULT_CONFIG: DiceConfig = {
 };
 
 export class DicePreset {
+  loadBlob?: (url: string) => Promise<Blob>;
+
   #shape: string;
   #type: string;
   #labels: any[] = [];
@@ -227,12 +229,19 @@ export class DicePreset {
       return texture;
     }
 
+    const loadBlob = this.loadBlob ?? (async (url: string) => (await fetch(url)).blob());
+    const blob = await loadBlob(texture);
+    const objectUrl = URL.createObjectURL(blob);
     const img = new Image();
-    await new Promise((resolve, reject) => {
-      img.onload = resolve;
-      img.onerror = reject;
-      img.src = texture;
-    });
+    try {
+      await new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = objectUrl;
+      });
+    } finally {
+      URL.revokeObjectURL(objectUrl);
+    }
     return img;
   }
 }

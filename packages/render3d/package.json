@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/render3d",
+  "name": "@diegesis/render3d",
   "version": "0.1.0",
-  "description": "Three.js rendering toolkit for OpenVTT: post-processing composer, HDR/cubemap environments, normal map generation.",
+  "description": "Three.js rendering toolkit for Diegesis: post-processing composer, HDR/cubemap environments, normal map generation.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/render3d"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -34,5 +39,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "three.js", "postprocessing", "hdr", "vtt", "rendering"]
+  "keywords": ["diegesis", "three.js", "postprocessing", "hdr", "vtt", "rendering"]
 }

@@ -1,10 +1,10 @@
 import { v7 } from 'uuid';
 import * as v from 'valibot';
-import { evaluateFormula, isTruthy, parseFormula, toNumber } from '@openvtt/formula';
-import type { FormulaExpr } from '@openvtt/formula';
-import { evaluateRoll } from '@openvtt/dice-core';
-import type { RollExpr } from '@openvtt/dice-core';
-import { fromFormula } from '@openvtt/dice-notation';
+import { evaluateFormula, isTruthy, parseFormula, toNumber } from '@diegesis/formula';
+import type { FormulaExpr } from '@diegesis/formula';
+import { evaluateRoll } from '@diegesis/dice-core';
+import type { RollExpr } from '@diegesis/dice-core';
+import { fromFormula } from '@diegesis/dice-notation';
 import { characterDocumentSchema, effectDefinitionSchema, expirationStateSchema } from './schema';
 import { computeSheet } from './pipeline';
 import { applyRollTransform } from './roll-transform';

@@ -57,7 +57,7 @@ export function renderHome(root: HTMLElement): () => void {
   root.innerHTML = `
     <div class="home-stage">
       <div class="home-hero">
-        <div class="home-kicker">openvtt · playground</div>
+        <div class="home-kicker">diegesis · playground</div>
         <h1>Forge your <em>table</em>.</h1>
         <p>
           Open, composable building blocks for virtual tabletops — a typed event bus, dice IR and

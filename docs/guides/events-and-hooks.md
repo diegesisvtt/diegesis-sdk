@@ -1,6 +1,6 @@
 # Events and hooks
 
-`@openvtt/events` is the single pub/sub and hooks layer for the whole monorepo. Every package routes its events through an `EventBus` built from a typed **contract**, so payloads are validated with Valibot schemas and every event carries trace metadata.
+`@diegesis/events` is the single pub/sub and hooks layer for the whole monorepo. Every package routes its events through an `EventBus` built from a typed **contract**, so payloads are validated with Valibot schemas and every event carries trace metadata.
 
 - [API reference](../api/events.md)
 
@@ -10,7 +10,7 @@ A contract declares a namespace, a set of events (each with a Valibot schema), a
 
 ```ts
 import * as v from 'valibot';
-import { defineContract, createBus } from '@openvtt/events';
+import { defineContract, createBus } from '@diegesis/events';
 
 const diceContract = defineContract({
   namespace: 'dice',
@@ -26,7 +26,7 @@ const diceContract = defineContract({
 });
 ```
 
-`defineContract` fills in defaults: the namespace defaults to `'openvtt'`, and `events`/`hooks` default to empty maps. The contract object is typed, so every `on`, `emit`, `tap`, and `call` is checked against the Valibot output types.
+`defineContract` fills in defaults: the namespace defaults to `'diegesis'`, and `events`/`hooks` default to empty maps. The contract object is typed, so every `on`, `emit`, `tap`, and `call` is checked against the Valibot output types.
 
 ## Creating a bus
 
@@ -111,7 +111,7 @@ With `unknownEvents: 'reject'`, emitting an event that is not declared in the co
 
 ## Hooks
 
-Hooks are tapable-style extension points: named pipelines that other code can `tap` into. They are how openvtt implements modifiers, transforms, and policy checks without hard-coding extension points.
+Hooks are tapable-style extension points: named pipelines that other code can `tap` into. They are how diegesis implements modifiers, transforms, and policy checks without hard-coding extension points.
 
 ### The 8 strategies
 
@@ -129,7 +129,7 @@ Hooks are tapable-style extension points: named pipelines that other code can `t
 Rules of thumb:
 
 - **Waterfall** when taps transform a value (roll contexts, configs).
-- **Bail** when taps vote or short-circuit (`shouldReroll` in `@openvtt/dice` is `syncBail`).
+- **Bail** when taps vote or short-circuit (`shouldReroll` in `@diegesis/dice` is `syncBail`).
 - **Series** for ordered side effects; **parallel** for independent async work.
 
 ### Tapping
@@ -192,7 +192,7 @@ stop();   // removes the middleware
 
 The bridge is designed for browser extensions and third-party scripts that must interact with your app without a module import. With `bridge: true`, the bus:
 
-1. Registers itself in a global registry at `globalThis.__OPENVTT_EVENTS__`.
+1. Registers itself in a global registry at `globalThis.__DIEGESIS_EVENTS__`.
 2. Re-dispatches every emitted event as a DOM `CustomEvent` named by the wire name (e.g. `dice:rolled`) on `document` (or a custom `target`), with `{ payload, meta }` in `event.detail`.
 
 ```ts
@@ -206,7 +206,7 @@ const bus2 = createBus(contract, {
 From an extension content script:
 
 ```ts
-import { getBridgeRegistry } from '@openvtt/events';
+import { getBridgeRegistry } from '@diegesis/events';
 
 const bridge = getBridgeRegistry()?.get('dice');
 bridge?.on('rolled', (payload) => console.log('saw a roll', payload));
@@ -221,7 +221,7 @@ The public bridge exposes `on`, `off`, `once`, `emit`, `tap`, `call`, `callAsync
 
 ## Broadcast: cross-tab replication
 
-With `broadcast: true`, every `emit` is also posted to a `BroadcastChannel` named `openvtt:<namespace>`. Other tabs with a bus on the same channel receive the event with `meta.origin === 'broadcast'`:
+With `broadcast: true`, every `emit` is also posted to a `BroadcastChannel` named `diegesis:<namespace>`. Other tabs with a bus on the same channel receive the event with `meta.origin === 'broadcast'`:
 
 ```ts
 const bus = createBus(contract, { broadcast: true });
@@ -263,9 +263,9 @@ bus.isDestroyed;   // true
 
 ```ts
 import * as v from 'valibot';
-import { createBus } from '@openvtt/events';
-import { fromFormula } from '@openvtt/dice-notation';
-import { evaluateRoll } from '@openvtt/dice-core';
+import { createBus } from '@diegesis/events';
+import { fromFormula } from '@diegesis/dice-notation';
+import { evaluateRoll } from '@diegesis/dice-core';
 
 const bus = createBus({
   namespace: 'dice',
@@ -294,4 +294,4 @@ roll('1d20');
 // [0190...] 1d20 + 1d4 → 17   (deterministic because of the seed)
 ```
 
-This pattern — hooks for transforming inputs, events for announcing outcomes — is exactly how `@openvtt/dice` (`shouldReroll`), `@openvtt/sheet` (`computed`, `effect:applied`, ...), and `@openvtt/assets` (`preload:*`) are built.
+This pattern — hooks for transforming inputs, events for announcing outcomes — is exactly how `@diegesis/dice` (`shouldReroll`), `@diegesis/sheet` (`computed`, `effect:applied`, ...), and `@diegesis/assets` (`preload:*`) are built.

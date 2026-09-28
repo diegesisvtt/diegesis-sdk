@@ -1,6 +1,6 @@
 import { Graphics, type DestroyOptions } from 'pixi.js';
 import { GlowFilter } from 'pixi-filters/glow';
-import { PlaceableObject, clamp, toHex, type CanvasLike, type PlaceableObjectOptions } from '@openvtt/canvas';
+import { PlaceableObject, clamp, toHex, type CanvasLike, type PlaceableObjectOptions } from '@diegesis/canvas';
 import { dashedArcs, ringRadius, type RingSlot } from '../layout';
 import { DEFAULT_RING_STYLE, type RingData, type RingStyle } from '../schemas';
 

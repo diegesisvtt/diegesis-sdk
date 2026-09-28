@@ -1,12 +1,12 @@
 # AGENTS.md
 
-Diretrizes para agentes trabalhando no monorepo **openvtt**.
+Diretrizes para agentes trabalhando no monorepo **diegesis-sdk**.
 
 ## Visão geral
 
 Monorepo JavaScript/Typecript gerenciado por **Bun** (workspaces) + **Turborepo**.
 
-- `packages/*` — bibliotecas publicáveis (`@openvtt/events`, `@openvtt/dice`, ...)
+- `packages/*` — bibliotecas publicáveis (`@diegesis/events`, `@diegesis/dice`, ...)
 - `apps/*` — aplicações consumidoras (`playground`, ...)
 
 ## Comandos
@@ -22,7 +22,7 @@ Sempre executar da raiz do repo, exceto quando indicado.
 | Lint         | `bun run lint`     |
 | Typecheck    | `bun run typecheck`|
 
-Os scripts são delegados ao Turbo e rodam em todos os workspaces. Para escopar um pacote: `bun run <script> --filter=@openvtt/events`.
+Os scripts são delegados ao Turbo e rodam em todos os workspaces. Para escopar um pacote: `bun run <script> --filter=@diegesis/events`.
 
 ## Stack obrigatória
 
@@ -33,7 +33,7 @@ As decisões abaixo são padronizadas em todo o monorepo. Não introduzir altern
 Todo ID gerado no projeto **deve** usar **UUID v7** (time-ordered, sortable).
 
 - Pacote: `uuid` (`^11`) — importar `v7`.
-- No `@openvtt/events`, IDs de eventos/correlação já seguem isso via `newId()` em `packages/events/src/tracing.ts`.
+- No `@diegesis/events`, IDs de eventos/correlação já seguem isso via `newId()` em `packages/events/src/tracing.ts`.
 - Em novos pacotes, gere IDs com `import { v7 } from 'uuid'`. Não use `v4`, `Math.random`, `crypto.randomUUID()` nem contadores auto-incrementados como identificadores públicos.
 
 Exemplo:
@@ -49,7 +49,7 @@ const id = v7();
 Toda validação/parsing de contratos, eventos e dados de entrada **deve** usar **Valibot**.
 
 - Pacote: `valibot` (`^1`).
-- O `@openvtt/events` aceita schemas Valibot (`v.GenericSchema`) diretamente na definição de contratos; não é necessário converter tipos manualmente.
+- O `@diegesis/events` aceita schemas Valibot (`v.GenericSchema`) diretamente na definição de contratos; não é necessário converter tipos manualmente.
 - Não usar `zod`, `joi`, `yup` ou `ajv`. Não inventar validação ad-hoc com `if`/guards quando um schema cobre o caso.
 
 Exemplo:
@@ -64,11 +64,11 @@ const RollSchema = v.object({
 });
 ```
 
-### Eventos e hooks — `@openvtt/events`
+### Eventos e hooks — `@diegesis/events`
 
-Eventos (pub/sub) e hooks (taps/pipeline) em qualquer parte do monorepo **devem** ser geridos pelo pacote **`@openvtt/events`**.
+Eventos (pub/sub) e hooks (taps/pipeline) em qualquer parte do monorepo **devem** ser geridos pelo pacote **`@diegesis/events`**.
 
-- Workspace: `packages/events` → nome público `@openvtt/events`.
+- Workspace: `packages/events` → nome público `@diegesis/events`.
 - Não criar `EventEmitter` próprio, instanciar `mitt`/`tapable` diretamente nem acoplar lógica de pub/sub aos componentes. Tudo passa pelo `EventBus`.
 - Use `defineContract` (ou `createBus`) para declarar o conjunto tipado de **events** e **hooks**; passe os schemas Valibot correspondentes.
 
@@ -76,7 +76,7 @@ Uso típico:
 
 ```ts
 import * as v from 'valibot';
-import { createBus } from '@openvtt/events';
+import { createBus } from '@diegesis/events';
 
 const bus = createBus({
   namespace: 'dice',

@@ -1,4 +1,4 @@
-import { MENU_ORDER, menu, menuControls, menuWhen, type ContextMenuContribution, type ContextMenuItem } from '@openvtt/canvas';
+import { MENU_ORDER, menu, menuControls, menuWhen, type ContextMenuContribution, type ContextMenuItem } from '@diegesis/canvas';
 import { normalizeTrackerColor } from './color';
 import type { MathApplyResult } from './store';
 import type { Tracker, TrackerInput, TrackerLabelStyle, TrackerSide } from './schemas';

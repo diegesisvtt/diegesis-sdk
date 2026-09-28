@@ -27,7 +27,7 @@ export class Broadcast {
   constructor(handlers: BroadcastHandlers, options: BroadcastOptions = {}) {
     this.handlers = handlers;
     if (typeof BroadcastChannel !== 'undefined') {
-      const name = options.channel ?? `openvtt:${handlers.namespace}`;
+      const name = options.channel ?? `diegesis:${handlers.namespace}`;
       this.channel = new BroadcastChannel(name);
       this.channel.onmessage = (event: MessageEvent) => {
         const data = event.data;

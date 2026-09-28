@@ -1,17 +1,17 @@
-# @openvtt/sheet
+# @diegesis/sheet
 
-Engine de fichas de personagem orientada a efeitos. O documento guarda apenas **valores base** e **instâncias de efeito**; todo o resto — atributos finais, valores derivados, flags, bônus de rolagem — é recomputado por um pipeline determinístico e auditável sempre que algo muda. Eventos de ciclo de vida fluem por um bus do `@openvtt/events`.
+Engine de fichas de personagem orientada a efeitos. O documento guarda apenas **valores base** e **instâncias de efeito**; todo o resto — atributos finais, valores derivados, flags, bônus de rolagem — é recomputado por um pipeline determinístico e auditável sempre que algo muda. Eventos de ciclo de vida fluem por um bus do `@diegesis/events`.
 
 ## Instalação
 
 ```bash
-bun add @openvtt/sheet
+bun add @diegesis/sheet
 ```
 
 ## Quickstart
 
 ```ts
-import { createDocument, SheetEngine, defineSystemPack } from '@openvtt/sheet';
+import { createDocument, SheetEngine, defineSystemPack } from '@diegesis/sheet';
 
 const pack = defineSystemPack({
   id: 'mini-dnd',
@@ -75,7 +75,7 @@ Reagem a eventos do bus: `{ on, condition?, changes?, effect?, roll?, rollInto? 
 
 ```ts
 import * as v from 'valibot';
-import { createSheetBus } from '@openvtt/sheet';
+import { createSheetBus } from '@diegesis/sheet';
 
 const bus = createSheetBus({
   events: {
@@ -110,4 +110,4 @@ engine.loadDocument(JSON.parse(json));
 
 ## Desenvolvimento
 
-`bun run build` · `bun run test` · `bun run typecheck` (a partir da raiz do monorepo, com `--filter=@openvtt/sheet`).
+`bun run build` · `bun run test` · `bun run typecheck` (a partir da raiz do monorepo, com `--filter=@diegesis/sheet`).

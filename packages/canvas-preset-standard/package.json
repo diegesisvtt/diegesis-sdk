@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-preset-standard",
+  "name": "@diegesis/canvas-preset-standard",
   "version": "0.1.0",
-  "description": "Standard preset for @openvtt/canvas — bundles the core plugins (grid, maps, tiles, drawings, walls, templates, tokens, rings, lights, measure, lighting, fog) in one import.",
+  "description": "Standard preset for @diegesis/canvas — bundles the core plugins (grid, maps, tiles, drawings, walls, templates, tokens, rings, lights, measure, lighting, fog) in one import.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-preset-standard"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,25 +28,25 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
-    "@openvtt/canvas-plugin-grid": "workspace:*",
-    "@openvtt/canvas-plugin-grid-square": "workspace:*",
-    "@openvtt/canvas-plugin-grid-hex": "workspace:*",
-    "@openvtt/canvas-plugin-grid-isometric": "workspace:*",
-    "@openvtt/canvas-plugin-maps": "workspace:*",
-    "@openvtt/canvas-plugin-tiles": "workspace:*",
-    "@openvtt/canvas-plugin-drawings": "workspace:*",
-    "@openvtt/canvas-plugin-walls": "workspace:*",
-    "@openvtt/canvas-plugin-templates": "workspace:*",
-    "@openvtt/canvas-plugin-tokens": "workspace:*",
-    "@openvtt/canvas-plugin-rings": "workspace:*",
-    "@openvtt/canvas-plugin-lights": "workspace:*",
-    "@openvtt/canvas-plugin-measure": "workspace:*",
-    "@openvtt/canvas-plugin-ranges": "workspace:*",
-    "@openvtt/canvas-plugin-lighting": "workspace:*",
-    "@openvtt/canvas-plugin-fog": "workspace:*",
-    "@openvtt/canvas-plugin-window": "workspace:*",
-    "@openvtt/canvas-plugin-image-editor": "workspace:*"
+    "@diegesis/canvas": "workspace:*",
+    "@diegesis/canvas-plugin-grid": "workspace:*",
+    "@diegesis/canvas-plugin-grid-square": "workspace:*",
+    "@diegesis/canvas-plugin-grid-hex": "workspace:*",
+    "@diegesis/canvas-plugin-grid-isometric": "workspace:*",
+    "@diegesis/canvas-plugin-maps": "workspace:*",
+    "@diegesis/canvas-plugin-tiles": "workspace:*",
+    "@diegesis/canvas-plugin-drawings": "workspace:*",
+    "@diegesis/canvas-plugin-walls": "workspace:*",
+    "@diegesis/canvas-plugin-templates": "workspace:*",
+    "@diegesis/canvas-plugin-tokens": "workspace:*",
+    "@diegesis/canvas-plugin-rings": "workspace:*",
+    "@diegesis/canvas-plugin-lights": "workspace:*",
+    "@diegesis/canvas-plugin-measure": "workspace:*",
+    "@diegesis/canvas-plugin-ranges": "workspace:*",
+    "@diegesis/canvas-plugin-lighting": "workspace:*",
+    "@diegesis/canvas-plugin-fog": "workspace:*",
+    "@diegesis/canvas-plugin-window": "workspace:*",
+    "@diegesis/canvas-plugin-image-editor": "workspace:*"
   },
   "peerDependencies": {
     "pixi.js": "^8.15.0"
@@ -55,5 +60,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "preset", "plugins", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "preset", "plugins", "vtt", "tabletop"]
 }

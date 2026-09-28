@@ -1,11 +1,11 @@
 /**
- * Fakes de DOM para testes headless em bun — o @openvtt/canvas define Web
+ * Fakes de DOM para testes headless em bun — o @diegesis/canvas define Web
  * Components (`class extends HTMLElement`) no escopo de módulo, então este
  * módulo deve ser o primeiro import de qualquer teste que o carregue.
  *
  * Apenas `HTMLElement`/`customElements` são instalados no escopo de módulo
  * (necessários no momento do import). O fake de `document` NÃO deve existir
- * fora do ciclo de um teste: o Bridge do @openvtt/events despacha CustomEvents
+ * fora do ciclo de um teste: o Bridge do @diegesis/events despacha CustomEvents
  * em `globalThis.document` quando presente, e um fake permanente quebraria
  * testes de outros pacotes no mesmo processo.
  */

@@ -717,9 +717,9 @@ body {
   --ovtt-modal-backdrop: rgba(6, 5, 3, 0.55);
 }
 
-openvtt-layer-panel,
-openvtt-fog-panel,
-openvtt-image-editor {
+diegesis-layer-panel,
+diegesis-fog-panel,
+diegesis-image-editor {
   --ovtt-bg: transparent;
   --ovtt-border: transparent;
   --ovtt-radius: 0;
@@ -734,7 +734,7 @@ openvtt-image-editor {
   --ovtt-font-size: 12px;
 }
 
-openvtt-window-frame::part(content) {
+diegesis-window-frame::part(content) {
   padding: 6px;
 }
 

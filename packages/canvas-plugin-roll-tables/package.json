@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-roll-tables",
+  "name": "@diegesis/canvas-plugin-roll-tables",
   "version": "0.1.0",
-  "description": "Placeable roll-table anchors for @openvtt/canvas — drop weighted random tables on the map, draw from the context menu, and persist the last result on the document.",
+  "description": "Placeable roll-table anchors for @diegesis/canvas — drop weighted random tables on the map, draw from the context menu, and persist the last result on the document.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-roll-tables"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,8 +28,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
-    "@openvtt/roll-tables": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
+    "@diegesis/roll-tables": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -39,5 +44,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "rolltable", "random-tables", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "rolltable", "random-tables", "vtt", "tabletop"]
 }

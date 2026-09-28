@@ -1,5 +1,5 @@
-import type { FormulaExpr } from '@openvtt/formula';
-import { evaluateFormula, extractVariables, isTruthy, toNumber } from '@openvtt/formula';
+import type { FormulaExpr } from '@diegesis/formula';
+import { evaluateFormula, extractVariables, isTruthy, toNumber } from '@diegesis/formula';
 import type {
   ActiveRollTransform,
   AuditEntry,

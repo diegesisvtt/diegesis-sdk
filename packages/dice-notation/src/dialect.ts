@@ -1,4 +1,4 @@
-import type { DialectConfig } from '@openvtt/dice-notation-core';
+import type { DialectConfig } from '@diegesis/dice-notation-core';
 import { NotationError } from './errors';
 import { AMBIGUOUS_ALIASES, MODIFIER_PATTERNS } from './keywords';
 

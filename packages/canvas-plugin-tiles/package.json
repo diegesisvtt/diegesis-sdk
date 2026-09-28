@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-tiles",
+  "name": "@diegesis/canvas-plugin-tiles",
   "version": "0.1.0",
-  "description": "Tile document plugin for @openvtt/canvas — Tile placeable and drag-to-place tile tool.",
+  "description": "Tile document plugin for @diegesis/canvas — Tile placeable and drag-to-place tile tool.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-tiles"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -38,5 +43,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "tile", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "tile", "vtt", "tabletop"]
 }

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import type { FacesSpec } from '@diegesis/dice-core';
 
 import type { DiceShape } from '../constants/dice';
 import { computeFaceNormals, type DiceGeometryType } from './geometry';
@@ -30,18 +31,9 @@ export interface Vector3Like {
   z: number;
 }
 
-export type DiceSetStyle = 'boon' | 'bane' | 'd20' | 'default';
-
 export interface ThrowVector {
-  index?: number;
   type: string;
-  op?: string;
-  sid?: number;
-  gid?: number;
-  glvl?: number;
-  func?: string;
-  args?: string | string[];
-  style?: DiceSetStyle;
+  colorset?: string;
   pos: Vector3Like;
   velocity: Vector3Like;
   angle: Vector3Like;
@@ -61,14 +53,6 @@ export function createEmptyThrowVector(type: string): ThrowVector {
 export interface DiceValues {
   value: number;
   label: string;
-  reason: string;
-}
-
-export interface DiceResult {
-  value: number | undefined;
-  label: string;
-  reason: string;
-  ignore?: boolean;
 }
 
 export interface DiceObject {
@@ -110,21 +94,15 @@ export type DiceMaterial =
   | THREE.MeshPhysicalMaterial;
 
 export interface DiceMeshBehavior {
-  result: DiceResult[];
+  dieId: string;
+  faces: FacesSpec;
+  forcedValue: number;
   shape: DiceShape;
-  rerolls: number;
-  rerolling: boolean;
-  stopped: number;
-  resultReason: string;
   mass: number;
-  notation: ThrowVector;
+  throw: ThrowVector;
   body?: DieBodyState;
   valueGeometry?: DiceGeometryType;
   getFaceValue: () => DiceValues;
-  storeRolledValue: (reason?: string) => void;
-  getLastValue: () => DiceResult;
-  ignoreLastValue: (ignore: boolean) => void;
-  setLastValue: (result: DiceResult) => void;
 }
 
 export type DiceMesh = THREE.Mesh & DiceMeshBehavior;
@@ -133,8 +111,7 @@ const scratchFaceNormal = new THREE.Vector3();
 const scratchUpVector = new THREE.Vector3();
 
 function readFaceValue(mesh: DiceMesh, preset: DiceObject): DiceValues {
-  const reason = mesh.resultReason;
-  const empty: DiceValues = { value: 0, label: '', reason };
+  const empty: DiceValues = { value: 0, label: '' };
 
   scratchUpVector.set(0, 0, mesh.shape === 'd4' ? -1 : 1);
 
@@ -176,7 +153,6 @@ function readFaceValue(mesh: DiceMesh, preset: DiceObject): DiceValues {
     return {
       value: matindex,
       label: (labelArray[0] as string | undefined) || '',
-      reason,
     };
   }
 
@@ -188,41 +164,20 @@ function readFaceValue(mesh: DiceMesh, preset: DiceObject): DiceValues {
   const labelIndex = ((adjustedMatindex - 1) % (preset.labels.length - 2)) + offset;
   const label = (preset.labels[labelIndex] as string | undefined) || '';
 
-  return { value, label, reason };
+  return { value, label };
 }
 
 function attachDiceBehavior<T extends THREE.Object3D>(object: T, preset: DiceObject, type: string): T & DiceMeshBehavior {
   const target = object as T & DiceMeshBehavior;
 
-  target.result = [];
+  target.dieId = '';
+  target.faces = { kind: 'number', value: 0 };
+  target.forcedValue = 0;
   target.shape = preset.shape as DiceShape;
-  target.rerolls = 0;
-  target.rerolling = false;
-  target.stopped = 0;
-  target.resultReason = 'natural';
   target.mass = preset.mass;
-  target.notation = createEmptyThrowVector(type);
+  target.throw = createEmptyThrowVector(type);
 
   target.getFaceValue = () => readFaceValue(target as unknown as DiceMesh, preset);
-
-  target.storeRolledValue = (reason?: string) => {
-    target.resultReason = reason || target.resultReason;
-    target.result.push(target.getFaceValue());
-  };
-
-  target.getLastValue = () => target.result.at(-1) ?? { value: undefined, label: '', reason: '' };
-
-  target.ignoreLastValue = (ignore: boolean) => {
-    const last = target.getLastValue();
-    if (last.value === undefined) return;
-    last.ignore = ignore;
-    target.setLastValue(last);
-  };
-
-  target.setLastValue = (result: DiceResult) => {
-    if (!target.result.length || !result) return;
-    target.result[target.result.length - 1] = result;
-  };
 
   return target;
 }

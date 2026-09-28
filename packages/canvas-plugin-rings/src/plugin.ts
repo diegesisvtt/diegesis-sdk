@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { dynamicBus, type PlaceablesLayer, type PluginContext } from '@openvtt/canvas';
+import { dynamicBus, type PlaceablesLayer, type PluginContext } from '@diegesis/canvas';
 import { Ring } from './placeables/Ring';
 import { RingDataSchema, RingStyleSchema, DEFAULT_RING_STYLE, type RingData, type RingDataInput, type RingStyle, type RingStyleInput } from './schemas';
 import { COLOR_PRESETS, CONDITION_PRESETS, RingPresetRegistry, type RingPresetInput } from './presets';

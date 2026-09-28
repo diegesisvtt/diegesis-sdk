@@ -1,12 +1,12 @@
-# @openvtt/canvas-plugin-trackers
+# @diegesis/canvas-plugin-trackers
 
-Trackers de token extensíveis para o `@openvtt/canvas` — inspirado no [Owl Trackers](https://extensions.owlbear.rodeo/owl-trackers) (edição rápida com matemática inline, defaults de cena) e no [Bar Brawl](https://gitlab.com/woodentavern/foundryvtt-bar-brawl) (barras value/max, cores interpoladas, visibilidade por audiência, posicionamento).
+Trackers de token extensíveis para o `@diegesis/canvas` — inspirado no [Owl Trackers](https://extensions.owlbear.rodeo/owl-trackers) (edição rápida com matemática inline, defaults de cena) e no [Bar Brawl](https://gitlab.com/woodentavern/foundryvtt-bar-brawl) (barras value/max, cores interpoladas, visibilidade por audiência, posicionamento).
 
 ## Uso
 
 ```ts
-import { Canvas } from '@openvtt/canvas';
-import { trackersPlugin } from '@openvtt/canvas-plugin-trackers';
+import { Canvas } from '@diegesis/canvas';
+import { trackersPlugin } from '@diegesis/canvas-plugin-trackers';
 
 const canvas = new Canvas(container, {
   plugins: [/* ..., tokensPlugin, */ trackersPlugin],
@@ -72,10 +72,10 @@ trackers.registerResolver('sheet', ({ tracker }) => sheet.get(tracker.name));
 trackers.upsert(tokenId, { name: 'HP', source: 'sheet', kind: 'bar', max: 20 });
 ```
 
-Exemplo com `@openvtt/sheet` — o tracker resolve direto da ficha computada do personagem (retornar `null` preserva o valor inline):
+Exemplo com `@diegesis/sheet` — o tracker resolve direto da ficha computada do personagem (retornar `null` preserva o valor inline):
 
 ```ts
-import { getPath } from '@openvtt/sheet';
+import { getPath } from '@diegesis/sheet';
 
 const engines = new Map<string, SheetEngine>(); // tokenId → engine da ficha
 
@@ -110,4 +110,4 @@ trackers.prune(canvas.documents.layer('token')!.placeables.map((t) => t.id));
 
 ## Desenvolvimento
 
-`bun run build` · `bun run test` · `bun run typecheck` (a partir da raiz do monorepo, com `--filter=@openvtt/canvas-plugin-trackers`).
+`bun run build` · `bun run test` · `bun run typecheck` (a partir da raiz do monorepo, com `--filter=@diegesis/canvas-plugin-trackers`).

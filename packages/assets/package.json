@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/assets",
+  "name": "@diegesis/assets",
   "version": "0.1.0",
-  "description": "Declarative asset packs for OpenVTT: content-addressed caching, persistent storage adapters, preload with progress events.",
+  "description": "Declarative asset packs for Diegesis: content-addressed caching, persistent storage adapters, preload with progress events.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/assets"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/events": "workspace:*",
+    "@diegesis/events": "workspace:*",
     "valibot": "^1.4.2"
   },
   "devDependencies": {
@@ -34,5 +39,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "assets", "cache", "offline", "vtt", "preload"]
+  "keywords": ["diegesis", "assets", "cache", "offline", "vtt", "preload"]
 }

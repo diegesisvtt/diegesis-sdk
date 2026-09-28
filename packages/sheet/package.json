@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/sheet",
+  "name": "@diegesis/sheet",
   "version": "0.1.0",
-  "description": "Effect-oriented character sheet engine for OpenVTT — the document is minimal, the effect pipeline is the heart: collect, filter, sort by UUID v7, apply, derive, emit.",
+  "description": "Effect-oriented character sheet engine for Diegesis — the document is minimal, the effect pipeline is the heart: collect, filter, sort by UUID v7, apply, derive, emit.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/sheet"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,10 +28,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/dice-core": "workspace:*",
-    "@openvtt/dice-notation": "workspace:*",
-    "@openvtt/events": "workspace:*",
-    "@openvtt/formula": "workspace:*",
+    "@diegesis/dice-core": "workspace:*",
+    "@diegesis/dice-notation": "workspace:*",
+    "@diegesis/events": "workspace:*",
+    "@diegesis/formula": "workspace:*",
     "uuid": "^11.1.1",
     "valibot": "^1.4.2"
   },
@@ -37,5 +42,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "sheet", "effects", "active-effects", "vtt", "rpg", "foundry"]
+  "keywords": ["diegesis", "sheet", "effects", "active-effects", "vtt", "rpg", "foundry"]
 }

@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-grid-hex",
+  "name": "@diegesis/canvas-plugin-grid-hex",
   "version": "0.1.0",
-  "description": "Hex grid plugins for @openvtt/canvas — vertical (pointy-top) and horizontal (flat-top) hex-grid scenes.",
+  "description": "Hex grid plugins for @diegesis/canvas — vertical (pointy-top) and horizontal (flat-top) hex-grid scenes.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-grid-hex"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,8 +28,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
-    "@openvtt/canvas-plugin-grid": "workspace:*"
+    "@diegesis/canvas": "workspace:*",
+    "@diegesis/canvas-plugin-grid": "workspace:*"
   },
   "peerDependencies": {
     "pixi.js": "^8.15.0"
@@ -40,5 +45,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "grid", "hex", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "grid", "hex", "vtt", "tabletop"]
 }

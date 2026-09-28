@@ -1,4 +1,4 @@
-import { GridRenderer, Tool, type CanvasPointerInfo, type CanvasWheelInfo, type Point } from '@openvtt/canvas';
+import { GridRenderer, Tool, type CanvasPointerInfo, type CanvasWheelInfo, type Point } from '@diegesis/canvas';
 import type { TemplateToolOptions } from '../plugin';
 import { conePoints, rayPoints } from '../templates/geometry';
 import { affectedCells, footprintOf } from '../templates/cells';

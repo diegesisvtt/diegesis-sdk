@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { rollSchema } from '@openvtt/dice-core';
+import { rollSchema } from '@diegesis/dice-core';
 
 const modifierSchema = v.looseObject({
   op: v.string(),

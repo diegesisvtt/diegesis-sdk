@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/audio",
+  "name": "@diegesis/audio",
   "version": "0.1.0",
-  "description": "Howler-based audio engine for OpenVTT: channels with mute/solo, fades, random groups, spatial sound and timelines.",
+  "description": "Howler-based audio engine for Diegesis: channels with mute/solo, fades, random groups, spatial sound and timelines.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/audio"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/events": "workspace:*",
+    "@diegesis/events": "workspace:*",
     "howler": "^2.2.4",
     "valibot": "^1.4.2"
   },
@@ -35,5 +40,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "audio", "howler", "spatial", "ambience", "vtt", "tabletop"]
+  "keywords": ["diegesis", "audio", "howler", "spatial", "ambience", "vtt", "tabletop"]
 }

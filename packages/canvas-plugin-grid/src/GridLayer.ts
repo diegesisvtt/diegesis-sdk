@@ -1,6 +1,6 @@
 import { Graphics } from 'pixi.js';
-import { CanvasLayer, CONFIG, GridRenderer, toHex } from '@openvtt/canvas';
-import type { CanvasLayerOptions, GridConfig, GridType } from '@openvtt/canvas';
+import { CanvasLayer, CONFIG, GridRenderer, toHex } from '@diegesis/canvas';
+import type { CanvasLayerOptions, GridConfig, GridType } from '@diegesis/canvas';
 
 export interface GridLayerOptions extends CanvasLayerOptions {
   grid: GridConfig;

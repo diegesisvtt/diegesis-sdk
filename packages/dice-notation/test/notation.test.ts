@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 import * as v from 'valibot';
-import { evaluateRoll, rollSchema } from '@openvtt/dice-core';
+import { evaluateRoll, rollSchema } from '@diegesis/dice-core';
 import { fromFormula, NotationError, toFormula } from '../src';
 
 describe('fromFormula — dice terms', () => {

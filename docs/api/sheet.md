@@ -1,18 +1,18 @@
-# @openvtt/sheet
+# @diegesis/sheet
 
-Effect-oriented character sheet engine. A `SystemPack` declares ordinals, derived values, roll templates, and effect definitions; a `SheetEngine` applies effect instances to a `CharacterDocument` through a deterministic, auditable pipeline and emits lifecycle events over an `@openvtt/events` bus.
+Effect-oriented character sheet engine. A `SystemPack` declares ordinals, derived values, roll templates, and effect definitions; a `SheetEngine` applies effect instances to a `CharacterDocument` through a deterministic, auditable pipeline and emits lifecycle events over an `@diegesis/events` bus.
 
 **Version:** 0.1.0
-**Dependencies:** `@openvtt/dice-core`, `@openvtt/dice-notation`, `@openvtt/events`, `@openvtt/formula`, `uuid`, `valibot`
+**Dependencies:** `@diegesis/dice-core`, `@diegesis/dice-notation`, `@diegesis/events`, `@diegesis/formula`, `uuid`, `valibot`
 
 ## Installation
 
 ```bash
-bun add @openvtt/sheet
+bun add @diegesis/sheet
 ```
 
 ```ts
-import { SheetEngine, createDocument, defineSystemPack } from '@openvtt/sheet';
+import { SheetEngine, createDocument, defineSystemPack } from '@diegesis/sheet';
 ```
 
 See the [Character sheets guide](../guides/character-sheets.md) for system-pack authoring, and the [Events and hooks guide](../guides/events-and-hooks.md) for the bus contract.
@@ -356,7 +356,7 @@ function applyRollTransform(expr: RollExpr, transform: RollTransform): RollExpr;
 - Recurses into pools.
 
 ```ts
-import { applyRollTransform } from '@openvtt/sheet';
+import { applyRollTransform } from '@diegesis/sheet';
 
 const advantaged = applyRollTransform(template.expr, {
   addDice: 1,
@@ -387,7 +387,7 @@ function defineSystemPack(pack: SystemPack): SystemPack; // identity authoring h
 - The engine runs `validatePack` automatically in the constructor unless `validate: false` is passed, so packs built with `defineSystemPack` are still checked before use.
 
 ```ts
-import { defineSystemPack, validatePack, PackValidationError } from '@openvtt/sheet';
+import { defineSystemPack, validatePack, PackValidationError } from '@diegesis/sheet';
 
 const pack = defineSystemPack({
   id: 'bad',
@@ -420,13 +420,13 @@ function createSheetBus<E extends EventMap = {}>(
 ): SheetBus<E>;
 ```
 
-`createSheetBus` builds an `@openvtt/events` bus pre-configured with the sheet contract. Pass it as `options.bus` to the engine, or subscribe to engine events externally.
+`createSheetBus` builds an `@diegesis/events` bus pre-configured with the sheet contract. Pass it as `options.bus` to the engine, or subscribe to engine events externally.
 
 The `events` option merges extra, fully typed events into the contract — the recommended way to declare the gameplay events that drive durations and triggers (`round:end`, `turn:start`, `clock:tick`, ...). Emissions and listeners for these names are type-checked, and the bus stays compatible with `unknownEvents: 'reject'`:
 
 ```ts
 import * as v from 'valibot';
-import { createSheetBus } from '@openvtt/sheet';
+import { createSheetBus } from '@diegesis/sheet';
 
 const bus = createSheetBus({
   events: {
@@ -454,7 +454,7 @@ import {
   createDocument,
   createSheetBus,
   defineSystemPack,
-} from '@openvtt/sheet';
+} from '@diegesis/sheet';
 
 const pack = defineSystemPack({
   id: 'demo',
@@ -493,7 +493,7 @@ computed.audit;         // one entry per applied change
 
 ```ts
 import * as v from 'valibot';
-import { createSheetBus } from '@openvtt/sheet';
+import { createSheetBus } from '@diegesis/sheet';
 
 const bus = createSheetBus({
   events: {
@@ -534,5 +534,5 @@ engine.registerDefinition({
 - [Character sheets guide](../guides/character-sheets.md)
 - [Events and hooks guide](../guides/events-and-hooks.md)
 - [Formulas guide](../guides/formulas.md)
-- [@openvtt/events](./events.md) — the bus used for lifecycle events.
-- [@openvtt/dice-core](./dice-core.md) — roll evaluation behind `RollFn`.
+- [@diegesis/events](./events.md) — the bus used for lifecycle events.
+- [@diegesis/dice-core](./dice-core.md) — roll evaluation behind `RollFn`.

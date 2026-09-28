@@ -1,9 +1,9 @@
-import type { Canvas } from '@openvtt/canvas';
+import type { Canvas } from '@diegesis/canvas';
 import { ImageEditor } from '../editor';
 import { imageMasks } from '../masks';
 import { DEFAULT_SETTINGS } from '../composer';
 
-export const IMAGE_EDITOR_TAG = 'openvtt-image-editor';
+export const IMAGE_EDITOR_TAG = 'diegesis-image-editor';
 
 const STYLE = `
   :host {
@@ -64,7 +64,7 @@ const STYLE = `
  * CSS custom properties (--ovtt-*) e shadow parts (panel, preview, controls).
  * Para UI própria, use `ImageEditor` (headless) diretamente.
  */
-export class OpenVTTImageEditor extends HTMLElement {
+export class DiegesisImageEditor extends HTMLElement {
   static observedAttributes = ['size'];
 
   private _canvas: Canvas | null = null;
@@ -245,5 +245,5 @@ export class OpenVTTImageEditor extends HTMLElement {
 }
 
 export function defineImageEditorElements(): void {
-  if (!customElements.get(IMAGE_EDITOR_TAG)) customElements.define(IMAGE_EDITOR_TAG, OpenVTTImageEditor);
+  if (!customElements.get(IMAGE_EDITOR_TAG)) customElements.define(IMAGE_EDITOR_TAG, DiegesisImageEditor);
 }

@@ -1,4 +1,4 @@
-import { createGridTypePlugin } from '@openvtt/canvas-plugin-grid';
+import { createGridTypePlugin } from '@diegesis/canvas-plugin-grid';
 
 /** Grid isométrico — registra a layer `grid-isometric`. */
 export const gridIsometricPlugin = createGridTypePlugin({

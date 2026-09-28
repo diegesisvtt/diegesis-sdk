@@ -7,5 +7,5 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  external: ['@openvtt/dice-core', '@openvtt/dice-notation', '@openvtt/events', 'uuid', 'valibot'],
+  external: ['@diegesis/dice-core', '@diegesis/dice-notation', '@diegesis/events', 'uuid', 'valibot'],
 });

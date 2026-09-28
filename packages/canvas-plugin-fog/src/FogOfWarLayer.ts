@@ -1,5 +1,5 @@
 import { Container, Graphics, RenderTexture, Sprite, Texture } from 'pixi.js';
-import { CanvasLayer, dynamicBus, type Canvas, type Point } from '@openvtt/canvas';
+import { CanvasLayer, dynamicBus, type Canvas, type Point } from '@diegesis/canvas';
 import { computeVisibilityPolygon, type VisionSegment } from './visibility';
 
 const FOG_COLOR = '#060608';

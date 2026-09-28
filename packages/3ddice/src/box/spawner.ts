@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import type { FacesSpec } from '@diegesis/dice-core';
 
 import type { ShadowQuality } from './config';
 import type { DiceFactory } from '../services/factory';
@@ -21,29 +22,33 @@ export interface DiceSpawnerDeps {
   getConfig: () => DiceSpawnerConfig;
 }
 
+export interface SpawnMeta {
+  dieId: string;
+  faces: FacesSpec;
+  forcedValue: number;
+}
+
 export class DiceSpawner {
   readonly dice: DiceMesh[] = [];
 
   constructor(private deps: DiceSpawnerDeps) {}
 
-  async spawn(vectordata: ThrowVector): Promise<DiceMesh | null> {
+  async spawn(vectordata: ThrowVector, meta: SpawnMeta): Promise<DiceMesh | null> {
     const config = this.deps.getConfig();
 
     let dicemesh: DiceMesh | null;
-    if (vectordata.style && config.theme) {
-      const styleColorData = await this.deps.colors.getColorSetForDiceType(
-        config.theme,
-        vectordata.style
-      );
-      dicemesh = await this.deps.factory.createWithColorSet(vectordata.type, styleColorData);
+    if (vectordata.colorset) {
+      const colorData = await this.deps.colors.getColorSet({ colorset: vectordata.colorset });
+      dicemesh = await this.deps.factory.createWithColorSet(vectordata.type, colorData);
     } else {
       dicemesh = await this.deps.factory.create(vectordata.type);
     }
     if (!dicemesh) return null;
 
-    dicemesh.notation = vectordata;
-    dicemesh.result = [];
-    dicemesh.stopped = 0;
+    dicemesh.throw = vectordata;
+    dicemesh.dieId = meta.dieId;
+    dicemesh.faces = meta.faces;
+    dicemesh.forcedValue = meta.forcedValue;
     dicemesh.castShadow = config.shadows !== 'none';
     dicemesh.body = createDieBodyState();
 
@@ -52,8 +57,18 @@ export class DiceSpawner {
     return dicemesh;
   }
 
+  findById(id: string): DiceMesh | undefined {
+    return this.dice.find((die) => die.dieId === id);
+  }
+
+  indexOfId(id: string): number {
+    return this.dice.findIndex((die) => die.dieId === id);
+  }
+
   detach(mesh: DiceMesh): void {
     this.deps.scene.remove(mesh);
+    const index = this.dice.indexOf(mesh);
+    if (index >= 0) this.dice.splice(index, 1);
   }
 
   removeAll(): void {

@@ -1,4 +1,4 @@
-import { MENU_ORDER, menu, menuWhen, type ContextMenuItem, type PluginContext } from '@openvtt/canvas';
+import { MENU_ORDER, menu, menuWhen, type ContextMenuItem, type PluginContext } from '@diegesis/canvas';
 import type { RangesController } from './controller';
 
 const CHECK_ICON =

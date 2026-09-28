@@ -1,6 +1,6 @@
 # Dice rolling
 
-This guide covers the headless dice stack: `@openvtt/dice-core` (the IR and evaluator) and `@openvtt/dice-notation` (the canonical text syntax). For the 3D animated roller see [3D dice](3d-dice.md); for Foundry/Roll20 syntax see [Notation dialects](notation-dialects.md).
+This guide covers the headless dice stack: `@diegesis/dice-core` (the IR and evaluator) and `@diegesis/dice-notation` (the canonical text syntax). For the 3D animated roller see [3D dice](3d-dice.md); for Foundry/Roll20 syntax see [Notation dialects](notation-dialects.md).
 
 - API references: [dice-core](../api/dice-core.md), [dice-notation](../api/dice-notation.md)
 
@@ -8,7 +8,7 @@ This guide covers the headless dice stack: `@openvtt/dice-core` (the IR and eval
 
 ```
 text ──fromFormula──▶ RollExpr (IR) ──evaluateRoll──▶ RollResult
-     @openvtt/dice-notation            @openvtt/dice-core
+     @diegesis/dice-notation            @diegesis/dice-core
 ```
 
 `RollExpr` is defined as `FormulaExpr<DiceExpr>`: the [formula AST](formulas.md#the-ast-formulaexpr) extended with two dice leaf nodes. That means any dice expression can contain full formula arithmetic, variable paths, functions, and comparisons — and any formula can contain dice.
@@ -18,7 +18,7 @@ text ──fromFormula──▶ RollExpr (IR) ──evaluateRoll──▶ RollRe
 ### DieTerm and Pool
 
 ```ts
-import type { DieTerm, Pool, FacesSpec, Modifier } from '@openvtt/dice-core';
+import type { DieTerm, Pool, FacesSpec, Modifier } from '@diegesis/dice-core';
 
 const fourD6Keep3: DieTerm = {
   type: 'die',
@@ -115,7 +115,7 @@ The term's value is then: `count-success` → number of successes; `count-failur
 
 ## Canonical notation syntax
 
-`@openvtt/dice-notation` parses the canonical, unambiguous syntax. Full modifier names (`keep-highest3`) always work, plus a curated set of aliases:
+`@diegesis/dice-notation` parses the canonical, unambiguous syntax. Full modifier names (`keep-highest3`) always work, plus a curated set of aliases:
 
 | Alias | Op | | Alias | Op |
 |---|---|---|---|---|
@@ -132,7 +132,7 @@ Other syntax:
 2d6                  count + faces          d20, d% (percentile), dF (fate), dcoin
 {2d6, 1d8}kh2        pools with modifiers
 @abilities.str.mod   variable paths (resolved from scope)
-floor(x / 2)         all @openvtt/formula functions
+floor(x / 2)         all @diegesis/formula functions
 1d20 + 3 >= 15       comparisons evaluate to booleans
 (2 + 1)d6            parenthesized count / faces expressions
 ```
@@ -147,8 +147,8 @@ fromFormula('4d6r1');
 ## Evaluating rolls
 
 ```ts
-import { fromFormula } from '@openvtt/dice-notation';
-import { evaluateRoll } from '@openvtt/dice-core';
+import { fromFormula } from '@diegesis/dice-notation';
+import { evaluateRoll } from '@diegesis/dice-core';
 
 const result = evaluateRoll(fromFormula('4d6keep-highest3'), { seed: 'demo' });
 
@@ -181,7 +181,7 @@ interface DieRoll {
 Pass `seed` for reproducible rolls, or bring your own `rng` (any `() => number` returning `[0, 1)`); `createRng(seed)` builds a seeded one:
 
 ```ts
-import { createRng, evaluateRoll } from '@openvtt/dice-core';
+import { createRng, evaluateRoll } from '@diegesis/dice-core';
 
 evaluateRoll(expr, { seed: 'session-42' });          // same result every time
 evaluateRoll(expr, { rng: createRng('session-42') }); // equivalent
@@ -196,7 +196,7 @@ Determinism covers the whole expression — dice, pools, explosions, and rerolls
 
 ```ts
 import * as v from 'valibot';
-import { rollSchema } from '@openvtt/dice-core';
+import { rollSchema } from '@diegesis/dice-core';
 
 const expr = v.parse(rollSchema, JSON.parse(savedJson));
 ```
@@ -204,8 +204,8 @@ const expr = v.parse(rollSchema, JSON.parse(savedJson));
 ## Worked examples
 
 ```ts
-import { fromFormula } from '@openvtt/dice-notation';
-import { evaluateRoll } from '@openvtt/dice-core';
+import { fromFormula } from '@diegesis/dice-notation';
+import { evaluateRoll } from '@diegesis/dice-core';
 
 // Standard stat roll: 4d6 drop the lowest
 evaluateRoll(fromFormula('4d6keep-highest3'), { seed: 'demo' }).value;
@@ -231,4 +231,4 @@ console.log(result.value);            // d20 + 3
 console.log(result.rolls[0].value);   // the raw d20 face
 ```
 
-Because `RollExpr` is a formula AST, you can also build expressions programmatically and serialize them back with `toFormula` from `@openvtt/dice-notation` — see [Notation dialects](notation-dialects.md#converting-between-dialects) for round-trip workflows.
+Because `RollExpr` is a formula AST, you can also build expressions programmatically and serialize them back with `toFormula` from `@diegesis/dice-notation` — see [Notation dialects](notation-dialects.md#converting-between-dialects) for round-trip workflows.

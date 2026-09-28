@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { evaluateRoll } from '@openvtt/dice-core';
+import { evaluateRoll } from '@diegesis/dice-core';
 import { fromFormula, Roll20NotationError, toFormula } from '../src';
 
 function makeRng(...values: number[]): () => number {
@@ -405,7 +405,7 @@ describe('round-trip fromFormula <-> toFormula', () => {
   }
 });
 
-describe('integration with @openvtt/dice-core evaluateRoll', () => {
+describe('integration with @diegesis/dice-core evaluateRoll', () => {
   it('parses then evaluates keep-highest', () => {
     const ir = fromFormula('4d6kh3');
     const result = evaluateRoll(ir, { rng: makeRng(0.1, 0.5, 0.2, 0.9) });

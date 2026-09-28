@@ -1,18 +1,18 @@
-# @openvtt/dice-foundry-notation
+# @diegesis/dice-foundry-notation
 
-Foundry VTT dice notation dialect. Parses Foundry-style sigils (`r`, `x`, `kh`, `df`, ...) into the canonical `@openvtt/dice-core` `RollExpr` IR, and serializes IR back to Foundry sigils. The API shape mirrors `@openvtt/dice-notation`.
+Foundry VTT dice notation dialect. Parses Foundry-style sigils (`r`, `x`, `kh`, `df`, ...) into the canonical `@diegesis/dice-core` `RollExpr` IR, and serializes IR back to Foundry sigils. The API shape mirrors `@diegesis/dice-notation`.
 
 **Version:** 0.1.0
-**Dependencies:** `@openvtt/dice-core`
+**Dependencies:** `@diegesis/dice-core`
 
 ## Installation
 
 ```bash
-bun add @openvtt/dice-foundry-notation
+bun add @diegesis/dice-foundry-notation
 ```
 
 ```ts
-import { fromFormula, toFormula } from '@openvtt/dice-foundry-notation';
+import { fromFormula, toFormula } from '@diegesis/dice-foundry-notation';
 ```
 
 See the [Notation dialects guide](../guides/notation-dialects.md) for a side-by-side comparison of dialects.
@@ -30,7 +30,7 @@ function fromFormula(source: string): RollExpr;
 | source | `string` | — | Foundry-style notation, e.g. `'2d6r1'`. |
 
 ```ts
-import { fromFormula } from '@openvtt/dice-foundry-notation';
+import { fromFormula } from '@diegesis/dice-foundry-notation';
 
 fromFormula('2d6r1');
 // modifiers: [{ op: 'reroll-once', compare: { op: '=', value: 1 } }]
@@ -145,8 +145,8 @@ toFormula(fromFormula('4df')); // '4df'
 ### Evaluation
 
 ```ts
-import { fromFormula } from '@openvtt/dice-foundry-notation';
-import { evaluateRoll, createRng } from '@openvtt/dice-core';
+import { fromFormula } from '@diegesis/dice-foundry-notation';
+import { evaluateRoll, createRng } from '@diegesis/dice-core';
 
 const expr = fromFormula('4d6kh3');
 const result = evaluateRoll(expr, { rng: createRng('seed') });
@@ -156,6 +156,6 @@ result.terms[0].applied; // ['keep-highest']
 ## Related
 
 - [Notation dialects guide](../guides/notation-dialects.md)
-- [@openvtt/dice-notation](./dice-notation.md) — canonical notation.
-- [@openvtt/dice-roll20-notation](./dice-roll20-notation.md) — Roll20 dialect.
-- [@openvtt/dice-core](./dice-core.md) — the IR and evaluator.
+- [@diegesis/dice-notation](./dice-notation.md) — canonical notation.
+- [@diegesis/dice-roll20-notation](./dice-roll20-notation.md) — Roll20 dialect.
+- [@diegesis/dice-core](./dice-core.md) — the IR and evaluator.

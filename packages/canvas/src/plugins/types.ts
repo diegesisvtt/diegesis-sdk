@@ -148,7 +148,7 @@ export type WindowStateKind = 'normal' | 'minimized' | 'maximized';
 /**
  * Declaração de janela registrável. O conteúdo é lazy: a factory só roda na
  * primeira abertura. Implementado pelo plugin `windows`
- * (`@openvtt/canvas-plugin-window`); registrar sem ele instalado lança erro.
+ * (`@diegesis/canvas-plugin-window`); registrar sem ele instalado lança erro.
  */
 export interface WindowContribution {
   /** Id estável da definição (usado para reabrir e restaurar). */
@@ -211,7 +211,7 @@ export interface PluginContext {
   registerContextMenu(contribution: ContextMenuContribution): void;
   /**
    * Declara uma janela gerenciada pelo plugin `windows`. Requer
-   * `@openvtt/canvas-plugin-window` instalado (declare a dependência).
+   * `@diegesis/canvas-plugin-window` instalado (declare a dependência).
    */
   registerWindow(contribution: WindowContribution): void;
   /** Registra cleanup executado no uninstall do plugin e no destroy do canvas. */

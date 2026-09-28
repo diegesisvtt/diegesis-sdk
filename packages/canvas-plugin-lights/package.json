@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-lights",
+  "name": "@diegesis/canvas-plugin-lights",
   "version": "0.1.0",
-  "description": "Ambient light plugin for @openvtt/canvas — light documents, AmbientLight placeable, light tool and light:sources contributions.",
+  "description": "Ambient light plugin for @diegesis/canvas — light documents, AmbientLight placeable, light tool and light:sources contributions.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-lights"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -38,5 +43,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "light", "lighting", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "light", "lighting", "vtt", "tabletop"]
 }

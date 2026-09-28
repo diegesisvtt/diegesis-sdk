@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import type { WindowDockTarget, WindowStateKind } from '@openvtt/canvas';
+import type { WindowDockTarget, WindowStateKind } from '@diegesis/canvas';
 
 export const WINDOW_DOCK_SCHEMA = v.picklist(['float', 'left', 'right', 'bottom']);
 export const WINDOW_STATE_SCHEMA = v.picklist(['normal', 'minimized', 'maximized']);

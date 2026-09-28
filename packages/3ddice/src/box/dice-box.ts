@@ -1,52 +1,72 @@
 import * as THREE from 'three';
 
-import type { AssetManager } from '@openvtt/assets';
-import type { EnvironmentSpec } from '@openvtt/render3d';
+import type { AssetManager } from '@diegesis/assets';
+import type { EnvironmentSpec } from '@diegesis/render3d';
 
-import { defaultRegistries, type DiceRegistries } from '../registries';
+import { createDiceRegistries, type DiceRegistries } from '../registries';
 import { buildDiceManifest } from '../assets';
 import { createDiceBus, type DiceBus } from '../bus';
-import type { DieResult, RollResult } from '../results';
+import { normalizeTerms, type DiceTerm } from '../contract';
+import { DiceError } from '../errors';
+import type { RerollRequest, RolledDie, RollOutcome } from '../results';
+import type { DiceTheme } from '../constants/themes';
+import type { TextureEntry } from '../constants/texturelist';
+import type { MaterialOptions } from '../constants/materialtypes';
+import type { DiceModelRegistration } from '../registries';
 import { DiceColors, type ColorSet } from '../services/colors';
 import { DiceFactory } from '../services/factory';
-import { swapDiceFace, swapDiceFaceD4, type FaceSwapDeps } from '../services/face-swap';
-import type { DiceMesh, ThrowVector } from '../services/dice-mesh';
-import {
-  createDefaultNotationParser,
-  type NotationParser,
-  type ParsedNotation,
-} from '../services/notation';
+import { swapDiceFace, type FaceSwapDeps } from '../services/face-swap';
 import {
   configToOptions,
   normalizeOptions,
-  normalizeShadows,
   type DiceBoxOptions,
   type NormalizedConfig,
-  type ShadowQuality,
 } from './config';
 import type { DiceBoxDeps } from './deps';
 import { LayoutController } from './layout';
 import { PhysicsController } from './physics-controller';
-import { RollOrchestrator, type SelectorDie } from './roll-orchestrator';
+import { RollOrchestrator } from './roll-orchestrator';
 import { RollQueue } from './roll-queue';
 import { SceneRenderer } from './scene-renderer';
 import { SelectionController } from './selection';
 import { SoundManager } from './sounds';
 import { DiceSpawner } from './spawner';
 import { ThrowPlanner } from './throw-planner';
-import type { Vector2D } from './types';
 
 export interface DiceBoxEvents {
   ready: void;
-  'roll:start': { id: string; notation: string };
-  'roll:finish': any;
+  'roll:start': { id: string };
+  'roll:finish': RollOutcome;
   'roll:cancel': { id?: string };
-  'die:click': { id: number; value: any };
+  'die:click': { id: string; value: number };
   'theme:change': { theme: string };
   error: Error;
 }
 
-type RethrowFunction = (dicemesh: DiceMesh, args: string | string[]) => boolean;
+export interface ThemeRegistryFacade {
+  list: () => Record<string, DiceTheme>;
+  get: (id: string) => DiceTheme | undefined;
+  has: (id: string) => boolean;
+  register: (id: string, theme: DiceTheme) => void;
+}
+
+export interface TextureRegistryFacade {
+  list: () => Record<string, TextureEntry>;
+  get: (id: string | string[]) => TextureEntry | undefined;
+  register: (id: string, texture: TextureEntry) => void;
+}
+
+export interface MaterialRegistryFacade {
+  list: () => Record<string, MaterialOptions>;
+  get: (id: string) => MaterialOptions | undefined;
+  register: (id: string, material: MaterialOptions) => void;
+}
+
+export interface ModelRegistryFacade {
+  list: () => Record<string, DiceModelRegistration>;
+  get: (type: string) => DiceModelRegistration | undefined;
+  register: (registration: DiceModelRegistration) => void;
+}
 
 export class DiceBox {
   #initialized = false;
@@ -58,6 +78,12 @@ export class DiceBox {
   private colorData?: ColorSet;
 
   readonly bus: DiceBus;
+  readonly ready: Promise<void>;
+  readonly themes: ThemeRegistryFacade;
+  readonly textures: TextureRegistryFacade;
+  readonly materials: MaterialRegistryFacade;
+  readonly models: ModelRegistryFacade;
+
   private queue: RollQueue;
   private sounds: SoundManager;
   private selection: SelectionController;
@@ -69,13 +95,13 @@ export class DiceBox {
   private orchestrator: RollOrchestrator;
 
   private registries: DiceRegistries;
-  private parser: NotationParser;
   private diceColors: DiceColors;
   private diceFactory: DiceFactory;
   private faceSwapDeps: FaceSwapDeps;
 
   private assetManager?: AssetManager;
   private assetResolver: (url: string) => string;
+  private loadBlob: (url: string) => Promise<Blob>;
 
   constructor(element: HTMLDivElement, options: DiceBoxOptions = {}) {
     this.container = element;
@@ -84,10 +110,36 @@ export class DiceBox {
 
     this.assetManager = this.config.assets?.manager;
     this.assetResolver = (url) => this.assetManager?.resolveUrl(url) ?? url;
+    this.loadBlob = async (url) => {
+      if (this.assetManager?.has(url)) return this.assetManager.load(url);
+      const response = await fetch(this.assetResolver(url));
+      return response.blob();
+    };
 
-    this.registries = deps.registries ?? defaultRegistries;
-    this.parser = deps.parser ?? createDefaultNotationParser();
+    this.registries = deps.registries ?? createDiceRegistries();
     this.bus = deps.bus ?? createDiceBus();
+
+    this.themes = {
+      list: () => this.registries.listThemes(),
+      get: (id) => this.registries.getTheme(id),
+      has: (id) => this.registries.hasTheme(id),
+      register: (id, theme) => this.registries.registerTheme(id, theme),
+    };
+    this.textures = {
+      list: () => this.registries.listTextures(),
+      get: (id) => this.registries.getTexture(id),
+      register: (id, texture) => this.registries.registerTexture(id, texture),
+    };
+    this.materials = {
+      list: () => this.registries.listMaterials(),
+      get: (id) => this.registries.getMaterial(id),
+      register: (id, material) => this.registries.registerMaterial(id, material),
+    };
+    this.models = {
+      list: () => this.registries.listDiceModels(),
+      get: (type) => this.registries.getDiceModel(type),
+      register: (registration) => this.registries.registerDiceModel(registration),
+    };
 
     this.queue = deps.queue ?? new RollQueue(
       () => this.config.queueMode,
@@ -99,6 +151,7 @@ export class DiceBox {
     this.diceColors = deps.colors ?? new DiceColors({
       assetPath: this.config.assetPath,
       resolver: this.assetResolver,
+      loadBlob: this.loadBlob,
       registries: this.registries,
     });
     this.diceFactory = deps.factory ?? new DiceFactory(
@@ -108,6 +161,7 @@ export class DiceBox {
         normalMaps: this.config.normalMaps,
         dracoPath: this.config.dracoPath,
         resolver: this.assetResolver,
+        loadBlob: this.loadBlob,
       },
       { registries: this.registries, presets: deps.presets }
     );
@@ -134,6 +188,7 @@ export class DiceBox {
     this.planner = deps.planner ?? new ThrowPlanner({
       getDisplay: () => this.layout.display,
       getPreset: (type) => this.diceFactory.ensure(type),
+      rng: deps.rng,
     });
     this.spawner = deps.spawner ?? new DiceSpawner({
       scene: this.sceneRenderer.scene,
@@ -156,7 +211,6 @@ export class DiceBox {
       physics: this.physics,
       planner: this.planner,
       spawner: this.spawner,
-      parser: this.parser,
       sounds: this.sounds,
       shapes: this.diceFactory,
       swapFace: (mesh, result) => swapDiceFace(mesh, result, this.faceSwapDeps),
@@ -164,13 +218,18 @@ export class DiceBox {
         timestep: this.config.timestep,
         iterationLimit: this.config.iterationLimit,
         strength: this.config.strength,
+        cascadeDelay: this.config.cascadeDelay,
       }),
       getDisplay: () => this.layout.display,
-      relayout: () => this.setDimensions(this.layout.dimensions),
       renderFrame: () => this.renderFrame(),
       clearSelection: () => this.selection.clear(),
       isDisposed: () => this.#disposed,
+      rng: deps.rng ?? Math.random,
     });
+
+    const ready = this.#initialize();
+    ready.catch(() => {});
+    this.ready = ready;
   }
 
   get initialized(): boolean {
@@ -185,11 +244,7 @@ export class DiceBox {
     return this.orchestrator.rolling;
   }
 
-  get running(): boolean {
-    return this.orchestrator.running;
-  }
-
-  get selectedIds(): Set<number> {
+  get selectedIds(): Set<string> {
     return this.selection.selectedIds;
   }
 
@@ -205,15 +260,9 @@ export class DiceBox {
     return this.bus.once(event as never, (payload: unknown) => handler(payload as DiceBoxEvents[K]));
   }
 
-  registerRethrowFunction(name: string, fn: RethrowFunction): void {
-    const key = name.toLowerCase();
-    this.bus.tap('shouldReroll', key, (ctx) =>
-      (ctx.func === key ? !!fn(ctx.die as DiceMesh, ctx.args) : undefined) as never
-    );
-  }
-
-  async initialize(): Promise<void> {
-    if (this.#initialized || this.#disposed) return;
+  async #initialize(): Promise<void> {
+    if (this.#initialized) return;
+    if (this.#disposed) throw new DiceError('DiceBox is destroyed', 'DISPOSED');
 
     this.sceneRenderer.initialize(this.container, {
       antialias: this.config.antialias,
@@ -303,7 +352,7 @@ export class DiceBox {
     });
   }
 
-  select(dieIds: number[]): void {
+  select(dieIds: string[]): void {
     this.selection.select(dieIds);
   }
 
@@ -334,11 +383,7 @@ export class DiceBox {
     await this.sounds.load();
   }
 
-  loadAudio(src: string): Promise<HTMLAudioElement> {
-    return this.sounds.loadAudio(src);
-  }
-
-  async updateConfig(options: DiceBoxOptions = {}): Promise<void> {
+  async configure(options: DiceBoxOptions = {}): Promise<void> {
     const prev = this.config;
     const next = normalizeOptions({ ...configToOptions(this.config), ...options });
     this.config = next;
@@ -354,8 +399,16 @@ export class DiceBox {
       options.theme_material !== undefined;
 
     if (themeChanged) {
+      this.surface =
+        this.registries.getTheme(next.surface ?? next.theme)?.surface ??
+        this.registries.getTheme('default')?.surface ??
+        this.surface;
       await this.loadTheme();
       await this.#prepareAssets();
+      if (this.config.sounds) {
+        this.sounds.surface = this.surface;
+        this.sounds.dieMaterial = this.sounds.resolveDieMaterial(this.colorData?.texture?.material);
+      }
       this.bus.emit('theme:change', { theme: next.theme });
     }
 
@@ -369,7 +422,7 @@ export class DiceBox {
     }
 
     if (options.shadows !== undefined && this.sceneRenderer.renderer) {
-      this.setShadowQuality(next.shadows);
+      this.sceneRenderer.setShadowQuality(next.shadows, this.spawner.dice);
     }
 
     if (options.postprocessing !== undefined && this.sceneRenderer.renderer) {
@@ -381,13 +434,16 @@ export class DiceBox {
       console.warn('[dice] "antialias" changes require a new DiceBox instance to take effect');
     }
 
-    if (next.surface !== prev.surface) {
+    if (next.surface !== prev.surface && !themeChanged) {
       this.surface = this.registries.getTheme(next.surface ?? next.theme)?.surface ?? this.surface;
     }
 
-    if (next.sounds !== undefined || next.volume !== undefined) {
+    if (options.sounds !== undefined || options.volume !== undefined) {
       this.sounds.enabled = next.sounds;
       this.sounds.volume = next.volume;
+      if (next.sounds && options.sounds === true) {
+        await this.loadSounds();
+      }
     }
 
     if (this.orchestrator.idle && this.sceneRenderer.renderer && this.sceneRenderer.camera) {
@@ -395,56 +451,12 @@ export class DiceBox {
     }
   }
 
-  setShadowQuality(quality: ShadowQuality | boolean): void {
-    this.config = { ...this.config, shadows: normalizeShadows(quality) };
-    this.sceneRenderer.setShadowQuality(this.config.shadows, this.spawner.dice);
-    if (this.orchestrator.idle && this.sceneRenderer.renderer && this.sceneRenderer.camera) {
-      this.renderFrame();
-    }
-  }
-
-  toggleShadows(enabled: boolean): void {
-    this.setShadowQuality(enabled);
-  }
-
-  setDimensions(dimensions: THREE.Vector2): void {
+  private setDimensions(dimensions: THREE.Vector2): void {
     this.layout.setDimensions(dimensions);
   }
 
-  renderFrame(): void {
+  private renderFrame(): void {
     this.sceneRenderer.renderFrame();
-  }
-
-  vectorRand(vector: Vector2D): Vector2D {
-    return this.orchestrator.vectorRand(vector);
-  }
-
-  getNotationVectors(notation: string, vector: Vector2D, boost: number, dist: number): ParsedNotation {
-    return this.orchestrator.getNotationVectors(notation, vector, boost, dist);
-  }
-
-  startClickThrow(notation: string): ParsedNotation {
-    return this.orchestrator.startClickThrow(notation);
-  }
-
-  swapDiceFace(dicemesh: DiceMesh, result: number): Promise<void> {
-    return swapDiceFace(dicemesh, result, this.faceSwapDeps);
-  }
-
-  swapDiceFace_D4(dicemesh: DiceMesh, result: number): Promise<void> {
-    return swapDiceFaceD4(dicemesh, result, this.faceSwapDeps);
-  }
-
-  async spawnDice(vectordata: ThrowVector): Promise<DiceMesh | null> {
-    return this.spawner.spawn(vectordata);
-  }
-
-  async showSelector(dice: SelectorDie[] = ['d20']): Promise<void> {
-    return this.orchestrator.showSelector(dice);
-  }
-
-  clearDice(): void {
-    this.orchestrator.clearDice();
   }
 
   clear(): void {
@@ -455,32 +467,20 @@ export class DiceBox {
     this.orchestrator.cancel();
   }
 
-  getDiceResults(): RollResult;
-  getDiceResults(id: number): DieResult;
-  getDiceResults(id?: number): RollResult | DieResult {
-    return id !== undefined
-      ? this.orchestrator.getDiceResults(id)
-      : this.orchestrator.getDiceResults();
+  async roll(terms: DiceTerm[]): Promise<RollOutcome> {
+    return this.orchestrator.roll(normalizeTerms(terms));
   }
 
-  async roll(notationString: string | string[]): Promise<RollResult> {
-    return this.orchestrator.roll(notationString);
+  async add(terms: DiceTerm[]): Promise<RollOutcome> {
+    return this.orchestrator.add(normalizeTerms(terms));
   }
 
-  async reroll(diceIdArray: number[]): Promise<DieResult[]> {
-    return this.orchestrator.reroll(diceIdArray);
+  async reroll(dice: RerollRequest[]): Promise<RolledDie[]> {
+    return this.orchestrator.reroll(dice);
   }
 
-  async add(notationString: string): Promise<DieResult[] | RollResult> {
-    return this.orchestrator.add(notationString);
-  }
-
-  async remove(diceIdArray: number[]): Promise<DieResult[]> {
-    return this.orchestrator.remove(diceIdArray);
-  }
-
-  async rollDice(token: number): Promise<void> {
-    return this.orchestrator.rollDice(token);
+  async remove(ids: string[]): Promise<RolledDie[]> {
+    return this.orchestrator.remove(ids);
   }
 
   destroy(): void {

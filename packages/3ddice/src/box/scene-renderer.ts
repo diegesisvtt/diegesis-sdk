@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
-import type { AntialiasMode, EnvironmentHandle, EnvironmentSpec, PostFXOptions } from '@openvtt/render3d';
-import { PostFX, loadEnvironment } from '@openvtt/render3d';
+import type { AntialiasMode, EnvironmentHandle, EnvironmentSpec, PostFXOptions } from '@diegesis/render3d';
+import { PostFX, loadEnvironment } from '@diegesis/render3d';
 
 import { CAMERA } from '../constants/camera';
 import { POSITION } from '../constants/position';

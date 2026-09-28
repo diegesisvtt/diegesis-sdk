@@ -1,4 +1,4 @@
-import type { WindowDockEdge } from '@openvtt/canvas';
+import type { WindowDockEdge } from '@diegesis/canvas';
 
 export interface Rect {
   x: number;

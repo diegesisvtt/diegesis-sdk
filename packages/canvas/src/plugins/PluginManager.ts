@@ -50,7 +50,7 @@ class PluginContextImpl implements PluginContext {
     const registrar = this.canvas.plugins.get<WindowRegistrar>('windows');
     if (!registrar || typeof registrar.registerWindow !== 'function') {
       throw new Error(
-        '[canvas] registerWindow requires the "windows" plugin — install @openvtt/canvas-plugin-window first (declare dependencies: ["windows"])',
+        '[canvas] registerWindow requires the "windows" plugin — install @diegesis/canvas-plugin-window first (declare dependencies: ["windows"])',
       );
     }
     registrar.registerWindow(contribution, this);

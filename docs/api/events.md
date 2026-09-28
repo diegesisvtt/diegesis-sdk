@@ -1,6 +1,6 @@
-# @openvtt/events
+# @diegesis/events
 
-Schema-validated event & hook bus for the openvtt monorepo. It combines typed pub/sub events (built on `mitt`) with tapable-style hook pipelines (built on `tapable`), validates every payload against Valibot schemas, and tags each emission with tracing metadata (UUID v7 ids, correlation ids, origin). Optional addons provide cross-tab broadcast via `BroadcastChannel` and a browser-extension bridge via a global registry.
+Schema-validated event & hook bus for the diegesis monorepo. It combines typed pub/sub events (built on `mitt`) with tapable-style hook pipelines (built on `tapable`), validates every payload against Valibot schemas, and tags each emission with tracing metadata (UUID v7 ids, correlation ids, origin). Optional addons provide cross-tab broadcast via `BroadcastChannel` and a browser-extension bridge via a global registry.
 
 **Version:** 0.1.0
 **Dependencies:** `mitt`, `tapable`, `uuid`, `valibot`
@@ -8,11 +8,11 @@ Schema-validated event & hook bus for the openvtt monorepo. It combines typed pu
 ## Installation
 
 ```bash
-bun add @openvtt/events
+bun add @diegesis/events
 ```
 
 ```ts
-import { createBus, defineContract } from '@openvtt/events';
+import { createBus, defineContract } from '@diegesis/events';
 ```
 
 See the [Events and hooks guide](../guides/events-and-hooks.md) for a conceptual walkthrough.
@@ -35,7 +35,7 @@ function createBus<E extends EventMap = EventMap, H extends HookMap = HookMap>(
 
 ```ts
 import * as v from 'valibot';
-import { createBus } from '@openvtt/events';
+import { createBus } from '@diegesis/events';
 
 const bus = createBus({
   namespace: 'dice',
@@ -135,7 +135,7 @@ Declares a typed contract of events and hooks with Valibot schemas.
 function defineContract<E extends EventMap, H extends HookMap>(def: ContractDef<E, H>): Contract<E, H>;
 
 interface ContractDef<E, H> {
-  namespace?: string;                          // default 'openvtt'
+  namespace?: string;                          // default 'diegesis'
   events?: Record<string, v.GenericSchema>;
   hooks?: Record<string, HookDef>;
 }
@@ -153,7 +153,7 @@ type HookStrategy =
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| def.namespace | `string` | `'openvtt'` | Contract namespace, used in wire names. |
+| def.namespace | `string` | `'diegesis'` | Contract namespace, used in wire names. |
 | def.events | `Record<string, v.GenericSchema>` | `{}` | Event name to payload schema. |
 | def.hooks | `Record<string, HookDef>` | `{}` | Hook name to strategy and optional schema. |
 
@@ -250,7 +250,7 @@ interface HookContext<T> {
 Exposes buses through a global registry so browser extensions can subscribe and emit.
 
 ```ts
-const GLOBAL_KEY = '__OPENVTT_EVENTS__'; // also exported as BRIDGE_GLOBAL_KEY
+const GLOBAL_KEY = '__DIEGESIS_EVENTS__'; // also exported as BRIDGE_GLOBAL_KEY
 
 interface BridgeOptions {
   globalKey?: string;       // default GLOBAL_KEY
@@ -293,7 +293,7 @@ class Bridge {
 ```
 
 ```ts
-import { createBus, getBridgeRegistry } from '@openvtt/events';
+import { createBus, getBridgeRegistry } from '@diegesis/events';
 
 const bus = createBus({ namespace: 'dice', events: {} }, { bridge: true });
 const bridge = getBridgeRegistry().get('dice');
@@ -306,7 +306,7 @@ Replicates emissions across tabs via `BroadcastChannel`.
 
 ```ts
 interface BroadcastOptions {
-  channel?: string; // default `openvtt:${namespace}`
+  channel?: string; // default `diegesis:${namespace}`
 }
 
 interface BroadcastMessage {
@@ -374,7 +374,7 @@ type EventBusErrorCode =
 
 ```ts
 import * as v from 'valibot';
-import { createBus } from '@openvtt/events';
+import { createBus } from '@diegesis/events';
 
 const bus = createBus({
   namespace: 'math',
@@ -394,7 +394,7 @@ bus.call('compute', { n: 3 }); // { n: 7 }
 
 ```ts
 import * as v from 'valibot';
-import { createBus, EventValidationError } from '@openvtt/events';
+import { createBus, EventValidationError } from '@diegesis/events';
 
 const bus = createBus({
   namespace: 'dice',
@@ -413,4 +413,4 @@ try {
 ## Related
 
 - [Events and hooks guide](../guides/events-and-hooks.md)
-- [@openvtt/sheet](./sheet.md) — uses an event bus for sheet lifecycle events.
+- [@diegesis/sheet](./sheet.md) — uses an event bus for sheet lifecycle events.

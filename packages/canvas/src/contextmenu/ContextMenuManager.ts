@@ -1,6 +1,6 @@
 import type { Canvas } from '../canvas';
 import type { CanvasPointerInfo } from '../input/types';
-import type { OpenVTTContextMenu } from '../ui/context-menu';
+import type { DiegesisContextMenu } from '../ui/context-menu';
 import { MENU_ORDER } from './builders';
 import {
   CONTEXT_MENU_TAG,
@@ -65,12 +65,12 @@ export function normalizeItems(items: readonly ContextMenuItem[], context: Conte
  * registradas (`ctx.registerContextMenu`), do hook waterfall
  * `contextmenu:items` e dos itens nativos (Duplicate/Delete), emite
  * `contextmenu:open|close` no bus e renderiza o overlay
- * `<openvtt-context-menu>` no host do canvas.
+ * `<diegesis-context-menu>` no host do canvas.
  */
 export class ContextMenuManager {
   private readonly canvas: Canvas;
   private readonly contributions = new Map<string, ContextMenuContribution>();
-  private view: OpenVTTContextMenu | null = null;
+  private view: DiegesisContextMenu | null = null;
   private host: HTMLElement | null = null;
   private isOpen = false;
   private readonly unsubs: Array<() => void> = [];
@@ -271,13 +271,13 @@ export class ContextMenuManager {
     })();
   }
 
-  private ensureView(): OpenVTTContextMenu | null {
+  private ensureView(): DiegesisContextMenu | null {
     if (typeof document === 'undefined' || !this.host) return null;
     if (typeof customElements === 'undefined' || !customElements.get(CONTEXT_MENU_TAG)) return null;
     if (!this.view) {
       const el = document.createElement(CONTEXT_MENU_TAG);
       this.host.appendChild(el);
-      this.view = el as OpenVTTContextMenu;
+      this.view = el as DiegesisContextMenu;
       this.unsubs.push(this.canvas.bus.on('pan', () => this.close('canvas')));
       this.unsubs.push(this.canvas.bus.on('zoom', () => this.close('canvas')));
     }

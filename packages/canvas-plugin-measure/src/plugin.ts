@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { definePlugin, type Canvas, type PluginContext } from '@openvtt/canvas';
+import { definePlugin, type Canvas, type PluginContext } from '@diegesis/canvas';
 import { MeasureTool } from './tools/MeasureTool';
 import { MEASURE_TOOL_DEFAULTS } from './options';
 import { resolveMeasureOptions } from './resolve';

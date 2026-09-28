@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-templates",
+  "name": "@diegesis/canvas-plugin-templates",
   "version": "0.1.0",
-  "description": "Area of effect templates plugin for @openvtt/canvas — circle/cone/ray template documents, placeable, tool and geometry helpers.",
+  "description": "Area of effect templates plugin for @diegesis/canvas — circle/cone/ray template documents, placeable, tool and geometry helpers.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-templates"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -38,5 +43,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "template", "aoe", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "template", "aoe", "vtt", "tabletop"]
 }

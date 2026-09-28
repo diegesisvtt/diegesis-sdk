@@ -5,7 +5,7 @@ import {
   menuWhen,
   type ContextMenuItem,
   type PluginContext,
-} from '@openvtt/canvas';
+} from '@diegesis/canvas';
 import type { RingPreset } from './presets';
 import type { RingsPlugin } from './plugin';
 

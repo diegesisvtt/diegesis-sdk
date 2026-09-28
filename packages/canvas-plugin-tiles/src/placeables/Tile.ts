@@ -1,5 +1,5 @@
 import { Graphics, Sprite } from 'pixi.js';
-import { PlaceableObject, type CanvasLike } from '@openvtt/canvas';
+import { PlaceableObject, type CanvasLike } from '@diegesis/canvas';
 import type { TileData } from '../schemas';
 
 export class Tile extends PlaceableObject<TileData> {

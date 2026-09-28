@@ -1,4 +1,4 @@
-import { Tool, type CanvasPointerInfo, type Point } from '@openvtt/canvas';
+import { Tool, type CanvasPointerInfo, type Point } from '@diegesis/canvas';
 import type { TileToolOptions } from '../plugin';
 
 function normalizeRect(a: Point, b: Point): { x: number; y: number; width: number; height: number } {

@@ -1,19 +1,19 @@
-# @openvtt/assets
+# @diegesis/assets
 
-Declarative asset packs for the openvtt monorepo. Manifests describe named assets (textures, audio, HDR environments, models, fonts, arbitrary blobs); the `AssetManager` loads them through a layered cache (in-memory, then persistent storage adapters, then network), verifies content hashes, deduplicates in-flight requests, and preloads packs with progress events delivered over an `@openvtt/events` bus.
+Declarative asset packs for the diegesis monorepo. Manifests describe named assets (textures, audio, HDR environments, models, fonts, arbitrary blobs); the `AssetManager` loads them through a layered cache (in-memory, then persistent storage adapters, then network), verifies content hashes, deduplicates in-flight requests, and preloads packs with progress events delivered over an `@diegesis/events` bus.
 
 **Version:** 0.1.0
-**Dependencies:** `@openvtt/events`, `valibot`
+**Dependencies:** `@diegesis/events`, `valibot`
 **Browser globals required:** `fetch`, `crypto.subtle`, `caches`, `URL.createObjectURL`
 
 ## Installation
 
 ```bash
-bun add @openvtt/assets
+bun add @diegesis/assets
 ```
 
 ```ts
-import { AssetManager, defineManifest } from '@openvtt/assets';
+import { AssetManager, defineManifest } from '@diegesis/assets';
 ```
 
 See the [assets and rendering guide](../guides/assets-and-rendering.md) for a conceptual walkthrough.
@@ -21,7 +21,7 @@ See the [assets and rendering guide](../guides/assets-and-rendering.md) for a co
 ## Quick start
 
 ```ts
-import { AssetManager, defineManifest } from '@openvtt/assets';
+import { AssetManager, defineManifest } from '@diegesis/assets';
 
 const manifest = defineManifest({
   name: 'core',
@@ -134,8 +134,8 @@ class CacheStorageAdapter implements StorageAdapter {
 }
 
 interface CacheStorageAdapterOptions {
-  cacheName?: string; // default 'openvtt-assets'
-  baseUrl?: string;   // default 'https://assets.openvtt.local/'
+  cacheName?: string; // default 'diegesis-assets'
+  baseUrl?: string;   // default 'https://assets.diegesis.local/'
 }
 ```
 
@@ -143,7 +143,7 @@ interface CacheStorageAdapterOptions {
 
 ## Bus
 
-The package defines an `@openvtt/events` contract, `assetsContract` (namespace `assets`), and a factory `createAssetsBus(): AssetsBus`.
+The package defines an `@diegesis/events` contract, `assetsContract` (namespace `assets`), and a factory `createAssetsBus(): AssetsBus`.
 
 ### Events
 
@@ -263,4 +263,4 @@ Revokes outstanding object URLs and destroys the event bus. The manager cannot b
 
 - [Assets and rendering guide](../guides/assets-and-rendering.md)
 - [Getting started](../guides/getting-started.md)
-- [@openvtt/dice](./dice.md), [@openvtt/render3d](./render3d.md), [@openvtt/events](./events.md)
+- [@diegesis/dice](./dice.md), [@diegesis/render3d](./render3d.md), [@diegesis/events](./events.md)

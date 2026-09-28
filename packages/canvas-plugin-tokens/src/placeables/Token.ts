@@ -1,5 +1,5 @@
 import { Graphics, Sprite, Text } from 'pixi.js';
-import { PlaceableObject, CONFIG, Easing, dynamicBus, lerp, toHex, type CanvasLike } from '@openvtt/canvas';
+import { PlaceableObject, CONFIG, Easing, dynamicBus, lerp, toHex, type CanvasLike } from '@diegesis/canvas';
 import type { TokenData } from '../schemas';
 
 export interface TokenMoveOptions {

@@ -9,19 +9,19 @@ import {
   newId,
   LAYER_PANEL_TAG,
   type CanvasPlugin,
-  type OpenVTTLayerPanel,
+  type DiegesisLayerPanel,
   type SceneDataInput,
   type GridType,
-} from '@openvtt/canvas';
+} from '@diegesis/canvas';
 import { hotkeys } from '../hotkeys';
-import { standardPlugins } from '@openvtt/canvas-preset-standard';
-import { RingsPlugin, ringsBus } from '@openvtt/canvas-plugin-rings';
-import { chainSegments, ellipsePoints, rectPoints, type WallSegmentDataInput } from '@openvtt/canvas-plugin-walls';
-import type { WindowsPlugin, WindowManager } from '@openvtt/canvas-plugin-window';
-import { RangesPlugin } from '@openvtt/canvas-plugin-ranges';
-import { MEASURE_METRIC_PRESETS, type MeasurePlugin } from '@openvtt/canvas-plugin-measure';
-import { DND5E_COMBAT, TrackersPlugin, trackersPlugin, onTrackersEvents } from '@openvtt/canvas-plugin-trackers';
-import { createRollTablesPlugin } from '@openvtt/canvas-plugin-roll-tables';
+import { standardPlugins } from '@diegesis/canvas-preset-standard';
+import { RingsPlugin, ringsBus } from '@diegesis/canvas-plugin-rings';
+import { chainSegments, ellipsePoints, rectPoints, type WallSegmentDataInput } from '@diegesis/canvas-plugin-walls';
+import type { WindowsPlugin, WindowManager } from '@diegesis/canvas-plugin-window';
+import { RangesPlugin } from '@diegesis/canvas-plugin-ranges';
+import { MEASURE_METRIC_PRESETS, type MeasurePlugin } from '@diegesis/canvas-plugin-measure';
+import { DND5E_COMBAT, TrackersPlugin, trackersPlugin, onTrackersEvents } from '@diegesis/canvas-plugin-trackers';
+import { createRollTablesPlugin } from '@diegesis/canvas-plugin-roll-tables';
 import { buildRollTablesWindow } from './rolltables-window';
 
 defineCanvasElements();
@@ -161,8 +161,8 @@ function numToHex(n: number): string {
   return `#${n.toString(16).padStart(6, '0')}`;
 }
 
-const TRACKERS_STORAGE_KEY = 'openvtt:playground:trackers';
-const WINDOWS_STORAGE_KEY = 'openvtt:playground:windows';
+const TRACKERS_STORAGE_KEY = 'diegesis:playground:trackers';
+const WINDOWS_STORAGE_KEY = 'diegesis:playground:windows';
 const INITIAL_MEASURE_PRESET = 'dnd5e-metric';
 
 function loadTrackersSnapshot(): unknown {
@@ -215,7 +215,7 @@ export function renderCanvas(root: HTMLElement): () => void {
     <div id="canvas-stage" class="stage"></div>
     <div class="overlay page-title">
       <h1>Scene Canvas</h1>
-      <p>@openvtt/canvas</p>
+      <p>@diegesis/canvas</p>
     </div>
     <div class="overlay panel canvas-tools" id="tools">
       ${TOOLS.map(
@@ -411,7 +411,7 @@ export function renderCanvas(root: HTMLElement): () => void {
       height: 460,
       dock: 'left',
       factory: () => {
-        const panel = document.createElement(LAYER_PANEL_TAG) as OpenVTTLayerPanel;
+        const panel = document.createElement(LAYER_PANEL_TAG) as DiegesisLayerPanel;
         panel.canvas = canvas;
         return panel;
       },

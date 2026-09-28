@@ -1,4 +1,4 @@
-import { Tool, toHex, type CanvasPointerInfo, type Point } from '@openvtt/canvas';
+import { Tool, toHex, type CanvasPointerInfo, type Point } from '@diegesis/canvas';
 import type { DrawToolOptions } from '../plugin';
 
 class DrawIdle extends Tool {

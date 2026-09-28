@@ -1,6 +1,6 @@
 import { Application, BlurFilter, Container, Graphics } from 'pixi.js';
-import { type EventMeta, type EventPayload } from '@openvtt/events';
-import { createHotkeyManager, type HotkeyManager } from '@openvtt/hotkeys';
+import { type EventMeta, type EventPayload } from '@diegesis/events';
+import { createHotkeyManager, type HotkeyManager } from '@diegesis/hotkeys';
 import { CONFIG } from './config';
 import { createCanvasBus, type CanvasBus, type CanvasEventMap } from './bus';
 import { CanvasViewport } from './viewport';
@@ -103,7 +103,7 @@ export class Canvas implements CanvasLike {
     this.hotkeys = options.hotkeys ?? createHotkeyManager({ namespace: 'canvas' });
     this.ownsHotkeys = !options.hotkeys;
     this.stage = new Container();
-    this.stage.label = 'openvtt-canvas';
+    this.stage.label = 'diegesis-canvas';
     this.background = new BackgroundLayer({
       name: 'background',
       zIndex: 0,

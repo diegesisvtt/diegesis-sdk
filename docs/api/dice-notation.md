@@ -1,18 +1,18 @@
-# @openvtt/dice-notation
+# @diegesis/dice-notation
 
-Canonical, unambiguous dice notation parser and serializer. Produces the `@openvtt/dice-core` `RollExpr` IR from text and prints IR back to canonical long-form notation. Ambiguous shorthand aliases are rejected with helpful errors so saved rolls stay explicit.
+Canonical, unambiguous dice notation parser and serializer. Produces the `@diegesis/dice-core` `RollExpr` IR from text and prints IR back to canonical long-form notation. Ambiguous shorthand aliases are rejected with helpful errors so saved rolls stay explicit.
 
 **Version:** 0.1.0
-**Dependencies:** `@openvtt/dice-core`
+**Dependencies:** `@diegesis/dice-core`
 
 ## Installation
 
 ```bash
-bun add @openvtt/dice-notation
+bun add @diegesis/dice-notation
 ```
 
 ```ts
-import { fromFormula, toFormula } from '@openvtt/dice-notation';
+import { fromFormula, toFormula } from '@diegesis/dice-notation';
 ```
 
 See the [Notation dialects guide](../guides/notation-dialects.md) for a comparison with the Foundry and Roll20 dialects, and the [Dice rolling guide](../guides/dice-rolling.md) for evaluation.
@@ -32,7 +32,7 @@ function fromFormula(source: string): RollExpr;
 Throws `NotationError` (with `position` and `input`) on invalid syntax or ambiguous aliases.
 
 ```ts
-import { fromFormula } from '@openvtt/dice-notation';
+import { fromFormula } from '@diegesis/dice-notation';
 
 fromFormula('4d6keep-highest3');
 // { type: 'die', count: 4, faces: { kind: 'number', value: 6 },
@@ -159,8 +159,8 @@ fromFormula('floor((@str - 10) / 2)');
 ### End to end
 
 ```ts
-import { fromFormula } from '@openvtt/dice-notation';
-import { evaluateRoll } from '@openvtt/dice-core';
+import { fromFormula } from '@diegesis/dice-notation';
+import { evaluateRoll } from '@diegesis/dice-core';
 
 const expr = fromFormula('1d20 + @abilities.str.mod');
 const result = evaluateRoll(expr, {
@@ -173,5 +173,5 @@ result.value; // 23
 ## Related
 
 - [Notation dialects guide](../guides/notation-dialects.md)
-- [@openvtt/dice-core](./dice-core.md) — the IR and evaluator.
-- [@openvtt/dice-foundry-notation](./dice-foundry-notation.md) and [@openvtt/dice-roll20-notation](./dice-roll20-notation.md) — dialect variants.
+- [@diegesis/dice-core](./dice-core.md) — the IR and evaluator.
+- [@diegesis/dice-foundry-notation](./dice-foundry-notation.md) and [@diegesis/dice-roll20-notation](./dice-roll20-notation.md) — dialect variants.

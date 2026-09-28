@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/formula",
+  "name": "@diegesis/formula",
   "version": "0.1.0",
-  "description": "Tiny, jsep-powered formula IR for OpenVTT — json-logic-shaped AST that travels over the event bus, persists to documents, and runs with no eval.",
+  "description": "Tiny, jsep-powered formula IR for Diegesis — json-logic-shaped AST that travels over the event bus, persists to documents, and runs with no eval.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/formula"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -33,5 +38,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "formula", "jsep", "json-logic", "vtt", "ast", "ir"]
+  "keywords": ["diegesis", "formula", "jsep", "json-logic", "vtt", "ast", "ir"]
 }

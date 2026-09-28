@@ -1,6 +1,6 @@
 # 3D dice
 
-`@openvtt/dice` (source in `packages/3ddice`) is a framework-agnostic 3D dice roller: three.js rendering, cannon-es physics in a Web Worker, themes and textures, sounds, post-processing, and a full roll lifecycle API. It composes the lower-level packages [@openvtt/physics, @openvtt/render3d, @openvtt/assets](assets-and-rendering.md) — you can use those standalone, but `DiceBox` is the batteries-included entry point.
+`@diegesis/dice` (source in `packages/3ddice`) is a framework-agnostic 3D dice roller: three.js rendering, cannon-es physics in a Web Worker, themes and textures, sounds, post-processing, and a full roll lifecycle API. It composes the lower-level packages [@diegesis/physics, @diegesis/render3d, @diegesis/assets](assets-and-rendering.md) — you can use those standalone, but `DiceBox` is the batteries-included entry point.
 
 - [API reference](../api/dice.md)
 
@@ -11,7 +11,7 @@
 ```
 
 ```ts
-import { DiceBox } from '@openvtt/dice';
+import { DiceBox } from '@diegesis/dice';
 
 const container = document.querySelector<HTMLDivElement>('#dice-container')!;
 
@@ -59,7 +59,7 @@ await diceBox.initialize();
 | `queueMode` | `'serial' \| 'replace' \| 'parallel'` | `'serial'` | How concurrent `roll()` calls are scheduled |
 | `dracoPath` | `string` | — | Draco decoder path for compressed models |
 | `colorSpotlight` | `number` | `0xefdfd5` | Spotlight color |
-| `assets` | `{ manager?, preload?, includeLazy? }` | — | `@openvtt/assets` integration (see below) |
+| `assets` | `{ manager?, preload?, includeLazy? }` | — | `@diegesis/assets` integration (see below) |
 
 Deprecated snake_case aliases (`theme_colorset`, `gravity_multiplier`, `framerate`, ...) still work and log a deprecation warning.
 
@@ -185,7 +185,7 @@ import {
   registerTexture, listTextures,
   registerMaterial, listMaterials,
   TEXTURELIST, MATERIALTYPES, DiceColors,
-} from '@openvtt/dice';
+} from '@diegesis/dice';
 
 listThemes();     // built-ins plus anything registered
 listTextures();   // ~28 textures in TEXTURELIST (metal, wood, galaxy, ...)
@@ -224,7 +224,7 @@ const diceBox2 = new DiceBox(container2, {
 Register GLTF/GLB models (optionally Draco-compressed) as dice types:
 
 ```ts
-import { registerDiceModel } from '@openvtt/dice';
+import { registerDiceModel } from '@diegesis/dice';
 
 registerDiceModel({
   type: 'd20',                 // replace or add a die type
@@ -294,10 +294,10 @@ Only the changed subsystems are rebuilt; the renderer itself is reused (except f
 
 ## Asset preloading
 
-Pass an `AssetManager` from `@openvtt/assets` and the box registers its texture/sound manifest and preloads it during `initialize()`:
+Pass an `AssetManager` from `@diegesis/assets` and the box registers its texture/sound manifest and preloads it during `initialize()`:
 
 ```ts
-import { AssetManager } from '@openvtt/dice';   // re-exported from @openvtt/assets
+import { AssetManager } from '@diegesis/dice';   // re-exported from @diegesis/assets
 
 const assets = new AssetManager();
 const diceBox = new DiceBox(container, {
@@ -313,7 +313,7 @@ Loaded assets are then served from cache (object URLs) everywhere the box resolv
 Based on the playground app (`apps/playground`):
 
 ```ts
-import { DiceBox, RollCancelledError, listThemes, type RollResult } from '@openvtt/dice';
+import { DiceBox, RollCancelledError, listThemes, type RollResult } from '@diegesis/dice';
 
 const container = document.querySelector<HTMLDivElement>('#dice-container')!;
 const statusEl = document.querySelector<HTMLElement>('#status')!;

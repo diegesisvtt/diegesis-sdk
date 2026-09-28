@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { evaluateRoll, type Rng } from '@openvtt/dice-core';
+import { evaluateRoll, type Rng } from '@diegesis/dice-core';
 import { FoundryNotationError, fromFormula, toFormula } from '../src';
 
 function rngFromRolls(rolls: ReadonlyArray<readonly [number, number]>): Rng {

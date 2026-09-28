@@ -1,12 +1,12 @@
 # Publishing
 
-The playground is the live wiki, documentation and API reference for openvtt. Every push to `main` publishes it automatically to [Render](https://render.com) as a static site served over a global CDN.
+The playground is the live wiki, documentation and API reference for diegesis. Every push to `main` publishes it automatically to [Render](https://render.com) as a static site served over a global CDN.
 
 ## What gets published
 
 | Target | URL | Content |
 |---|---|---|
-| Render static site | `https://openvtt-playground.onrender.com` | The full playground app — home, labs and the wiki |
+| Render static site | `https://diegesis-playground.onrender.com` | The full playground app — home, labs and the wiki |
 
 The router uses hash URLs (`#/docs/...`), so the static build needs no server rewrites and works on any static host.
 
@@ -29,7 +29,7 @@ The site itself is defined as code in [`render.yaml`](../../render.yaml) at the 
 
 ## Setup (one time)
 
-1. **Create the GitHub mirror** — create an empty repo on GitHub (e.g. `openvtt/openvtt`), then on Codeberg go to *Settings → Repository → Mirroring*, add a **push mirror** to `https://github.com/<user>/openvtt.git` authenticated with a GitHub token (`contents:write`). Codeberg pushes every commit automatically.
+1. **Create the GitHub mirror** — create an empty repo on GitHub (e.g. `diegesis/diegesis`), then on Codeberg go to *Settings → Repository → Mirroring*, add a **push mirror** to `https://github.com/<user>/diegesis.git` authenticated with a GitHub token (`contents:write`). Codeberg pushes every commit automatically.
 2. **Create the Render Blueprint** — on [dashboard.render.com](https://dashboard.render.com), *New → Blueprint*, connect the GitHub account and select the mirrored repo. Render reads `render.yaml` and provisions the static site.
 3. Done — every push to `main` mirrors to GitHub and Render redeploys with zero-downtime and immediate cache invalidation.
 

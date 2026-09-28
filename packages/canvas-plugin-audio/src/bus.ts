@@ -1,4 +1,4 @@
-import type { CanvasBus } from '@openvtt/canvas';
+import type { CanvasBus } from '@diegesis/canvas';
 import type { SoundSource, SoundSourceInput } from './schemas';
 
 export interface SoundSourcesPayload {

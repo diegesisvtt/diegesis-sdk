@@ -1,4 +1,4 @@
-import type { TimelineTrackInput } from '@openvtt/audio';
+import type { TimelineTrackInput } from '@diegesis/audio';
 
 const SAMPLE_RATE = 22050;
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { RandomTable, TableError, createTable } from '@openvtt/roll-tables';
+import { RandomTable, TableError, createTable } from '@diegesis/roll-tables';
 import { RollTablesRegistry, flattenDraw } from '../src/registry';
 
 const loot = {

@@ -1,6 +1,6 @@
 import { v7 } from 'uuid';
-import { evaluateRoll, type DieRoll } from '@openvtt/dice-core';
-import { toFormula } from '@openvtt/dice-notation';
+import { evaluateRoll, type DieRoll } from '@diegesis/dice-core';
+import { toFormula } from '@diegesis/dice-notation';
 import {
   SheetEngine,
   createDocument,
@@ -12,7 +12,7 @@ import {
   type EffectDefinition,
   type RollTransform,
   type SystemPack,
-} from '@openvtt/sheet';
+} from '@diegesis/sheet';
 
 const pack: SystemPack = {
   id: 'dnd5e-lab',
@@ -385,7 +385,7 @@ export function renderSheet(root: HTMLElement): () => void {
     </div>
     <div class="overlay page-title">
       <h1>Sheet Lab</h1>
-      <p>@openvtt/sheet · formula · dice-core</p>
+      <p>@diegesis/sheet · formula · dice-core</p>
     </div>
     <div class="overlay dice-status pill" id="status" data-state="ready">
       <span class="dot"></span><span id="status-text">ready</span>

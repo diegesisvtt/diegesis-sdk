@@ -1,7 +1,7 @@
 import './globals';
 import { describe, expect, it } from 'bun:test';
 import { affectedCells, footprintOf, pointInPolygon } from '../src/templates/cells';
-import type { GridConfig } from '@openvtt/canvas';
+import type { GridConfig } from '@diegesis/canvas';
 
 const square: GridConfig = { type: 'square', size: 50 };
 

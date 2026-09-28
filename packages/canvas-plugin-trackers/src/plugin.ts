@@ -2,7 +2,7 @@ import {
   dynamicBus,
   type CanvasPlugin,
   type PluginContext,
-} from '@openvtt/canvas';
+} from '@diegesis/canvas';
 import * as v from 'valibot';
 import {
   EVERYTHING_VIEWER,

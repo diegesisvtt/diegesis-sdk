@@ -130,9 +130,9 @@ export { HistoryManager } from './history/HistoryManager';
 
 export {
   defineCanvasElements,
-  OpenVTTLayerPanel,
+  DiegesisLayerPanel,
   LAYER_PANEL_TAG,
-  OpenVTTContextMenu,
+  DiegesisContextMenu,
   CONTEXT_MENU_TAG,
 } from './ui';
 

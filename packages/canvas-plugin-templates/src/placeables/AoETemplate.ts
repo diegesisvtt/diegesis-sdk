@@ -1,5 +1,5 @@
 import { Graphics, Text } from 'pixi.js';
-import { GridRenderer, PlaceableObject, toHex, type CanvasLike, type Point, type SelectionFrame } from '@openvtt/canvas';
+import { GridRenderer, PlaceableObject, toHex, type CanvasLike, type Point, type SelectionFrame } from '@diegesis/canvas';
 import type { TemplateData } from '../schemas';
 import { bboxOf, conePoints, rayPoints } from '../templates/geometry';
 import { affectedCells, footprintOf } from '../templates/cells';

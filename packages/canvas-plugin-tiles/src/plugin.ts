@@ -1,4 +1,4 @@
-import { definePlugin, type PluginContext } from '@openvtt/canvas';
+import { definePlugin, type PluginContext } from '@diegesis/canvas';
 import { Tile } from './placeables/Tile';
 import { TileTool } from './tools/TileTool';
 import { registerTilesContextMenu } from './context';

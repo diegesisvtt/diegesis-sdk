@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test';
-import { evaluateRoll } from '@openvtt/dice-core';
+import { evaluateRoll } from '@diegesis/dice-core';
 import type { SystemPack } from '../src';
 import { makeEngine } from './helpers';
 

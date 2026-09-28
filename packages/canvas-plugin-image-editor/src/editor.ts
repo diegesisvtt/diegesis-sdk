@@ -1,4 +1,4 @@
-import type { Canvas } from '@openvtt/canvas';
+import type { Canvas } from '@diegesis/canvas';
 import {
   DEFAULT_SETTINGS,
   HtmlImageSource,

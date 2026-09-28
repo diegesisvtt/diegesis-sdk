@@ -1,12 +1,12 @@
 ---
-"@openvtt/canvas": minor
-"@openvtt/canvas-plugin-window": minor
-"@openvtt/canvas-plugin-image-editor": minor
-"@openvtt/canvas-plugin-fog": minor
-"@openvtt/canvas-preset-standard": minor
+"@diegesis/canvas": minor
+"@diegesis/canvas-plugin-window": minor
+"@diegesis/canvas-plugin-image-editor": minor
+"@diegesis/canvas-plugin-fog": minor
+"@diegesis/canvas-preset-standard": minor
 ---
 
-Add `@openvtt/canvas-plugin-window`: a window manager for `@openvtt/canvas`.
+Add `@diegesis/canvas-plugin-window`: a window manager for `@diegesis/canvas`.
 
 - Floating windows with close, drag (mouse + touch via Pointer Events),
   minimize (taskbar), maximize and resize (8 handles, min/max/aspect
@@ -38,7 +38,7 @@ Add `@openvtt/canvas-plugin-window`: a window manager for `@openvtt/canvas`.
 - Headless mode: without a real DOM the manager tracks logical state and
   events, so tests/SSR keep working.
 
-Core (`@openvtt/canvas`): `WindowContribution` types and
+Core (`@diegesis/canvas`): `WindowContribution` types and
 `PluginContext.registerWindow()` (auto-unregistered on plugin uninstall);
 `Canvas.host` getter; `PluginManager.get` generic widened. The image editor
 now requires the `windows` plugin and opens its built-in panel inside a

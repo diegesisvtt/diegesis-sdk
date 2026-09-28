@@ -1,52 +1,35 @@
 import * as v from 'valibot';
-import { createBus } from '@openvtt/events';
+import { createBus } from '@diegesis/events';
 
-export const DieResultSchema = v.looseObject({
-  type: v.string(),
-  sides: v.number(),
-  id: v.number(),
+import { FacesSpecSchema } from './contract';
+
+export const RolledDieSchema = v.object({
+  id: v.pipe(v.string(), v.uuid()),
   value: v.number(),
-  label: v.union([v.string(), v.number()]),
-  reason: v.string(),
+  faces: FacesSpecSchema,
 });
 
-export const RollSetSchema = v.looseObject({
-  num: v.number(),
-  type: v.string(),
-  sides: v.number(),
-  rolls: v.array(DieResultSchema),
-  total: v.number(),
+export const RolledTermSchema = v.object({
+  id: v.pipe(v.string(), v.uuid()),
+  dice: v.array(RolledDieSchema),
 });
 
-export const RollResultSchema = v.looseObject({
-  id: v.string(),
-  notation: v.string(),
-  sets: v.array(RollSetSchema),
-  modifier: v.number(),
-  total: v.number(),
+export const RollOutcomeSchema = v.object({
+  id: v.pipe(v.string(), v.uuid()),
+  terms: v.array(RolledTermSchema),
+  dice: v.array(RolledDieSchema),
 });
-
-export const RerollContextSchema = v.looseObject({
-  die: v.any(),
-  func: v.string(),
-  args: v.any(),
-});
-
-export type RerollContext = v.InferOutput<typeof RerollContextSchema>;
 
 export const diceContract = {
   namespace: 'dice',
   events: {
     ready: v.optional(v.object({})),
-    'roll:start': v.object({ id: v.string(), notation: v.string() }),
-    'roll:finish': RollResultSchema,
+    'roll:start': v.object({ id: v.pipe(v.string(), v.uuid()) }),
+    'roll:finish': RollOutcomeSchema,
     'roll:cancel': v.looseObject({ id: v.optional(v.string()) }),
-    'die:click': v.looseObject({ id: v.number(), value: v.any() }),
+    'die:click': v.object({ id: v.pipe(v.string(), v.uuid()), value: v.number() }),
     'theme:change': v.object({ theme: v.string() }),
     error: v.custom<Error>((input) => input instanceof Error),
-  },
-  hooks: {
-    shouldReroll: { strategy: 'syncBail' as const, schema: RerollContextSchema },
   },
 };
 

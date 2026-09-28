@@ -1,4 +1,4 @@
-import { createGridTypePlugin } from '@openvtt/canvas-plugin-grid';
+import { createGridTypePlugin } from '@diegesis/canvas-plugin-grid';
 
 /** Grid quadrado — registra a layer `grid-square` e sua configuração. */
 export const gridSquarePlugin = createGridTypePlugin({

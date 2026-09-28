@@ -9,7 +9,7 @@ import { EraserTool } from './eraser';
  * navegação global (wheel, pinch) e do pan temporário pelo botão do meio.
  * Tools de plugins entram via `extraTools` (preenchido pelo ToolManager
  * antes da construção). Teclas de tool/undo/redo/ping/espaço são geridas
- * pelo `@openvtt/hotkeys` via ToolManager.
+ * pelo `@diegesis/hotkeys` via ToolManager.
  */
 export class RootState extends StateNode {
   static id = 'root';

@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { newId } from '@openvtt/events';
+import { newId } from '@diegesis/events';
 import { SoundGroupSchema, type SoundGroup, type SoundGroupInput } from './schemas';
 
 interface GroupEntry {

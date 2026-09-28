@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { createBus, type EventBus } from '@openvtt/events';
+import { createBus, type EventBus } from '@diegesis/events';
 import {
   ContextMenuBeforeHookSchema,
   ContextMenuCloseEventSchema,

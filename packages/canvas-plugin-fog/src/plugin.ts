@@ -1,8 +1,8 @@
 import * as v from 'valibot';
-import { MENU_ORDER, definePlugin, menu, menuControls, menuWhen, type PluginContext } from '@openvtt/canvas';
+import { MENU_ORDER, definePlugin, menu, menuControls, menuWhen, type PluginContext } from '@diegesis/canvas';
 import { FogOfWarLayer } from './FogOfWarLayer';
 import { createFogTools, type FogToolOptions } from './tools/fog';
-import { defineFogElements, FOG_PANEL_TAG, type OpenVTTFogPanel } from './ui/fog-panel';
+import { defineFogElements, FOG_PANEL_TAG, type DiegesisFogPanel } from './ui/fog-panel';
 
 const DEFAULT_TOOL_OPTIONS: FogToolOptions = { brushSize: 100 };
 
@@ -49,7 +49,7 @@ export const fogPlugin = definePlugin({
         dock: 'right',
         factory: () => {
           defineFogElements();
-          const panel = document.createElement(FOG_PANEL_TAG) as OpenVTTFogPanel;
+          const panel = document.createElement(FOG_PANEL_TAG) as DiegesisFogPanel;
           panel.canvas = ctx.canvas;
           return panel;
         },

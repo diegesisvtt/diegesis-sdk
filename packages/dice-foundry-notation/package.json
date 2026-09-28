@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/dice-foundry-notation",
+  "name": "@diegesis/dice-foundry-notation",
   "version": "0.1.0",
-  "description": "Foundry VTT dice notation parser and serializer for the OpenVTT dice IR — maps Foundry sigils (kh, r, rr, x, xo, cs, cf, df, d%, df-as-fate, dc, @path) to canonical modifier operations.",
+  "description": "Foundry VTT dice notation parser and serializer for the Diegesis dice IR — maps Foundry sigils (kh, r, rr, x, xo, cs, cf, df, d%, df-as-fate, dc, @path) to canonical modifier operations.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/dice-foundry-notation"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,8 +28,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/dice-core": "workspace:*",
-    "@openvtt/dice-notation-core": "workspace:*"
+    "@diegesis/dice-core": "workspace:*",
+    "@diegesis/dice-notation-core": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.4.0",
@@ -33,5 +38,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "dice", "notation", "parser", "foundry", "vtt"]
+  "keywords": ["diegesis", "dice", "notation", "parser", "foundry", "vtt"]
 }

@@ -1,6 +1,6 @@
-import { isDiceExpr } from '@openvtt/dice-core';
-import type { DiceExpr, DieTerm, Pool, RollExpr } from '@openvtt/dice-core';
-import { parseFormula } from '@openvtt/formula';
+import { isDiceExpr } from '@diegesis/dice-core';
+import type { DiceExpr, DieTerm, Pool, RollExpr } from '@diegesis/dice-core';
+import { parseFormula } from '@diegesis/formula';
 import type { RollTransform } from './types';
 
 export function applyRollTransform(expr: RollExpr, transform: RollTransform): RollExpr {

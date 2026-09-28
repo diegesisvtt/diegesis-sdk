@@ -47,8 +47,8 @@ export class CacheStorageAdapter implements StorageAdapter {
   #cachePromise?: Promise<Cache>;
 
   constructor(options: CacheStorageAdapterOptions = {}) {
-    this.#cacheName = options.cacheName ?? 'openvtt-assets';
-    this.#baseUrl = options.baseUrl ?? 'https://assets.openvtt.local/';
+    this.#cacheName = options.cacheName ?? 'diegesis-assets';
+    this.#baseUrl = options.baseUrl ?? 'https://assets.diegesis.local/';
   }
 
   static isSupported(): boolean {

@@ -1,7 +1,7 @@
-import { dynamicBus, type Canvas } from '@openvtt/canvas';
+import { dynamicBus, type Canvas } from '@diegesis/canvas';
 import type { FogOfWarLayer } from '../FogOfWarLayer';
 
-export const FOG_PANEL_TAG = 'openvtt-fog-panel';
+export const FOG_PANEL_TAG = 'diegesis-fog-panel';
 
 const STYLE = `
   :host {
@@ -102,7 +102,7 @@ const STYLE = `
  * simula visão do jogador, escuridão, pincel manual e raio de visão dos
  * tokens. Atribua a instância de Canvas à propriedade `canvas`.
  */
-export class OpenVTTFogPanel extends HTMLElement {
+export class DiegesisFogPanel extends HTMLElement {
   private _canvas: Canvas | null = null;
   private unsubs: Array<() => void> = [];
   private suppressRender = false;
@@ -233,5 +233,5 @@ export class OpenVTTFogPanel extends HTMLElement {
 }
 
 export function defineFogElements(): void {
-  if (!customElements.get(FOG_PANEL_TAG)) customElements.define(FOG_PANEL_TAG, OpenVTTFogPanel);
+  if (!customElements.get(FOG_PANEL_TAG)) customElements.define(FOG_PANEL_TAG, DiegesisFogPanel);
 }

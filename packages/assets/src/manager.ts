@@ -133,7 +133,7 @@ export class AssetManager {
 
   async load(id: string): Promise<Blob> {
     const asset = this.#assets.get(id);
-    if (!asset) throw new Error(`[@openvtt/assets] Unknown asset: "${id}"`);
+    if (!asset) throw new Error(`[@diegesis/assets] Unknown asset: "${id}"`);
 
     const inflight = this.#inflight.get(asset.key);
     if (inflight) return inflight;
@@ -202,7 +202,7 @@ export class AssetManager {
 
   async preload(packName: string, options: PreloadOptions = {}): Promise<PreloadSummary> {
     const pack = this.#packs.get(packName);
-    if (!pack) throw new Error(`[@openvtt/assets] Unknown pack: "${packName}"`);
+    if (!pack) throw new Error(`[@diegesis/assets] Unknown pack: "${packName}"`);
 
     const concurrency = Math.max(1, options.concurrency ?? 4);
     const entries = pack.assets

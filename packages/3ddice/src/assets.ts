@@ -1,5 +1,5 @@
-import type { AssetEntry, AssetManifest } from '@openvtt/assets';
-import { defaultRegistries, type DiceRegistries } from './registries';
+import type { AssetEntry, AssetManifest } from '@diegesis/assets';
+import { createDiceRegistries, type DiceRegistries } from './registries';
 import { DIE_MATERIAL_COUNTS, SURFACE_COUNTS } from './box/sounds';
 import type { NormalizedConfig } from './box/config';
 import type { DiceStyle } from './constants/themes';
@@ -17,7 +17,7 @@ function styleTextureNames(style?: Partial<DiceStyle>): string[] {
   return Array.isArray(texture) ? texture : [texture];
 }
 
-export function buildDiceManifest(config: NormalizedConfig, surface: string, registries: DiceRegistries = defaultRegistries): AssetManifest {
+export function buildDiceManifest(config: NormalizedConfig, surface: string, registries: DiceRegistries = createDiceRegistries()): AssetManifest {
   const assets: AssetEntry[] = [];
   const seen = new Set<string>();
   const push = (entry: AssetEntry) => {

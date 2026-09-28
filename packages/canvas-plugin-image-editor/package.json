@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-image-editor",
+  "name": "@diegesis/canvas-plugin-image-editor",
   "version": "0.1.0",
-  "description": "Image editor plugin for @openvtt/canvas — crop (pan/zoom/rotate/flip), advanced masks and ring overlay for token art; built-in customizable UI plus a headless API for custom interfaces.",
+  "description": "Image editor plugin for @diegesis/canvas — crop (pan/zoom/rotate/flip), advanced masks and ring overlay for token art; built-in customizable UI plus a headless API for custom interfaces.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-image-editor"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,8 +28,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
-    "@openvtt/canvas-plugin-window": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
+    "@diegesis/canvas-plugin-window": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -39,5 +44,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "image", "editor", "token", "crop", "mask", "vtt"]
+  "keywords": ["diegesis", "canvas", "plugin", "image", "editor", "token", "crop", "mask", "vtt"]
 }

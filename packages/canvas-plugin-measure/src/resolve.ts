@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import type { Point } from '@openvtt/canvas';
+import type { Point } from '@diegesis/canvas';
 import { MEASURE_TOOL_DEFAULTS } from './options';
 import {
   MeasureToolOptionsSchema,

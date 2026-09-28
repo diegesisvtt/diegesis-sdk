@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-grid",
+  "name": "@diegesis/canvas-plugin-grid",
   "version": "0.1.0",
-  "description": "Grid plugin for @openvtt/canvas — renders the scene grid (square, hex, isometric) and contributes grid configuration via context menu.",
+  "description": "Grid plugin for @diegesis/canvas — renders the scene grid (square, hex, isometric) and contributes grid configuration via context menu.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-grid"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -40,5 +45,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "grid", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "grid", "vtt", "tabletop"]
 }

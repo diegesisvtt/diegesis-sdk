@@ -1,5 +1,5 @@
 import { describe, it, expect, mock, beforeEach } from 'bun:test';
-import { createHotkeyManager } from '@openvtt/hotkeys';
+import { createHotkeyManager } from '@diegesis/hotkeys';
 import { ToolManager } from '../src/tools/ToolManager';
 import { RootState } from '../src/tools/RootState';
 import { StateNode } from '../src/state/StateNode';

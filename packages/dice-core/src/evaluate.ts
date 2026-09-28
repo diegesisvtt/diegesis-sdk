@@ -1,5 +1,5 @@
 import { v7 as uuidv7 } from 'uuid';
-import { evaluateFormula, toNumber, type Scope } from '@openvtt/formula';
+import { evaluateFormula, toNumber, type Scope } from '@diegesis/formula';
 import type { DieTerm, DiceExpr, Modifier, Pool, RollExpr } from './ir';
 import { createRng, rollInt, type Rng } from './rng';
 import type { DieRoll, TermResult, RollResult, WorkingDie } from './result';

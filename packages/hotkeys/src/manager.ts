@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { createBus, defineContract, type EventBus } from '@openvtt/events';
+import { createBus, defineContract, type EventBus } from '@diegesis/events';
 import { InvalidProfileError, HotkeysError } from './errors';
 import { KeyEngine } from './engine';
 import type { KeyboardTarget, EngineOptions } from './engine';
@@ -30,7 +30,7 @@ export class HotkeyManager {
     } else {
       this.bus = createBus<HotkeyEventMap, HotkeyHookMap>(
         defineContract({
-          namespace: options.namespace ?? 'openvtt',
+          namespace: options.namespace ?? 'diegesis',
           events: {
             hotkeyTriggered: HotkeyTriggeredSchema,
             bindsChanged: BindsChangedSchema,

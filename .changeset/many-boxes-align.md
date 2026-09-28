@@ -1,7 +1,7 @@
 ---
-"@openvtt/canvas": minor
-"@openvtt/canvas-plugin-templates": minor
-"@openvtt/canvas-plugin-lights": patch
+"@diegesis/canvas": minor
+"@diegesis/canvas-plugin-templates": minor
+"@diegesis/canvas-plugin-lights": patch
 ---
 
 The selection box now rotates with the object. With a single object selected, the box, resize corner handles and the rotate handle are drawn on the object's oriented frame instead of its axis-aligned bounding box, so a rotated cone, ray, rectangle or tile keeps a tight selection that hugs the shape. Placeables expose the frame through the new `PlaceableObject.getSelectionFrame()` (`cx`, `cy`, `width`, `height`, `angle`), which `AoETemplate` overrides so cone/ray frames follow `direction` and the circle stays neutral.

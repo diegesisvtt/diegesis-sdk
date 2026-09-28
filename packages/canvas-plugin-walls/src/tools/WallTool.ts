@@ -1,4 +1,4 @@
-import { Tool, CONFIG, type CanvasPointerInfo, type Point } from '@openvtt/canvas';
+import { Tool, CONFIG, type CanvasPointerInfo, type Point } from '@diegesis/canvas';
 import { chainSegments, ellipsePoints, flattenSegment, rdpSimplify, rectPoints, type SegmentSpec } from '../geometry';
 import type { WallSegmentData } from '../schemas';
 import type { WallToolOptions } from '../plugin';

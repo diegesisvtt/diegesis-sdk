@@ -1,8 +1,25 @@
-import { DiceBox, RollCancelledError, listThemes, type RollResult } from '@openvtt/dice';
+import {
+  createDiceBox,
+  isTensDie,
+  RollCancelledError,
+  type DiceTerm,
+  type DieResultInput,
+  type RollOutcome,
+} from '@diegesis/dice';
+import {
+  createRng,
+  evaluateRoll,
+  rollInt,
+  type DieTerm,
+  type FacesSpec,
+  type RollExpr,
+} from '@diegesis/dice-core';
+import { evaluateFormula, extractLeaves, toNumber } from '@diegesis/formula';
+import { fromFormula } from '@diegesis/dice-notation';
 import { hotkeys } from '../hotkeys';
 
 const ICONS = {
-  gear: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.65 8.9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1.03-1.56V3a2 2 0 1 1 4 0v.09c0 .68.4 1.3 1.03 1.56a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87c.26.63.88 1.03 1.56 1.03H21a2 2 0 1 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15Z"/></svg>`,
+  gear: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.65 8.9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1.03-1.56V3a2 2 0 1 1 4 0v.09c0 .68.4 1.3 1.03 1.56a1.7 1.7 0 0 0 1.87-.34l.06-.06a1.7 1.7 0 0 0-.34.06 1.7 1.7 0 0 0 1.87.34l.06.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87c.26.63.88 1.03 1.56 1.03H21a2 2 0 1 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15Z"/></svg>`,
   trash: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>`,
 };
 
@@ -17,15 +34,140 @@ const QUICK_ROLLS: { notation: string; label: string }[] = [
   { notation: '1d2', label: 'coin' },
   { notation: '4d6+3', label: '4d6+3' },
   { notation: '2d20+1d6', label: '2d20+1d6' },
-  { notation: '1d20[boon]+1d20[bane]', label: 'boon/bane' },
+  { notation: '4d6kh3', label: '4d6kh3' },
+  { notation: '2d6!', label: '2d6!' },
 ];
+
+interface PlannedRoll {
+  terms: DiceTerm[];
+  total: number | boolean;
+  termValues: number[];
+}
+
+function evalNumber(expr: RollExpr): number {
+  return toNumber(evaluateFormula(expr, { onLeaf: () => 0 }));
+}
+
+function maxFor(faces: FacesSpec): number {
+  switch (faces.kind) {
+    case 'number':
+      return Math.max(1, Math.floor(faces.value));
+    case 'percentile':
+      return 100;
+    case 'coin':
+      return 2;
+    case 'fate':
+      return 1;
+    case 'expr':
+      return 0;
+  }
+}
+
+interface DieLeaf {
+  term: DieTerm;
+  count: number;
+  explode: 'none' | 'once' | 'recursive';
+  trigger: number;
+}
+
+function collectDieLeaves(expr: RollExpr): DieLeaf[] {
+  return extractLeaves(expr).map((leaf) => {
+    if (leaf.type === 'pool') throw new Error('Pools are not supported by the 3D demo');
+    const term = leaf as DieTerm;
+    const faces = term.faces;
+    const explodeMod = (term.modifiers ?? []).find((mod) => mod.op.startsWith('explode'));
+    const trigger = explodeMod?.compare ? evalNumber(explodeMod.compare.value) : maxFor(faces);
+    return {
+      term,
+      count: Math.max(0, Math.floor(evalNumber(term.count))),
+      explode: !explodeMod
+        ? 'none'
+        : explodeMod.op === 'explode'
+          ? 'recursive'
+          : explodeMod.op === 'explode-once'
+            ? 'once'
+            : 'none',
+      trigger,
+    };
+  });
+}
+
+function percentileParts(value: number): { tens: number; units: number } {
+  const rest = value % 100;
+  const tens = Math.floor(rest / 10) * 10;
+  const units = rest % 10 === 0 ? 10 : rest % 10;
+  return { tens: tens === 0 ? 100 : tens, units };
+}
+
+function buildResults(
+  leaf: DieLeaf,
+  dice: readonly { value: number; exploded: boolean }[]
+): DieResultInput[] {
+  const initial = dice.slice(0, leaf.count);
+  const extras = [...dice.slice(leaf.count)];
+
+  const cascadable =
+    leaf.explode !== 'none' &&
+    leaf.trigger === maxFor(leaf.term.faces) &&
+    !isTensDie(leaf.term.faces);
+
+  if (!cascadable || extras.length === 0) {
+    return dice.map((die) => die.value);
+  }
+
+  const results: DieResultInput[] = initial.map((die) => {
+    if (die.value !== leaf.trigger) return die.value;
+    const chain: number[] = [die.value];
+    while (extras.length > 0 && chain[chain.length - 1] === leaf.trigger) {
+      chain.push(extras.shift()!.value);
+      if (leaf.explode === 'once') break;
+    }
+    return chain.length > 1 ? chain : chain[0];
+  });
+
+  for (const leftover of extras) results.push(leftover.value);
+  return results;
+}
+
+function planRoll(source: string): PlannedRoll {
+  const expr = fromFormula(source);
+  const result = evaluateRoll(expr, { rng: createRng() });
+
+  const leaves = collectDieLeaves(expr);
+  const dieTerms = result.terms.filter((term) => term.type === 'die');
+  if (dieTerms.length !== leaves.length) {
+    throw new Error('Pools are not supported by the 3D demo');
+  }
+
+  const terms: DiceTerm[] = [];
+  const termValues: number[] = [];
+
+  dieTerms.forEach((term, index) => {
+    const leaf = leaves[index];
+    const faces = leaf.term.faces;
+    termValues.push(term.value);
+
+    if (isTensDie(faces)) {
+      for (const die of term.dice) {
+        const { tens, units } = percentileParts(die.value);
+        terms.push({ faces: { kind: 'percentile' }, results: [tens] });
+        terms.push({ faces: 10, results: [units] });
+      }
+      return;
+    }
+
+    terms.push({ faces, results: buildResults(leaf, term.dice) });
+  });
+
+  return { terms, total: result.value, termValues };
+}
 
 export function renderDice(root: HTMLElement): () => void {
   root.innerHTML = `
     <div id="dice-container" class="stage"></div>
     <div class="overlay page-title">
       <h1>Dice Lab</h1>
-      <p>@openvtt/dice</p>
+      <p>@diegesis/dice · visualization only — results by @diegesis/dice-core</p>
     </div>
     <div class="overlay dice-result" id="result"></div>
     <div class="overlay dice-settings">
@@ -93,13 +235,6 @@ export function renderDice(root: HTMLElement): () => void {
   const settingsPanel = root.querySelector<HTMLDivElement>('#settings-panel')!;
   const container = root.querySelector<HTMLDivElement>('#dice-container')!;
 
-  for (const [id, theme] of Object.entries(listThemes())) {
-    const option = document.createElement('option');
-    option.value = id;
-    option.textContent = theme.name;
-    themeSelect.appendChild(option);
-  }
-
   function setStatus(state: 'ready' | 'busy' | 'error', text: string) {
     statusPill.dataset.state = state;
     statusText.textContent = text;
@@ -113,7 +248,7 @@ export function renderDice(root: HTMLElement): () => void {
     };
   }
 
-  const diceBox = new DiceBox(container, {
+  const diceBox = createDiceBox(container, {
     assetPath: '/',
     theme: 'default',
     shadows: 'medium',
@@ -123,7 +258,15 @@ export function renderDice(root: HTMLElement): () => void {
     postprocessing: postprocessing(),
   });
 
-  let selectedDie: number | null = null;
+  for (const [id, theme] of Object.entries(diceBox.themes.list())) {
+    const option = document.createElement('option');
+    option.value = id;
+    option.textContent = theme.name;
+    themeSelect.appendChild(option);
+  }
+
+  let selectedDie: string | null = null;
+  let lastOutcome: RollOutcome | null = null;
   let rolling = false;
   let disposed = false;
 
@@ -138,7 +281,7 @@ export function renderDice(root: HTMLElement): () => void {
     if (disposed) return;
     diceBox.select([id]);
     selectedDie = id;
-    setStatus('ready', `die #${id} selected · value ${value?.value ?? '?'}`);
+    setStatus('ready', `die selected · value ${value}`);
   });
 
   diceBox.on('error', (error) => {
@@ -147,7 +290,7 @@ export function renderDice(root: HTMLElement): () => void {
     setStatus('error', 'error — see console');
   });
 
-  const cleanupInit = diceBox.initialize().catch((error) => {
+  diceBox.ready.catch((error) => {
     console.error('Failed to initialize DiceBox:', error);
     setStatus('error', 'error — see console');
   });
@@ -190,12 +333,30 @@ export function renderDice(root: HTMLElement): () => void {
     settingsBtn.classList.toggle('on', open);
   });
 
+  function newValueFor(faces: FacesSpec): number {
+    const rng = createRng();
+    switch (faces.kind) {
+      case 'number':
+        return rollInt(rng, faces.value);
+      case 'percentile':
+        return rollInt(rng, 10) * 10;
+      case 'coin':
+        return rollInt(rng, 2);
+      default:
+        return 1;
+    }
+  }
+
   async function rerollSelected() {
-    if (selectedDie === null) return;
+    if (selectedDie === null || !lastOutcome) return;
+    const die = lastOutcome.dice.find((d) => d.id === selectedDie);
+    if (!die) return;
     rolling = true;
     setStatus('busy', 'rerolling…');
     try {
-      await diceBox.reroll([selectedDie]);
+      const value = newValueFor(die.faces);
+      await diceBox.reroll([{ id: die.id, value }]);
+      die.value = value;
       setStatus('ready', 'ready');
     } catch (error) {
       if (!(error instanceof RollCancelledError)) console.error(error);
@@ -205,24 +366,21 @@ export function renderDice(root: HTMLElement): () => void {
     }
   }
 
-  function renderResult(result: RollResult) {
-    const sets = result.sets
-      .map((set) => `${set.num}${set.type} [${set.rolls.map((roll) => roll.value).join(', ')}] = ${set.total}`)
-      .join('  ·  ');
-    const modifier = result.modifier ? `  ·  mod ${result.modifier > 0 ? '+' : ''}${result.modifier}` : '';
+  function renderResult(source: string, plan: PlannedRoll, outcome: RollOutcome) {
+    const values = outcome.dice.map((die) => die.value).join(', ');
     resultEl.innerHTML = `
-      <div class="total">${result.total}</div>
-      <div class="notation">${result.notation}</div>
-      <div class="sets">${sets}${modifier}</div>
+      <div class="total">${plan.total}</div>
+      <div class="notation">${source}</div>
+      <div class="sets">[${values}]</div>
     `;
     resultEl.classList.add('show');
 
     const chip = document.createElement('button');
     chip.className = 'history-chip';
-    chip.dataset.notation = result.notation;
-    chip.append(result.notation + ' ');
+    chip.dataset.notation = source;
+    chip.append(source + ' ');
     const total = document.createElement('b');
-    total.textContent = `→ ${result.total}`;
+    total.textContent = `→ ${plan.total}`;
     chip.append(total);
     historyEl.prepend(chip);
     while (historyEl.childElementCount > 6) historyEl.lastChild?.remove();
@@ -231,14 +389,26 @@ export function renderDice(root: HTMLElement): () => void {
   async function roll(notation?: string) {
     if (rolling || !diceBox.initialized) return;
     if (notation !== undefined) notationInput.value = notation;
+    const source = notationInput.value.trim() || '1d20';
+
+    let plan: PlannedRoll;
+    try {
+      plan = planRoll(source);
+    } catch (error) {
+      console.error('Invalid notation:', error);
+      setStatus('error', error instanceof Error ? error.message : 'invalid notation');
+      return;
+    }
+
     rolling = true;
     rollButton.disabled = true;
     setStatus('busy', 'rolling…');
     diceBox.clearSelection();
     selectedDie = null;
     try {
-      const result = await diceBox.roll(notationInput.value.trim() || '1d20');
-      renderResult(result);
+      const outcome = await diceBox.roll(plan.terms);
+      lastOutcome = outcome;
+      renderResult(source, plan, outcome);
       setStatus('ready', 'ready');
     } catch (error) {
       if (!(error instanceof RollCancelledError)) {
@@ -268,16 +438,23 @@ export function renderDice(root: HTMLElement): () => void {
     if (chip?.dataset.notation) roll(chip.dataset.notation);
   });
 
+  const applyConfig = (patch: Parameters<typeof diceBox.configure>[0]) => {
+    diceBox.configure(patch).catch((error) => {
+      console.error('Configure failed:', error);
+      setStatus('error', 'config failed — see console');
+    });
+  };
+
   themeSelect.addEventListener('change', () => {
-    diceBox.updateConfig({ theme: themeSelect.value });
+    applyConfig({ theme: themeSelect.value });
   });
 
   environmentSelect.addEventListener('change', () => {
-    diceBox.updateConfig({ environment: environmentSelect.value as 'none' });
+    applyConfig({ environment: environmentSelect.value as 'none' });
   });
 
   shadowsSelect.addEventListener('change', () => {
-    diceBox.updateConfig({ shadows: shadowsSelect.value as 'medium' });
+    applyConfig({ shadows: shadowsSelect.value as 'medium' });
   });
 
   antialiasSelect.addEventListener('change', () => {
@@ -285,11 +462,12 @@ export function renderDice(root: HTMLElement): () => void {
   });
 
   bloomToggle.addEventListener('change', () => {
-    diceBox.updateConfig({ postprocessing: postprocessing() });
+    applyConfig({ postprocessing: postprocessing() });
   });
 
   clearButton.addEventListener('click', () => {
     diceBox.clear();
+    lastOutcome = null;
     resultEl.classList.remove('show');
     setStatus('ready', 'ready');
   });
@@ -298,7 +476,6 @@ export function renderDice(root: HTMLElement): () => void {
     disposed = true;
     hotkeys.unregister('playground');
     document.removeEventListener('click', onOutsideClick);
-    void cleanupInit;
     try {
       diceBox.destroy();
     } catch {

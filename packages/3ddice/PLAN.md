@@ -1,4 +1,4 @@
-# PLAN — Evolução do `@openvtt/dice`
+# PLAN — Evolução do `@diegesis/dice`
 
 Plano de melhorias do pacote `packages/3ddice`, consolidando:
 1. Correções do code review (bugs, leaks, desempenho);
@@ -190,7 +190,7 @@ const off = dice.on('roll:finish', fn); off(); // ou dice.off(...)
 ### 3.4 Temas e extensibilidade
 
 ```ts
-import { THEMES, registerTheme, registerTexture, registerMaterial, registerDiceModel } from '@openvtt/dice';
+import { THEMES, registerTheme, registerTexture, registerMaterial, registerDiceModel } from '@diegesis/dice';
 
 registerTheme('neon-dice', { name: 'Neon Dice', surface: 'metal', dice: {...}, cubeMap: [...] });
 registerTexture('holo', { source: 'textures/holo.webp', material: 'iridescent' });

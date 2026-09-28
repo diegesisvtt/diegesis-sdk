@@ -7,5 +7,5 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  external: ['uuid', 'valibot', '@openvtt/events', '@openvtt/canvas'],
+  external: ['uuid', 'valibot', '@diegesis/events', '@diegesis/canvas'],
 });

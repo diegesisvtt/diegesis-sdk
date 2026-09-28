@@ -1,5 +1,5 @@
 ---
-'@openvtt/canvas-plugin-tokens': minor
+'@diegesis/canvas-plugin-tokens': minor
 ---
 
 The `Hidden` context-menu toggle is now mixed-state aware for

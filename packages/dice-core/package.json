@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/dice-core",
+  "name": "@diegesis/dice-core",
   "version": "0.1.0",
-  "description": "Canonical dice IR + seeded evaluator for OpenVTT — Valibot-validated, dialect-neutral, side-effect-free except for an injectable RNG.",
+  "description": "Canonical dice IR + seeded evaluator for Diegesis — Valibot-validated, dialect-neutral, side-effect-free except for an injectable RNG.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/dice-core"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/formula": "workspace:*",
+    "@diegesis/formula": "workspace:*",
     "seedrandom": "^3.0.5",
     "uuid": "^11.1.1",
     "valibot": "^1.4.2"
@@ -36,5 +41,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "dice", "vtt", "foundry", "roll20", "seedrandom", "ir"]
+  "keywords": ["diegesis", "dice", "vtt", "foundry", "roll20", "seedrandom", "ir"]
 }

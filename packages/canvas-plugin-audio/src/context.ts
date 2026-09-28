@@ -6,7 +6,7 @@ import {
   type ContextMenuContext,
   type ContextMenuItem,
   type PluginContext,
-} from '@openvtt/canvas';
+} from '@diegesis/canvas';
 import type { SoundData } from './schemas';
 import type { AudioPlugin } from './plugin';
 

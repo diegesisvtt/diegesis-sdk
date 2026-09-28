@@ -7,7 +7,7 @@ import type {
   ModifierOp,
   Pool,
   RollExpr,
-} from '@openvtt/dice-core';
+} from '@diegesis/dice-core';
 import { tokenize, type Token, type TokenType } from './lexer';
 import { EXPLODE_OPS, FAILURE_OPS, FUNCTIONS, KEEP_DROP_OPS } from './keywords';
 import type { DialectConfig } from './dialect';

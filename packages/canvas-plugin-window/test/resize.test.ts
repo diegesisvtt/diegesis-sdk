@@ -1,11 +1,11 @@
 import { beforeAll, afterAll, describe, expect, it } from 'bun:test';
 import { GlobalRegistrator } from '@happy-dom/global-registrator';
-import type { CanvasBus } from '@openvtt/canvas';
+import type { CanvasBus } from '@diegesis/canvas';
 import type { WindowFrameElement } from '../src/frame';
 
 GlobalRegistrator.register();
 
-const { createCanvasBus, dynamicBus } = await import('@openvtt/canvas');
+const { createCanvasBus, dynamicBus } = await import('@diegesis/canvas');
 const { WindowManager } = await import('../src/manager');
 
 interface PointerInit {

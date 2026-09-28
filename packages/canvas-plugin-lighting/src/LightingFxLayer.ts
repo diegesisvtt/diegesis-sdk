@@ -1,5 +1,5 @@
 import { Sprite, Texture } from 'pixi.js';
-import { CanvasLayer, dynamicBus, toHex, type Canvas, type Point } from '@openvtt/canvas';
+import { CanvasLayer, dynamicBus, toHex, type Canvas, type Point } from '@diegesis/canvas';
 import { computeVisibilityPolygon, type VisionSegment } from './visibility';
 
 const NIGHT_COLOR = '#0a0a18';

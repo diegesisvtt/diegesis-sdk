@@ -2,7 +2,7 @@ import { describe, expect, it } from 'bun:test';
 import { buildMeasurePayload, formatMetricValue, formatMetrics, metricValues, pathLength, resolveMeasureOptions } from '../src/resolve';
 import { MEASURE_TOOL_DEFAULTS } from '../src/options';
 import { DND5E_METRIC_PRESET } from '../src/presets';
-import type { Point } from '@openvtt/canvas';
+import type { Point } from '@diegesis/canvas';
 
 describe('formatMetricValue', () => {
   it('drops trailing zero decimals within precision', () => {

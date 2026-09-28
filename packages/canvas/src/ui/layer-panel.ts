@@ -1,6 +1,6 @@
 import type { Canvas } from '../canvas';
 
-export const LAYER_PANEL_TAG = 'openvtt-layer-panel';
+export const LAYER_PANEL_TAG = 'diegesis-layer-panel';
 
 const STYLE = `
   :host {
@@ -77,7 +77,7 @@ const SVG = {
  * Canvas à propriedade `canvas`. Tematizável via CSS custom properties
  * (--ovtt-bg, --ovtt-accent, --ovtt-text, --ovtt-border, --ovtt-radius, ...).
  */
-export class OpenVTTLayerPanel extends HTMLElement {
+export class DiegesisLayerPanel extends HTMLElement {
   private _canvas: Canvas | null = null;
   private unsubs: Array<() => void> = [];
   private suppressRender = false;

@@ -1,18 +1,18 @@
-# @openvtt/dice-roll20-notation
+# @diegesis/dice-roll20-notation
 
-Roll20 dice notation dialect. Parses Roll20-style sigils (`!`, `!!`, `!p`, `ro`, `r`, ...) and `@{attribute}` references into the canonical `@openvtt/dice-core` `RollExpr` IR, and serializes IR back to Roll20 sigils. The API shape mirrors `@openvtt/dice-notation`, plus an `isFunctionName` helper and an additional `pipe` token type.
+Roll20 dice notation dialect. Parses Roll20-style sigils (`!`, `!!`, `!p`, `ro`, `r`, ...) and `@{attribute}` references into the canonical `@diegesis/dice-core` `RollExpr` IR, and serializes IR back to Roll20 sigils. The API shape mirrors `@diegesis/dice-notation`, plus an `isFunctionName` helper and an additional `pipe` token type.
 
 **Version:** 0.1.0
-**Dependencies:** `@openvtt/dice-core`
+**Dependencies:** `@diegesis/dice-core`
 
 ## Installation
 
 ```bash
-bun add @openvtt/dice-roll20-notation
+bun add @diegesis/dice-roll20-notation
 ```
 
 ```ts
-import { fromFormula, toFormula } from '@openvtt/dice-roll20-notation';
+import { fromFormula, toFormula } from '@diegesis/dice-roll20-notation';
 ```
 
 See the [Notation dialects guide](../guides/notation-dialects.md) for a side-by-side comparison of dialects.
@@ -30,7 +30,7 @@ function fromFormula(source: string): RollExpr;
 | source | `string` | — | Roll20-style notation, e.g. `'5d10>6'`. |
 
 ```ts
-import { fromFormula } from '@openvtt/dice-roll20-notation';
+import { fromFormula } from '@diegesis/dice-roll20-notation';
 
 fromFormula('2d6r<=2');  // reroll-recursive on <= 2
 fromFormula('2d6ro<=2'); // reroll-once on <= 2
@@ -153,8 +153,8 @@ toFormula(fromFormula('4d10cs>=8')); // '4d10>=8'
 ### Evaluation
 
 ```ts
-import { fromFormula } from '@openvtt/dice-roll20-notation';
-import { evaluateRoll } from '@openvtt/dice-core';
+import { fromFormula } from '@diegesis/dice-roll20-notation';
+import { evaluateRoll } from '@diegesis/dice-core';
 
 const expr = fromFormula('1d20 + @{strength}');
 const result = evaluateRoll(expr, {
@@ -167,6 +167,6 @@ result.value; // 24
 ## Related
 
 - [Notation dialects guide](../guides/notation-dialects.md)
-- [@openvtt/dice-notation](./dice-notation.md) — canonical notation.
-- [@openvtt/dice-foundry-notation](./dice-foundry-notation.md) — Foundry dialect.
-- [@openvtt/dice-core](./dice-core.md) — the IR and evaluator.
+- [@diegesis/dice-notation](./dice-notation.md) — canonical notation.
+- [@diegesis/dice-foundry-notation](./dice-foundry-notation.md) — Foundry dialect.
+- [@diegesis/dice-core](./dice-core.md) — the IR and evaluator.

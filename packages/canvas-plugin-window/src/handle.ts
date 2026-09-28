@@ -1,11 +1,11 @@
-import type { PluginContext, WindowConstraints, WindowDockEdge, WindowDockTarget, WindowStateKind } from '@openvtt/canvas';
+import type { PluginContext, WindowConstraints, WindowDockEdge, WindowDockTarget, WindowStateKind } from '@diegesis/canvas';
 
 export type WindowHandleEvent = 'close' | 'focus' | 'blur' | 'state' | 'dock' | 'resize' | 'popout' | 'popin';
 
 /**
  * Referência pública a uma janela aberta. Todas as operações delegam ao
  * `WindowManager` (fonte única de verdade); `element` é o frame
- * `<openvtt-window-frame>` e `content` o elemento produzido pela factory
+ * `<diegesis-window-frame>` e `content` o elemento produzido pela factory
  * (ambos null em modo headless).
  */
 export class WindowHandle {

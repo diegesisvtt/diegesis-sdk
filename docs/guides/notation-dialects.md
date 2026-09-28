@@ -1,12 +1,12 @@
 # Notation dialects
 
-openvtt ships three notation packages that all parse into the same `RollExpr` IR from `@openvtt/dice-core`:
+diegesis ships three notation packages that all parse into the same `RollExpr` IR from `@diegesis/dice-core`:
 
 | Package | Dialect | Use it for |
 |---|---|---|
-| `@openvtt/dice-notation` | Canonical | Internal storage, new UIs, anything you control |
-| `@openvtt/dice-foundry-notation` | Foundry VTT | Importing rolls/macros from Foundry |
-| `@openvtt/dice-roll20-notation` | Roll20 | Importing rolls/macros from Roll20 |
+| `@diegesis/dice-notation` | Canonical | Internal storage, new UIs, anything you control |
+| `@diegesis/dice-foundry-notation` | Foundry VTT | Importing rolls/macros from Foundry |
+| `@diegesis/dice-roll20-notation` | Roll20 | Importing rolls/macros from Roll20 |
 
 Because all three produce the same IR, you can parse in one dialect and serialize in another — the packages are lossless converters, not just parsers.
 
@@ -60,7 +60,7 @@ Importing a Roll20 macro with the Foundry parser (or vice versa) silently change
 In Roll20, a bare comparison after a dice term means "count successes":
 
 ```ts
-import { fromFormula } from '@openvtt/dice-roll20-notation';
+import { fromFormula } from '@diegesis/dice-roll20-notation';
 
 fromFormula('5d10>6');
 // Pool-less die term with modifiers: [{ op: 'count-success', compare: { op: '>', value: 6 } }]
@@ -71,7 +71,7 @@ The same text is a syntax error in the canonical and Foundry parsers, where comp
 ### `4df` means two different things in Foundry
 
 ```ts
-import { fromFormula } from '@openvtt/dice-foundry-notation';
+import { fromFormula } from '@diegesis/dice-foundry-notation';
 
 fromFormula('4df');    // 4 FATE dice: faces { kind: 'fate' }  (−1 / 0 / +1)
 fromFormula('4d6df');  // 4d6 with the deduct-failure modifier
@@ -109,16 +109,16 @@ Roll20 wraps attributes in `@{...}` and uses **pipes** for nesting; the parser c
 The workflow is always: parse with the source dialect into the shared IR, then serialize with the target dialect:
 
 ```ts
-import { fromFormula as fromFoundry } from '@openvtt/dice-foundry-notation';
-import { toFormula as toRoll20 } from '@openvtt/dice-roll20-notation';
-import { toFormula as toCanonical, fromFormula as fromCanonical } from '@openvtt/dice-notation';
+import { fromFormula as fromFoundry } from '@diegesis/dice-foundry-notation';
+import { toFormula as toRoll20 } from '@diegesis/dice-roll20-notation';
+import { toFormula as toCanonical, fromFormula as fromCanonical } from '@diegesis/dice-notation';
 
 // Foundry -> Roll20: reroll sigils get translated correctly
 const ir = fromFoundry('2d6r1');     // reroll-once<=1
 toRoll20(ir);                        // '2d6ro1'  — same semantics, Roll20 spelling
 
 // Roll20 -> canonical: implicit successes become explicit
-import { fromFormula as fromRoll20 } from '@openvtt/dice-roll20-notation';
+import { fromFormula as fromRoll20 } from '@diegesis/dice-roll20-notation';
 toCanonical(fromRoll20('5d10>6'));   // '5d10cs>6'
 ```
 
@@ -131,16 +131,16 @@ Two caveats:
 
 ```ts
 // Foundry: exploding attack roll with a keep
-import { fromFormula, toFormula } from '@openvtt/dice-foundry-notation';
+import { fromFormula, toFormula } from '@diegesis/dice-foundry-notation';
 const expr = fromFormula('1d20x + 4d6kh3');
 toFormula(expr);   // '1d20x + 4d6kh3' (round-trip stable)
 
 // Roll20: FATE dice with ascending sort, from a macro
-import { fromFormula as r20 } from '@openvtt/dice-roll20-notation';
+import { fromFormula as r20 } from '@diegesis/dice-roll20-notation';
 r20('4dFs');
 
 // Canonical: safe for storage and for your own UI
-import { fromFormula as canon } from '@openvtt/dice-notation';
+import { fromFormula as canon } from '@diegesis/dice-notation';
 canon('4d6drop-lowest1');        // full names always work
 canon('4d6d1');                  // NotationError: ambiguous alias "d"
 ```
@@ -148,6 +148,6 @@ canon('4d6d1');                  // NotationError: ambiguous alias "d"
 ## When to use which
 
 - **Storing roll definitions** (sheet templates, saved macros): canonical. It is total (covers all 21 ops), unambiguous, and safe to re-parse forever.
-- **Accepting pasted Foundry macros**: `@openvtt/dice-foundry-notation`, then optionally `toFormula` to canonical for storage.
-- **Accepting pasted Roll20 macros**: `@openvtt/dice-roll20-notation`. Remember implicit comparisons become `count-success` — evaluate the result and you get the number of successes, as Roll20 users expect.
+- **Accepting pasted Foundry macros**: `@diegesis/dice-foundry-notation`, then optionally `toFormula` to canonical for storage.
+- **Accepting pasted Roll20 macros**: `@diegesis/dice-roll20-notation`. Remember implicit comparisons become `count-success` — evaluate the result and you get the number of successes, as Roll20 users expect.
 - **Generating text for an external tool**: serialize with that tool's dialect package.

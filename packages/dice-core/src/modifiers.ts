@@ -1,8 +1,8 @@
 import type { FacesSpec, Modifier, ModifierOp } from './ir';
 import type { Rng } from './rng';
 import { rollInt } from './rng';
-import { toNumber } from '@openvtt/formula';
-import type { Scope } from '@openvtt/formula';
+import { toNumber } from '@diegesis/formula';
+import type { Scope } from '@diegesis/formula';
 import type { DieOutcome, WorkingDie } from './result';
 import type { ComparisonOp } from './ir';
 

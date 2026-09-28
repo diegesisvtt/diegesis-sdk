@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { createBus } from '@openvtt/events';
+import { createBus } from '@diegesis/events';
 
 export const assetsContract = {
   namespace: 'assets',

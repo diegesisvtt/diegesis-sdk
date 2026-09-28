@@ -1,8 +1,8 @@
 import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
-import type { Canvas } from '@openvtt/canvas';
-import type { WallsPlugin, Wall } from '@openvtt/canvas-plugin-walls';
-import type { Token } from '@openvtt/canvas-plugin-tokens';
-import type { TokensPlugin, ImageEditorPlugin } from '@openvtt/canvas-preset-standard';
+import type { Canvas } from '@diegesis/canvas';
+import type { WallsPlugin, Wall } from '@diegesis/canvas-plugin-walls';
+import type { Token } from '@diegesis/canvas-plugin-tokens';
+import type { TokensPlugin, ImageEditorPlugin } from '@diegesis/canvas-preset-standard';
 
 let canvas: Canvas;
 const created: string[] = [];
@@ -19,8 +19,8 @@ beforeAll(async () => {
     createElement: () => fakeElement(),
     createElementNS: () => fakeElement(),
   };
-  const { Canvas: CanvasCtor } = await import('@openvtt/canvas');
-  const { standardPlugins } = await import('@openvtt/canvas-preset-standard');
+  const { Canvas: CanvasCtor } = await import('@diegesis/canvas');
+  const { standardPlugins } = await import('@diegesis/canvas-preset-standard');
   canvas = new CanvasCtor({} as HTMLElement);
   for (const plugin of standardPlugins) await canvas.use(plugin);
   canvas.bus.onAny((name) => {
@@ -80,7 +80,7 @@ describe('capability hooks between plugins', () => {
   });
 
   it('dragging a wall point commits the new geometry and is undoable', async () => {
-    const { HistoryManager } = await import('@openvtt/canvas');
+    const { HistoryManager } = await import('@diegesis/canvas');
     if (!canvas.history) {
       (canvas as unknown as { history: HistoryManager }).history = new HistoryManager(canvas);
     }
@@ -165,7 +165,7 @@ describe('scene loading', () => {
   });
 
   it('dynamic events observable via dynamicBus (receiver intact)', async () => {
-    const { dynamicBus } = await import('@openvtt/canvas');
+    const { dynamicBus } = await import('@diegesis/canvas');
     const dyn = dynamicBus(canvas.bus);
     let payload: any = null;
     const unsub = dyn.on('token:create', (p) => { payload = p; });
@@ -176,7 +176,7 @@ describe('scene loading', () => {
   });
 
   it('plugin emitters keep the bus receiver (token:selected)', async () => {
-    const { dynamicBus } = await import('@openvtt/canvas');
+    const { dynamicBus } = await import('@diegesis/canvas');
     const seen: string[][] = [];
     const unsub = dynamicBus(canvas.bus).on('token:selected', (p: any) => seen.push(p.ids));
     const token = canvas.documents.layer('token')!.placeables[0];
@@ -225,7 +225,7 @@ describe('image editor', () => {
   });
 
   it('double-click on an image-editable document opens the editor', async () => {
-    const { dynamicBus } = await import('@openvtt/canvas');
+    const { dynamicBus } = await import('@diegesis/canvas');
     const token = await canvas.documents.create('token', { x: 650, y: 450, label: 'EditMe' });
     const opened: string[] = [];
     const unsub = dynamicBus(canvas.bus).on('imageEditor:opened', (p: any) => opened.push(p.id));
@@ -237,7 +237,7 @@ describe('image editor', () => {
   });
 
   it('double-click near a non-editable document does not open the editor', async () => {
-    const { dynamicBus } = await import('@openvtt/canvas');
+    const { dynamicBus } = await import('@diegesis/canvas');
     const opened: string[] = [];
     const unsub = dynamicBus(canvas.bus).on('imageEditor:opened', (p: any) => opened.push(p.id));
     const wall = await canvas.documents.create('wall', { segments: [{ x1: 600, y1: 520, x2: 760, y2: 520 }] });
@@ -257,7 +257,7 @@ describe('image editor', () => {
 
 describe('windows', () => {
   it('double-click opens the image editor as a managed window (headless)', async () => {
-    const { WindowsPlugin } = await import('@openvtt/canvas-preset-standard');
+    const { WindowsPlugin } = await import('@diegesis/canvas-preset-standard');
     const windows = canvas.plugins.get<WindowsPlugin>('windows')!;
     windows.manager.get('imageEditor')?.close();
     const before = windows.manager.list().length;
@@ -276,7 +276,7 @@ describe('windows', () => {
   });
 
   it('fog registers its panel window when windows is installed first', async () => {
-    const { WindowsPlugin } = await import('@openvtt/canvas-preset-standard');
+    const { WindowsPlugin } = await import('@diegesis/canvas-preset-standard');
     const windows = canvas.plugins.get<WindowsPlugin>('windows')!;
     const handle = windows.manager.open('fog');
     expect(handle).not.toBeNull();
@@ -286,8 +286,8 @@ describe('windows', () => {
   });
 
   it('fog works without the windows plugin (no panel registration)', async () => {
-    const { Canvas: CanvasCtor } = await import('@openvtt/canvas');
-    const { fogPlugin } = await import('@openvtt/canvas-plugin-fog');
+    const { Canvas: CanvasCtor } = await import('@diegesis/canvas');
+    const { fogPlugin } = await import('@diegesis/canvas-plugin-fog');
     const bare = new CanvasCtor({} as HTMLElement);
     await bare.use(fogPlugin);
     expect(bare.plugins.has('fog')).toBe(true);
@@ -298,9 +298,9 @@ describe('windows', () => {
 
 describe('image editor decoupling', () => {
   it('installs and works without the tokens plugin', async () => {
-    const { Canvas: CanvasCtor } = await import('@openvtt/canvas');
-    const { windowsPlugin } = await import('@openvtt/canvas-preset-standard');
-    const { imageEditorPlugin } = await import('@openvtt/canvas-plugin-image-editor');
+    const { Canvas: CanvasCtor } = await import('@diegesis/canvas');
+    const { windowsPlugin } = await import('@diegesis/canvas-preset-standard');
+    const { imageEditorPlugin } = await import('@diegesis/canvas-plugin-image-editor');
     const bare = new CanvasCtor({} as HTMLElement);
     await bare.use(windowsPlugin);
     await bare.use(imageEditorPlugin);
@@ -315,9 +315,9 @@ describe('image editor decoupling', () => {
   });
 
   it('a custom document type becomes editable by declaring imageField', async () => {
-    const { Canvas: CanvasCtor, PlaceableObject, definePlugin } = await import('@openvtt/canvas');
-    const { windowsPlugin } = await import('@openvtt/canvas-preset-standard');
-    const { imageEditorPlugin } = await import('@openvtt/canvas-plugin-image-editor');
+    const { Canvas: CanvasCtor, PlaceableObject, definePlugin } = await import('@diegesis/canvas');
+    const { windowsPlugin } = await import('@diegesis/canvas-preset-standard');
+    const { imageEditorPlugin } = await import('@diegesis/canvas-plugin-image-editor');
     class Portrait extends PlaceableObject<{ x: number; y: number; art?: string }> {
       readonly objectType = 'portrait';
       get bounds() { return { x: -10, y: -10, width: 20, height: 20 }; }

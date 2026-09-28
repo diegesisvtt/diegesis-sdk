@@ -1,32 +1,26 @@
-import { newId } from '@openvtt/events';
-import type { StepResult } from '@openvtt/physics';
+import { newId } from '@diegesis/events';
+import type { StepResult } from '@diegesis/physics';
 
-import type { DiceBus, RerollContext } from '../bus';
+import type { DiceBus } from '../bus';
+import { assertResultInRange, type NormalizedDie, type NormalizedTerm } from '../contract';
 import { RollCancelledError } from '../errors';
-import type { DieResult, RollResult } from '../results';
-import {
-  BODY_SLEEP_STATE,
-  createEmptyThrowVector,
-  type DiceMesh,
-  type DiceSetStyle,
-} from '../services/dice-mesh';
+import type { RerollRequest, RolledDie, RollOutcome } from '../results';
+import { BODY_SLEEP_STATE, type DiceMesh } from '../services/dice-mesh';
 import type { DiceFactory } from '../services/factory';
-import type { NotationParser, ParsedNotation } from '../services/notation';
 import type { PhysicsController } from './physics-controller';
 import type { DiceSpawner } from './spawner';
 import type { SoundManager } from './sounds';
 import type { RollQueue } from './roll-queue';
 import type { ThrowPlanner } from './throw-planner';
-import type { CameraHeights, DisplayConfig, Vector2D } from './types';
+import type { CameraHeights, DisplayConfig } from './types';
 
-export type AnimState = 'idle' | 'throw' | 'selector' | 'afterthrow' | 'simulate';
-
-export type SelectorDie = string | { type: string; style?: DiceSetStyle };
+export type AnimState = 'idle' | 'throw' | 'afterthrow' | 'simulate';
 
 export interface RollTimingConfig {
   timestep: number;
   iterationLimit: number;
   strength: number;
+  cascadeDelay: number;
 }
 
 export interface RollOrchestratorDeps {
@@ -35,28 +29,24 @@ export interface RollOrchestratorDeps {
   physics: PhysicsController;
   planner: ThrowPlanner;
   spawner: DiceSpawner;
-  parser: NotationParser;
   sounds: SoundManager;
   shapes: Pick<DiceFactory, 'getShapeDescriptor'>;
   swapFace: (mesh: DiceMesh, result: number) => Promise<void>;
   getConfig: () => RollTimingConfig;
   getDisplay: () => DisplayConfig;
-  relayout: () => void;
   renderFrame: () => void;
   clearSelection: () => void;
   isDisposed: () => boolean;
+  rng: () => number;
 }
 
 export class RollOrchestrator {
   #animState: AnimState = 'idle';
   #threadId = 0;
-  #dieIndex = 0;
   #iteration = 0;
   #rollToken = 0;
   #currentRollId = '';
   #rolling = false;
-  #notationVectors?: ParsedNotation;
-  #selector: { dice: string[] } = { dice: [] };
 
   constructor(private deps: RollOrchestratorDeps) {}
 
@@ -76,86 +66,8 @@ export class RollOrchestrator {
     return this.#animState;
   }
 
-  get notationVectors(): ParsedNotation | undefined {
-    return this.#notationVectors;
-  }
-
   resolveCameraZ(heights: CameraHeights): number {
-    if (this.#animState === 'selector') {
-      const count = this.#selector?.dice?.length || 1;
-      return count > 9
-        ? heights.far
-        : count < 6
-          ? heights.close
-          : heights.medium;
-    }
     return heights.far;
-  }
-
-  vectorRand(vector: Vector2D): Vector2D {
-    return this.deps.planner.vectorRand(vector);
-  }
-
-  getNotationVectors(notation: string, vector: Vector2D, boost: number, dist: number): ParsedNotation {
-    const parsed = this.deps.parser.parse(notation);
-    this.#dieIndex = this.deps.planner.plan(parsed, vector, boost, dist, this.#dieIndex);
-    return parsed;
-  }
-
-  startClickThrow(notation: string): ParsedNotation {
-    if (this.#rolling) {
-      this.clearDice();
-      this.#rolling = false;
-    }
-
-    const display = this.deps.getDisplay();
-    const vector = {
-      x: (Math.random() * 2 - 0.5) * display.currentWidth,
-      y: -(Math.random() * 2 - 0.5) * display.currentHeight,
-    };
-    const dist = Math.sqrt(vector.x * vector.x + vector.y * vector.y) + 100;
-    const boost = (Math.random() + 3) * dist * this.deps.getConfig().strength;
-
-    return this.getNotationVectors(notation, vector, boost, dist);
-  }
-
-  async showSelector(dice: SelectorDie[] = ['d20']): Promise<void> {
-    this.clearDice();
-    this.#rolling = false;
-    this.#animState = 'selector';
-    this.#selector = { dice: dice.map((d) => (typeof d === 'string' ? d : d.type)) };
-    this.deps.relayout();
-
-    const threadid = ++this.#threadId;
-
-    for (const diceItem of dice) {
-      const type = typeof diceItem === 'string' ? diceItem : diceItem.type;
-      const style = typeof diceItem === 'string' ? undefined : diceItem.style;
-      const vector = createEmptyThrowVector(type);
-      vector.style = style;
-      await this.deps.spawner.spawn(vector);
-    }
-
-    const frame = () => {
-      if (this.deps.isDisposed() || threadid !== this.#threadId || this.#animState !== 'selector') return;
-
-      const spacing = 100;
-      const totalDice = this.deps.spawner.dice.length;
-      const startX = -((totalDice - 1) * spacing) / 2;
-
-      this.deps.spawner.dice.forEach((die, index) => {
-        if (die) {
-          die.rotation.y += 0.01;
-          die.rotation.x += 0.005;
-          const xPos = startX + index * spacing;
-          die.position.set(xPos, 0, 0);
-        }
-      });
-
-      this.deps.renderFrame();
-      requestAnimationFrame(frame);
-    };
-    requestAnimationFrame(frame);
   }
 
   clearDice(): void {
@@ -181,143 +93,129 @@ export class RollOrchestrator {
     this.deps.bus.emit('roll:cancel', { id: this.#currentRollId || undefined });
   }
 
-  async roll(notationString: string | string[]): Promise<RollResult> {
-    const notation = Array.isArray(notationString) ? notationString.join('+') : notationString;
-    const token = ++this.#rollToken;
+  async roll(terms: NormalizedTerm[]): Promise<RollOutcome> {
     return this.deps.queue.enqueue(async () => {
+      const token = ++this.#rollToken;
       this.#assertActive(token);
-      return this.#rollNow(notation, token);
+      this.clearDice();
+      return this.#rollTerms(terms, token);
     });
   }
 
-  async #rollNow(notation: string, token: number): Promise<RollResult> {
+  async add(terms: NormalizedTerm[]): Promise<RollOutcome> {
+    return this.deps.queue.enqueue(async () => {
+      const token = ++this.#rollToken;
+      this.#assertActive(token);
+      if (this.deps.spawner.dice.length === 0) {
+        return this.#rollTerms(terms, token);
+      }
+      return this.#addTerms(terms, token);
+    });
+  }
+
+  async #rollTerms(terms: NormalizedTerm[], token: number): Promise<RollOutcome> {
     this.#currentRollId = newId();
-    this.deps.bus.emit('roll:start', { id: this.#currentRollId, notation });
-    this.#notationVectors = this.startClickThrow(notation);
-    if (!this.#notationVectors) {
-      throw new Error('Invalid notation');
+    this.deps.bus.emit('roll:start', { id: this.#currentRollId });
+
+    const planned = terms.flatMap((term) => term.dice);
+    const maxStep = planned.reduce((max, die) => Math.max(max, die.step), 0);
+    const pairs: { planned: NormalizedDie; mesh: DiceMesh | null }[] = [];
+
+    await this.#spawnWave(planned.filter((die) => die.step === 0), token, pairs);
+    await this.#throwAll(token);
+
+    for (let step = 1; step <= maxStep; step++) {
+      const waveDice = planned.filter((die) => die.step === step);
+      if (waveDice.length === 0) continue;
+      await this.#delay(this.deps.getConfig().cascadeDelay, token);
+      const existing = this.deps.spawner.dice.length;
+      await this.#spawnWave(waveDice, token, pairs);
+      await this.#throwNew(existing, token);
     }
-    await this.rollDice(token);
-    const results = this.getDiceResults();
-    this.deps.bus.emit('roll:finish', results);
-    return results;
+
+    const outcome = this.#buildOutcome(terms, pairs);
+    this.deps.bus.emit('roll:finish', outcome);
+    return outcome;
   }
 
-  async reroll(diceIdArray: number[]): Promise<DieResult[]> {
-    const token = ++this.#rollToken;
-    return this.deps.queue.enqueue(async () => {
-      this.#assertActive(token);
-      this.#rolling = true;
-      const threadid = ++this.#threadId;
-      this.#iteration = 0;
+  async #addTerms(terms: NormalizedTerm[], token: number): Promise<RollOutcome> {
+    this.#currentRollId = newId();
+    this.deps.bus.emit('roll:start', { id: this.#currentRollId });
 
-      diceIdArray.forEach((dieId) => {
-        const dicemesh = this.deps.spawner.dice[dieId];
-        if (!dicemesh) return;
-        dicemesh.rerolls += 1;
-        dicemesh.rerolling = true;
+    const existing = this.deps.spawner.dice.length;
+    const planned = terms.flatMap((term) => term.dice);
+    const pairs: { planned: NormalizedDie; mesh: DiceMesh | null }[] = [];
+
+    await this.#spawnWave(planned, token, pairs);
+    await this.#throwNew(existing, token);
+
+    const outcome = this.#buildOutcome(terms, pairs);
+    this.deps.bus.emit('roll:finish', outcome);
+    return outcome;
+  }
+
+  async #throwNew(existing: number, token: number): Promise<void> {
+    const all = this.deps.spawner.dice;
+    const payloads = this.deps.physics
+      .buildSpawnPayloads(all, this.deps.shapes)
+      .filter((p) => p.index >= existing);
+    await this.deps.physics.spawnBatch(payloads);
+    await this.#simulateThrow(token);
+
+    const spawned = all.slice(existing);
+    await this.#applyForcedValues(spawned);
+    await this.deps.physics.spawnBatch(payloads);
+    this.deps.physics.resetMeshesToInitial(payloads, all);
+
+    const threadid = ++this.#threadId;
+    this.#rolling = true;
+    await this.#animateThrow(threadid, token);
+  }
+
+  async #delay(ms: number, token: number): Promise<void> {
+    if (ms <= 0) return;
+    await new Promise((resolve) => setTimeout(resolve, ms));
+    this.#assertActive(token);
+  }
+
+  async #spawnWave(
+    planned: NormalizedDie[],
+    token: number,
+    pairs: { planned: NormalizedDie; mesh: DiceMesh | null }[]
+  ): Promise<void> {
+    const display = this.deps.getDisplay();
+    const rng = this.deps.rng;
+    const vector = {
+      x: (rng() * 2 - 0.5) * display.currentWidth,
+      y: -(rng() * 2 - 0.5) * display.currentHeight,
+    };
+    const dist = Math.sqrt(vector.x * vector.x + vector.y * vector.y) + 100;
+    const boost = (rng() + 3) * dist * this.deps.getConfig().strength;
+
+    const vectors = this.deps.planner.plan(planned, vector, boost, dist);
+
+    for (let i = 0; i < planned.length; i++) {
+      this.#assertActive(token);
+      const mesh = await this.deps.spawner.spawn(vectors[i], {
+        dieId: newId(),
+        faces: planned[i].faces,
+        forcedValue: planned[i].value,
       });
-      await this.deps.physics.tossReroll(diceIdArray);
-      this.#assertActive(token);
-
-      await this.#animateThrow(threadid, token);
-      return diceIdArray.map((dieId) => this.getDiceResults(dieId));
-    });
+      pairs.push({ planned: planned[i], mesh });
+    }
+    this.#assertActive(token);
   }
 
-  async add(notationString: string): Promise<DieResult[] | RollResult> {
-    const token = ++this.#rollToken;
-    return this.deps.queue.enqueue(async () => {
-      this.#assertActive(token);
-      const dice = this.deps.spawner.dice;
-      const dieCount = dice.length;
-      if (!dieCount) {
-        return this.#rollNow(notationString, token);
-      }
-
-      const addNotationVectors = this.startClickThrow(notationString);
-      const diceIdArray: number[] = [];
-
-      for (let i = 0, len = addNotationVectors.vectors.length; i < len; ++i) {
-        this.#assertActive(token);
-        await this.deps.spawner.spawn(addNotationVectors.vectors[i]);
-        diceIdArray.push(dieCount + i);
-      }
-
-      const payloads = this.deps.physics
-        .buildSpawnPayloads(dice, this.deps.shapes)
-        .filter((p) => diceIdArray.includes(p.index));
-      await this.deps.physics.spawnBatch(payloads);
-      await this.#simulateThrow(token);
-
-      await this.deps.physics.spawnBatch(payloads);
-      this.deps.physics.resetMeshesToInitial(payloads, dice);
-
-      if (addNotationVectors.result && addNotationVectors.result.length > 0) {
-        for (let i = 0; i < addNotationVectors.result.length; i++) {
-          const index = dieCount + i;
-          const dicemesh = dice[index];
-          if (!dicemesh) continue;
-          if (Number(dicemesh.getLastValue().value) == Number(addNotationVectors.result[i])) continue;
-          await this.deps.swapFace(dicemesh, Number(addNotationVectors.result[i]));
-        }
-      }
-
-      this.#notationVectors = this.#notationVectors
-        ? this.deps.parser.merge(this.#notationVectors, addNotationVectors)
-        : addNotationVectors;
-
-      const threadid = ++this.#threadId;
-      this.#rolling = true;
-      await this.#animateThrow(threadid, token);
-      return diceIdArray.map((dieId) => this.getDiceResults(dieId));
-    });
-  }
-
-  async remove(diceIdArray: number[]): Promise<DieResult[]> {
-    const results: DieResult[] = [];
-    const dice = this.deps.spawner.dice;
-    for (const dieId of diceIdArray) {
-      const mesh = dice[dieId];
-      if (!mesh) continue;
-      this.deps.spawner.detach(mesh);
-      mesh.storeRolledValue('remove');
-      results.push(this.getDiceResults(dieId));
-    }
-    await this.deps.physics.remove(diceIdArray);
-    this.deps.renderFrame();
-    return results;
-  }
-
-  async rollDice(token: number): Promise<void> {
-    const notationVectors = this.#notationVectors;
-    if (!notationVectors || notationVectors.error) {
-      return;
-    }
-
-    this.clearDice();
-
-    for (let i = 0, len = notationVectors.vectors.length; i < len; ++i) {
-      this.#assertActive(token);
-      await this.deps.spawner.spawn(notationVectors.vectors[i]);
-    }
-
+  async #throwAll(token: number): Promise<void> {
+    this.#assertActive(token);
     const dice = this.deps.spawner.dice;
     const payloads = this.deps.physics.buildSpawnPayloads(dice, this.deps.shapes);
     await this.deps.physics.spawnBatch(payloads);
     await this.#simulateThrow(token);
 
+    await this.#applyForcedValues(dice);
     await this.deps.physics.spawnBatch(payloads);
     this.deps.physics.resetMeshesToInitial(payloads, dice);
-
-    if (notationVectors.result && notationVectors.result.length > 0) {
-      for (let i = 0; i < notationVectors.result.length; i++) {
-        const dicemesh = dice[i];
-        if (!dicemesh) continue;
-        if (Number(dicemesh.getLastValue().value) == Number(notationVectors.result[i])) continue;
-        await this.deps.swapFace(dicemesh, Number(notationVectors.result[i]));
-      }
-    }
 
     this.#rolling = true;
     const threadid = ++this.#threadId;
@@ -325,111 +223,121 @@ export class RollOrchestrator {
     await this.#animateThrow(threadid, token);
   }
 
-  getDiceResults(): RollResult;
-  getDiceResults(id: number): DieResult;
-  getDiceResults(id?: number): RollResult | DieResult {
-    const dice = this.deps.spawner.dice;
-    if (id !== undefined) {
-      const die = dice[id];
-      if (!die) {
-        return { type: '', sides: 0, id, value: 0, label: '', reason: '' };
-      }
-      const last = die.result?.at(-1);
-      return {
-        type: die.shape,
-        sides: parseInt(die.shape.substring(1)),
-        id,
-        ...last,
-        value: last?.value ?? 0,
-        label: last?.label ?? '',
-        reason: last?.reason ?? '',
-      };
+  async #applyForcedValues(dice: DiceMesh[]): Promise<void> {
+    for (const mesh of dice) {
+      if (mesh.getFaceValue().value === mesh.forcedValue) continue;
+      await this.deps.swapFace(mesh, mesh.forcedValue);
     }
-    let counter = 0;
-    const notationVectors = this.#notationVectors;
-    const modifier = notationVectors?.constant
-      ? parseInt(`${notationVectors.op}${notationVectors.constant}`)
-      : 0;
-    let rollTotal = modifier;
-    return {
-      id: this.#currentRollId,
-      notation: notationVectors?.notation ?? '',
-      sets: (notationVectors?.set ?? []).map((set) => {
-        const endCount = counter + set.num - 1;
-        let setTotal = 0;
-        const rolls: DieResult[] = [];
-        for (let index = counter; index <= endCount; index++) {
-          const die = dice[counter];
-          const lastValue = die?.result?.at(-1);
-          if (!lastValue) {
-            counter++;
-            continue;
-          }
-          if (lastValue.reason === 'remove') {
-            counter++;
-            continue;
-          }
-          rolls.push({
-            type: set.type,
-            sides: parseInt(set.type.substring(1)),
-            id: counter,
-            ...lastValue,
-            value: lastValue.value ?? 0,
-          });
-          setTotal += lastValue.value ?? 0;
-          counter++;
+  }
+
+  async reroll(requests: RerollRequest[]): Promise<RolledDie[]> {
+    return this.deps.queue.enqueue(async () => {
+      const token = ++this.#rollToken;
+      this.#assertActive(token);
+
+      const targets: { index: number; mesh: DiceMesh; value: number }[] = [];
+      for (const request of requests) {
+        const index = this.deps.spawner.indexOfId(request.id);
+        if (index < 0) continue;
+        const mesh = this.deps.spawner.dice[index];
+        assertResultInRange(mesh.faces, request.value);
+        targets.push({ index, mesh, value: request.value });
+      }
+      if (targets.length === 0) return [];
+
+      this.#rolling = true;
+      const threadid = ++this.#threadId;
+      this.#iteration = 0;
+
+      await this.deps.physics.tossReroll(targets.map((t) => t.index));
+      this.#assertActive(token);
+      await this.#animateThrow(threadid, token);
+
+      for (const target of targets) {
+        target.mesh.forcedValue = target.value;
+        if (target.mesh.getFaceValue().value !== target.value) {
+          await this.deps.swapFace(target.mesh, target.value);
         }
-        rollTotal += setTotal;
-        return {
-          num: set.num,
-          type: set.type,
-          sides: parseInt(set.type.substring(1)),
-          rolls,
-          total: setTotal,
+      }
+      this.deps.renderFrame();
+
+      return targets.map((t) => ({
+        id: t.mesh.dieId,
+        value: t.value,
+        faces: t.mesh.faces,
+      }));
+    });
+  }
+
+  async remove(ids: string[]): Promise<RolledDie[]> {
+    return this.deps.queue.enqueue(async () => {
+      const token = ++this.#rollToken;
+      this.#assertActive(token);
+
+      const targets = ids
+        .map((id) => ({ id, index: this.deps.spawner.indexOfId(id) }))
+        .filter((t) => t.index >= 0)
+        .sort((a, b) => a.index - b.index);
+      if (targets.length === 0) return [];
+
+      const removed: RolledDie[] = [];
+      for (const target of targets) {
+        const mesh = this.deps.spawner.dice[this.deps.spawner.indexOfId(target.id)];
+        if (!mesh) continue;
+        removed.push({ id: mesh.dieId, value: mesh.forcedValue, faces: mesh.faces });
+        this.deps.spawner.detach(mesh);
+        this.deps.spawner.disposeMesh(mesh);
+      }
+
+      this.deps.physics.clear();
+      const survivors = this.deps.spawner.dice;
+      if (survivors.length > 0) {
+        await this.deps.physics.spawnBatch(
+          this.deps.physics.buildSettledPayloads(survivors, this.deps.shapes)
+        );
+      }
+      this.deps.renderFrame();
+      return removed;
+    });
+  }
+
+  #buildOutcome(
+    terms: NormalizedTerm[],
+    pairs: { planned: NormalizedDie; mesh: DiceMesh | null }[]
+  ): RollOutcome {
+    const byPlanned = new Map<NormalizedDie, DiceMesh | null>();
+    for (const pair of pairs) byPlanned.set(pair.planned, pair.mesh);
+
+    const rolledTerms = [];
+    const flat: RolledDie[] = [];
+
+    for (const term of terms) {
+      const dice: RolledDie[] = [];
+      for (const planned of term.dice) {
+        const mesh = byPlanned.get(planned);
+        const die: RolledDie = {
+          id: mesh?.dieId ?? newId(),
+          value: mesh?.forcedValue ?? planned.value,
+          faces: planned.faces,
         };
-      }),
-      modifier,
-      total: rollTotal,
-    };
-  }
-
-  #checkForRethrow(dicemesh: DiceMesh): boolean {
-    const func = dicemesh.notation.func?.toLowerCase() || '';
-    if (!func) return false;
-    const ctx = { die: dicemesh, func, args: dicemesh.notation.args || '' } as RerollContext;
-    return (this.deps.bus.call('shouldReroll', ctx) as unknown) === true;
-  }
-
-  #evaluateThrow(forcedFinish: boolean): { finished: boolean; rethrow: number[] } {
-    const rethrow: number[] = [];
-    const dice = this.deps.spawner.dice;
-
-    for (let i = 0; i < dice.length; i++) {
-      const dicemesh = dice[i];
-      if (!dicemesh?.body) continue;
-
-      if (dicemesh.body.sleepState < BODY_SLEEP_STATE && !forcedFinish) {
-        return { finished: false, rethrow: [] };
+        dice.push(die);
+        flat.push(die);
       }
-      if (dicemesh.body.sleepState !== BODY_SLEEP_STATE && !forcedFinish) {
-        continue;
-      }
-
-      if (dicemesh.result.length === 0) {
-        dicemesh.storeRolledValue(dicemesh.resultReason);
-      } else if (dicemesh.result.length > 0 && dicemesh.rerolling) {
-        dicemesh.rerolling = false;
-        dicemesh.storeRolledValue('reroll');
-      }
-
-      if (this.#checkForRethrow(dicemesh)) {
-        dicemesh.rerolls += 1;
-        dicemesh.rerolling = true;
-        rethrow.push(i);
-      }
+      rolledTerms.push({ id: newId(), dice });
     }
 
-    return { finished: true, rethrow };
+    return { id: this.#currentRollId, terms: rolledTerms, dice: flat };
+  }
+
+  #allSettled(forcedFinish: boolean): boolean {
+    const dice = this.deps.spawner.dice;
+    for (const dicemesh of dice) {
+      if (!dicemesh?.body) continue;
+      if (dicemesh.body.sleepState < BODY_SLEEP_STATE && !forcedFinish) {
+        return false;
+      }
+    }
+    return true;
   }
 
   #assertActive(token: number): void {
@@ -447,13 +355,7 @@ export class RollOrchestrator {
       this.#assertActive(token);
       const result = await this.deps.physics.simulate(this.deps.getConfig().iterationLimit);
       this.deps.physics.applyStates(result.states, this.deps.spawner.dice);
-
-      const evaluation = this.#evaluateThrow(true);
-      if (evaluation.rethrow.length > 0) {
-        await this.deps.physics.tossReroll(evaluation.rethrow);
-        continue;
-      }
-      break;
+      if (this.#allSettled(true)) break;
     }
     this.#animState = 'throw';
   }
@@ -484,7 +386,7 @@ export class RollOrchestrator {
             lastTime = lastTime + neededSteps * config.timestep * 1000;
             this.#assertActive(token);
             this.deps.physics.applyStates(stepResult.states, this.deps.spawner.dice);
-            this.deps.sounds.playCollideEvents(stepResult.collideEvents, this.#animState === 'simulate');
+            this.deps.sounds.playCollideEvents(stepResult.collideEvents, false);
           }
 
           this.deps.renderFrame();
@@ -493,14 +395,7 @@ export class RollOrchestrator {
           const allAsleep = stepResult?.allAsleep ?? false;
 
           if (allAsleep || forcedFinish) {
-            const evaluation = this.#evaluateThrow(forcedFinish);
-            if (!evaluation.finished) {
-              requestAnimationFrame(frame);
-              return;
-            }
-            if (evaluation.rethrow.length > 0) {
-              await this.deps.physics.tossReroll(evaluation.rethrow);
-              this.#assertActive(token);
+            if (!this.#allSettled(forcedFinish)) {
               requestAnimationFrame(frame);
               return;
             }

@@ -1,12 +1,12 @@
-import type { ModifierOp } from '@openvtt/dice-core';
+import type { ModifierOp } from '@diegesis/dice-core';
 import {
   buildModifierPatterns,
   canonicalToTokens,
   type ModPattern,
-} from '@openvtt/dice-notation-core';
+} from '@diegesis/dice-notation-core';
 
 export type { ModPattern };
-export { FUNCTIONS, isFunctionName } from '@openvtt/dice-notation-core';
+export { FUNCTIONS, isFunctionName } from '@diegesis/dice-notation-core';
 
 const CANONICAL_NAMES: readonly string[] = [
   'keep-highest',

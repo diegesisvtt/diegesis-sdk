@@ -7,5 +7,5 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  external: ['pixi.js', 'pixi-filters', 'valibot', 'uuid', '@openvtt/events', '@openvtt/canvas'],
+  external: ['pixi.js', 'pixi-filters', 'valibot', 'uuid', '@diegesis/events', '@diegesis/canvas'],
 });

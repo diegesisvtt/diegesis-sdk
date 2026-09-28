@@ -1,18 +1,18 @@
-# @openvtt/hotkeys
+# @diegesis/hotkeys
 
-Declarative, context-aware hotkey management for the openvtt monorepo. Actions are registered per `namespace/action` with default binds and handlers; users can rebind them, conflicts are detected and resolved by precedence, and everything is observable through an `@openvtt/events` bus. Matching uses physical `event.code` tokens, so binds are layout independent.
+Declarative, context-aware hotkey management for the diegesis monorepo. Actions are registered per `namespace/action` with default binds and handlers; users can rebind them, conflicts are detected and resolved by precedence, and everything is observable through an `@diegesis/events` bus. Matching uses physical `event.code` tokens, so binds are layout independent.
 
 **Version:** 0.1.0
-**Dependencies:** `@openvtt/events`, `uuid`, `valibot`
+**Dependencies:** `@diegesis/events`, `uuid`, `valibot`
 
 ## Installation
 
 ```bash
-bun add @openvtt/hotkeys
+bun add @diegesis/hotkeys
 ```
 
 ```ts
-import { createHotkeyManager, formatCombo } from '@openvtt/hotkeys';
+import { createHotkeyManager, formatCombo } from '@diegesis/hotkeys';
 ```
 
 ## `createHotkeyManager(options?)`
@@ -21,7 +21,7 @@ Creates a `HotkeyManager`.
 
 | Name | Type | Default | Description |
 |------|------|---------|-------------|
-| options.namespace | `string` | `'openvtt'` | Namespace for the internal event bus. |
+| options.namespace | `string` | `'diegesis'` | Namespace for the internal event bus. |
 | options.bus | `EventBus<HotkeyEventMap, HotkeyHookMap>` | auto | Reuse an existing bus instead of creating one. |
 | options.skipInputs | `boolean` | `true` | Ignore keys while typing in form fields. |
 | options.autoPreventDefault | `boolean` | `true` | Call `preventDefault`/`stopPropagation` when a handler claims the event. |
@@ -45,7 +45,7 @@ Registers an action and returns its `ActionInfo` snapshot. Throws `DuplicateActi
 | def.allowInInputs | `boolean` | `false` | Fire even while typing in form fields. |
 
 ```ts
-import { createHotkeyManager } from '@openvtt/hotkeys';
+import { createHotkeyManager } from '@diegesis/hotkeys';
 
 const hotkeys = createHotkeyManager();
 
@@ -118,7 +118,7 @@ hotkeys.applyProfile({ version: 1, overrides: { 'core/ping': ['ctrl+shift+p'] } 
 
 ## Events and hooks
 
-The manager exposes a typed `@openvtt/events` bus:
+The manager exposes a typed `@diegesis/events` bus:
 
 | Member | Payload | Emitted when |
 |--------|---------|--------------|
@@ -157,7 +157,7 @@ hotkeys.bus.tap('beforeHotkey', 'gm-only', (ctx) =>
 
 ## Adoption in the monorepo
 
-App-level and canvas-level shortcuts go through a shared manager. `@openvtt/canvas` accepts one via `new Canvas(el, { hotkeys })` (creating and managing its own otherwise) and registers its actions in the `canvas` namespace:
+App-level and canvas-level shortcuts go through a shared manager. `@diegesis/canvas` accepts one via `new Canvas(el, { hotkeys })` (creating and managing its own otherwise) and registers its actions in the `canvas` namespace:
 
 | Action | Default binds | Description |
 |--------|---------------|-------------|
@@ -169,7 +169,7 @@ App-level and canvas-level shortcuts go through a shared manager. `@openvtt/canv
 
 Apps should pass the same manager to every surface (see `apps/playground/src/hotkeys.ts`), register page actions in their own namespace (`playground/...`) and unregister on teardown.
 
-**Widget-local keys stay local.** Transient, focus-scoped widget interactions — context menu arrow navigation, modal `Escape` in `@openvtt/canvas-plugin-window`, `Enter` inside a widget's own input — are not user-rebindable actions and keep their scoped listeners. Tool-level keys that belong to the active tool state (selection `Delete`/arrows, drawing `Enter`/`Escape`) continue to flow through the canvas state machine instead of the hotkey engine.
+**Widget-local keys stay local.** Transient, focus-scoped widget interactions — context menu arrow navigation, modal `Escape` in `@diegesis/canvas-plugin-window`, `Enter` inside a widget's own input — are not user-rebindable actions and keep their scoped listeners. Tool-level keys that belong to the active tool state (selection `Delete`/arrows, drawing `Enter`/`Escape`) continue to flow through the canvas state machine instead of the hotkey engine.
 
 ## Errors
 

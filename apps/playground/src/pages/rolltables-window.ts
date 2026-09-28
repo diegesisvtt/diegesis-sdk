@@ -2,8 +2,8 @@ import {
   TableError,
   type RandomTable,
   type TableDef,
-} from '@openvtt/roll-tables';
-import { flattenDraw, type RollTablesRegistry } from '@openvtt/canvas-plugin-roll-tables';
+} from '@diegesis/roll-tables';
+import { flattenDraw, type RollTablesRegistry } from '@diegesis/canvas-plugin-roll-tables';
 
 export interface RollTablesWindowHooks {
   log?: (key: string, message: string) => void;

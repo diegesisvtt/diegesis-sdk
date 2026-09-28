@@ -14,9 +14,9 @@ export default defineConfig({
     'uuid',
     'mitt',
     'tapable',
-    '@openvtt/events',
-    '@openvtt/canvas',
-    '@openvtt/audio',
+    '@diegesis/events',
+    '@diegesis/canvas',
+    '@diegesis/audio',
     'howler',
   ],
 });

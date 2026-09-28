@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas",
+  "name": "@diegesis/canvas",
   "version": "0.1.0",
-  "description": "Framework-agnostic, PixiJS-powered game canvas for OpenVTT — Foundry-inspired Canvas/Layer/PlaceableObject API.",
+  "description": "Framework-agnostic, PixiJS-powered game canvas for Diegesis — Foundry-inspired Canvas/Layer/PlaceableObject API.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,8 +28,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/events": "workspace:*",
-    "@openvtt/hotkeys": "workspace:*",
+    "@diegesis/events": "workspace:*",
+    "@diegesis/hotkeys": "workspace:*",
     "rbush": "^4.0.1",
     "uuid": "^11.1.1",
     "valibot": "^1.4.2"
@@ -48,5 +53,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "pixi", "vtt", "tabletop", "scene", "token", "foundry"]
+  "keywords": ["diegesis", "canvas", "pixi", "vtt", "tabletop", "scene", "token", "foundry"]
 }

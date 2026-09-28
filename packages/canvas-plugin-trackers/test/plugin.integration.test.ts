@@ -1,15 +1,15 @@
 import './globals';
 import { installDocumentFake, removeDocumentFake } from './globals';
 import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
-import type { Canvas, ContextMenuItem, ContextMenuContext } from '@openvtt/canvas';
-import type { TokensPlugin } from '@openvtt/canvas-plugin-tokens';
+import type { Canvas, ContextMenuItem, ContextMenuContext } from '@diegesis/canvas';
+import type { TokensPlugin } from '@diegesis/canvas-plugin-tokens';
 import type { TrackersPlugin } from '../src/plugin';
 import { tapTrackersHooks } from '../src/hooks';
 import { trackersSelectionMenu, trackersSceneMenu, type TrackersMenuApi } from '../src/contextmenu';
 import type { Tracker } from '../src/schemas';
 
 let CanvasCtor: typeof Canvas;
-let dynamicBusMod: typeof import('@openvtt/canvas');
+let dynamicBusMod: typeof import('@diegesis/canvas');
 let tokensPlugin: TokensPlugin;
 let TrackersPluginCtor: typeof TrackersPlugin;
 let canvas: Canvas;
@@ -17,9 +17,9 @@ let trackers: TrackersPlugin;
 
 beforeAll(async () => {
   installDocumentFake();
-  dynamicBusMod = await import('@openvtt/canvas');
+  dynamicBusMod = await import('@diegesis/canvas');
   ({ Canvas: CanvasCtor } = dynamicBusMod);
-  ({ tokensPlugin } = await import('@openvtt/canvas-plugin-tokens'));
+  ({ tokensPlugin } = await import('@diegesis/canvas-plugin-tokens'));
   ({ TrackersPlugin: TrackersPluginCtor } = await import('../src/plugin'));
 
   canvas = new CanvasCtor({} as HTMLElement);

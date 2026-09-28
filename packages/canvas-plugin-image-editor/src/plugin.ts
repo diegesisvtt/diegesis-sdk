@@ -1,8 +1,8 @@
 import * as v from 'valibot';
-import { dynamicBus, MENU_ORDER, menu, type PluginContext } from '@openvtt/canvas';
-import type { WindowsPlugin } from '@openvtt/canvas-plugin-window';
+import { dynamicBus, MENU_ORDER, menu, type PluginContext } from '@diegesis/canvas';
+import type { WindowsPlugin } from '@diegesis/canvas-plugin-window';
 import { ImageEditor } from './editor';
-import { defineImageEditorElements, OpenVTTImageEditor } from './ui/image-editor';
+import { defineImageEditorElements, DiegesisImageEditor } from './ui/image-editor';
 import type { ImageEditorSettings } from './composer';
 
 const ICONS = {
@@ -25,7 +25,7 @@ export interface ImageEditorPluginOptions {
 /**
  * Image editor: edição de arte de placeables (crop, máscaras, anel) com API
  * headless (`createEditor`) para interfaces customizadas. A UI built-in
- * (`<openvtt-image-editor>`) abre numa janela gerenciada pelo plugin
+ * (`<diegesis-image-editor>`) abre numa janela gerenciada pelo plugin
  * `windows` (dependência dura): fechar, mover, minimizar, maximizar e
  * redimensionar vêm do frame da janela.
  *
@@ -64,7 +64,7 @@ export class ImageEditorPlugin {
       maximizable: this.maximizable,
       factory: () => {
         defineImageEditorElements();
-        const panel = document.createElement('openvtt-image-editor') as OpenVTTImageEditor;
+        const panel = document.createElement('diegesis-image-editor') as DiegesisImageEditor;
         panel.canvas = ctx.canvas;
         panel.addEventListener('image-edited', (event) => {
           const detail = (event as CustomEvent<{ type: string; id: string }>).detail;
@@ -114,7 +114,7 @@ export class ImageEditorPlugin {
     const windows = this.ctx.canvas.plugins.get<WindowsPlugin>('windows');
     if (!windows) return;
     const handle = windows.manager.open('imageEditor');
-    const panel = handle?.content as OpenVTTImageEditor | null;
+    const panel = handle?.content as DiegesisImageEditor | null;
     if (panel) panel.edit(type, id);
     dynamicBus(this.ctx.bus).emit('imageEditor:opened', { type, id });
   }

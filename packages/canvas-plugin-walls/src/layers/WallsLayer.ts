@@ -1,4 +1,4 @@
-import type { PlaceablesLayer } from '@openvtt/canvas';
+import type { PlaceablesLayer } from '@diegesis/canvas';
 import type { Wall } from '../placeables/Wall';
 import type { WallData, WallDataInput, WallSegmentData } from '../schemas';
 import { pointToCurveDistance } from '../geometry';

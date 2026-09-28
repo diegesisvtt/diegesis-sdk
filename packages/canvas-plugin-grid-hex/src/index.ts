@@ -1,4 +1,4 @@
-import { createGridTypePlugin } from '@openvtt/canvas-plugin-grid';
+import { createGridTypePlugin } from '@diegesis/canvas-plugin-grid';
 
 /** Grid hexagonal pointy-top — registra a layer `grid-hex-vertical`. */
 export const gridHexVerticalPlugin = createGridTypePlugin({

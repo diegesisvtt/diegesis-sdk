@@ -1,4 +1,4 @@
-import type { Scope } from '@openvtt/formula';
+import type { Scope } from '@diegesis/formula';
 import type { TableEntryData } from './schema';
 
 export interface EntryConditionContext {

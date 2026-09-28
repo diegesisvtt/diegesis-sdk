@@ -48,7 +48,7 @@ export function validatePayload(
     throw new EventValidationError(`Validation failed for "${label}":\n${summary}`, issues);
   }
 
-  console.warn(`[@openvtt/events] Validation warning for "${label}":\n${formatIssues(issues)}`);
+  console.warn(`[@diegesis/events] Validation warning for "${label}":\n${formatIssues(issues)}`);
   return { ok: false, value, issues };
 }
 

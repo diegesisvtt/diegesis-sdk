@@ -1,8 +1,8 @@
-import type { ModifierOp } from '@openvtt/dice-core';
-import { buildModifierPatterns, type ModPattern } from '@openvtt/dice-notation-core';
+import type { ModifierOp } from '@diegesis/dice-core';
+import { buildModifierPatterns, type ModPattern } from '@diegesis/dice-notation-core';
 
 export type { ModPattern };
-export { FUNCTIONS, isFunctionName } from '@openvtt/dice-notation-core';
+export { FUNCTIONS, isFunctionName } from '@diegesis/dice-notation-core';
 
 const ROLL20_SIGILS: Readonly<Record<string, ModifierOp>> = {
   '!!': 'explode-compound',

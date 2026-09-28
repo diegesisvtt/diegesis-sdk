@@ -1,18 +1,18 @@
-# @openvtt/dice-core
+# @diegesis/dice-core
 
-Canonical dice intermediate representation (IR) plus a seeded, deterministic evaluator. Dice terms are embedded in `@openvtt/formula` expressions as extension leaves, so rolls compose freely with arithmetic, comparisons, and variables. Every result carries full per-die history for auditing and rendering.
+Canonical dice intermediate representation (IR) plus a seeded, deterministic evaluator. Dice terms are embedded in `@diegesis/formula` expressions as extension leaves, so rolls compose freely with arithmetic, comparisons, and variables. Every result carries full per-die history for auditing and rendering.
 
 **Version:** 0.1.0
-**Dependencies:** `@openvtt/formula`, `seedrandom`, `uuid`, `valibot`
+**Dependencies:** `@diegesis/formula`, `seedrandom`, `uuid`, `valibot`
 
 ## Installation
 
 ```bash
-bun add @openvtt/dice-core
+bun add @diegesis/dice-core
 ```
 
 ```ts
-import { evaluateRoll, createRng } from '@openvtt/dice-core';
+import { evaluateRoll, createRng } from '@diegesis/dice-core';
 ```
 
 See the [Dice rolling guide](../guides/dice-rolling.md) for rolling strategies and the [Formulas guide](../guides/formulas.md) for the underlying expression model.
@@ -153,7 +153,7 @@ function evaluateRoll(
 | options.seed | `string` | — | Seed used to build a `seedrandom` RNG when `rng` is absent. |
 
 ```ts
-import { evaluateRoll } from '@openvtt/dice-core';
+import { evaluateRoll } from '@diegesis/dice-core';
 
 const result = evaluateRoll(
   {
@@ -247,7 +247,7 @@ Valibot schema validating the full `RollExpr` IR, including dice leaves.
 
 ```ts
 import * as v from 'valibot';
-import { rollSchema } from '@openvtt/dice-core';
+import { rollSchema } from '@diegesis/dice-core';
 
 const expr = v.parse(rollSchema, JSON.parse(savedRoll));
 ```
@@ -273,7 +273,7 @@ class DiceError extends Error {
 ### Explode-compound history
 
 ```ts
-import { evaluateRoll } from '@openvtt/dice-core';
+import { evaluateRoll } from '@diegesis/dice-core';
 
 const result = evaluateRoll(
   {
@@ -306,5 +306,5 @@ evaluateRoll(pool, { seed: 'demo' });
 ## Related
 
 - [Dice rolling guide](../guides/dice-rolling.md)
-- [@openvtt/formula](./formula.md) — the expression layer beneath `RollExpr`.
-- [@openvtt/dice-notation](./dice-notation.md) — text notation that produces this IR.
+- [@diegesis/formula](./formula.md) — the expression layer beneath `RollExpr`.
+- [@diegesis/dice-notation](./dice-notation.md) — text notation that produces this IR.

@@ -1,5 +1,5 @@
-import { CORE_LAYER_ORDER, definePlugin } from '@openvtt/canvas';
-import type { CanvasPlugin, GridType } from '@openvtt/canvas';
+import { CORE_LAYER_ORDER, definePlugin } from '@diegesis/canvas';
+import type { CanvasPlugin, GridType } from '@diegesis/canvas';
 import { GridLayer } from './GridLayer';
 import { registerGridTypeContextMenu } from './context';
 

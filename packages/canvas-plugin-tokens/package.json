@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-tokens",
+  "name": "@diegesis/canvas-plugin-tokens",
   "version": "0.1.0",
-  "description": "Token document plugin for @openvtt/canvas — Token placeable, token tool, vision and light sources.",
+  "description": "Token document plugin for @diegesis/canvas — Token placeable, token tool, vision and light sources.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-tokens"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -40,5 +45,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "token", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "token", "vtt", "tabletop"]
 }

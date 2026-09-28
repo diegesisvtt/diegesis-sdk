@@ -9,7 +9,7 @@ import {
   type EasedDragOptions,
   type PlaceablesLayer,
   type PluginContext,
-} from '@openvtt/canvas';
+} from '@diegesis/canvas';
 import { Token } from './placeables/Token';
 import type { TokenMoveOptions } from './placeables/Token';
 import { TokenTool } from './tools/TokenTool';

@@ -1,4 +1,4 @@
-import { formatCombo, type ActionInfo } from '@openvtt/hotkeys';
+import { formatCombo, type ActionInfo } from '@diegesis/hotkeys';
 import { hotkeys } from '../hotkeys';
 
 const DEMO_CONTEXT = 'demo';
@@ -14,7 +14,7 @@ export function renderHotkeys(root: HTMLElement): () => void {
     <div class="hotkeys-page">
       <header class="page-title">
         <h1>Hotkeys Lab</h1>
-        <p>@openvtt/hotkeys</p>
+        <p>@diegesis/hotkeys</p>
       </header>
 
       <div class="hotkeys-grid">

@@ -1,4 +1,4 @@
-import { Tool, type CanvasPointerInfo, type Point } from '@openvtt/canvas';
+import { Tool, type CanvasPointerInfo, type Point } from '@diegesis/canvas';
 import { rangesControllerFor } from '../controller';
 
 class RangesIdle extends Tool {

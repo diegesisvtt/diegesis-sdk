@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-lighting",
+  "name": "@diegesis/canvas-plugin-lighting",
   "version": "0.1.0",
-  "description": "Lighting plugin for @openvtt/canvas — darkness overlay cut by light sources with wall occlusion.",
+  "description": "Lighting plugin for @diegesis/canvas — darkness overlay cut by light sources with wall occlusion.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-lighting"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -38,5 +43,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "lighting", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "lighting", "vtt", "tabletop"]
 }

@@ -1,5 +1,5 @@
 import { Graphics, Text } from 'pixi.js';
-import { CanvasLayer, type Canvas, type Point } from '@openvtt/canvas';
+import { CanvasLayer, type Canvas, type Point } from '@diegesis/canvas';
 import type { ResolvedRing } from '../resolve';
 import type { RangeShape } from '../schemas';
 

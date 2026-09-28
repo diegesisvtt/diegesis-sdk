@@ -1,18 +1,18 @@
-# `@openvtt/canvas-plugin-window` — Design
+# `@diegesis/canvas-plugin-window` — Design
 
 Data: 2026-08-17
 Status: aprovado
 
 ## Objetivo
 
-Plugin de gerenciamento de janelas para `@openvtt/canvas`: criar janelas flutuantes
+Plugin de gerenciamento de janelas para `@diegesis/canvas`: criar janelas flutuantes
 com fechar, mover (drag, mouse + touch), minimizar, maximizar, redimensionar,
 docking por borda, snapping e persistência de estado. O image editor passa a
 exigir este plugin e abre como janela flutuante (com opção `modal`).
 
 ## Arquitetura
 
-Novo pacote `packages/canvas-plugin-window` (`@openvtt/canvas-plugin-window`),
+Novo pacote `packages/canvas-plugin-window` (`@diegesis/canvas-plugin-window`),
 estrutura espelhada de `packages/events` (tsup, tsconfig, exports, scripts).
 
 **`WindowsPlugin`** (id `'windows'`), plugin não-documental:
@@ -26,7 +26,7 @@ estrutura espelhada de `packages/events` (tsup, tsconfig, exports, scripts).
   bloqueando o canvas; `Esc` fecha a menos que a janela seja `persistent`.
 - Dispose via `ctx.onDispose` remove overlay, janelas e listeners.
 
-**`<openvtt-window-frame>`** (Shadow DOM): barra de título com botões
+**`<diegesis-window-frame>`** (Shadow DOM): barra de título com botões
 minimizar/maximizar/fechar (cada um omitível via `closable/minimizable/
 maximizable`), área de conteúdo, 8 handles de resize. Pointer Events +
 `setPointerCapture` (mouse e touch unificados). Duplo-clique no título alterna
@@ -107,7 +107,7 @@ definição. Estados órfãos são ignorados silenciosamente.
 ## Integração
 
 - Image editor: `dependencies: ['windows']`; `open()` chama
-  `windows.open('imageEditor', ...)` com `<openvtt-image-editor>` como
+  `windows.open('imageEditor', ...)` com `<diegesis-image-editor>` como
   conteúdo (sem botão ✕ próprio — o frame cuida do close). Eventos
   `imageEditor:opened/applied` mantidos.
 - Preset standard: `windowsPlugin` antes do `imageEditorPlugin`.

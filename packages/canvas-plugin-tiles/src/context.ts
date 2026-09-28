@@ -1,4 +1,4 @@
-import { MENU_ORDER, menu, menuControls, menuWhen, type ContextMenuContext, type ContextMenuItem, type PluginContext } from '@openvtt/canvas';
+import { MENU_ORDER, menu, menuControls, menuWhen, type ContextMenuContext, type ContextMenuItem, type PluginContext } from '@diegesis/canvas';
 import type { TileData } from './schemas';
 
 const ICONS = {

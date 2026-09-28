@@ -1,5 +1,5 @@
 import { v7 } from 'uuid';
-import { AudioEngine, DEFAULT_CHANNELS } from '@openvtt/audio';
+import { AudioEngine, DEFAULT_CHANNELS } from '@diegesis/audio';
 import { hotkeys } from '../hotkeys';
 import { LOOPS, MOODS, PADS, moodTracks, renderLoopUri, type SoundIds } from '../audio/soundbank';
 
@@ -52,7 +52,7 @@ export function renderAudio(root: HTMLElement): () => void {
     </div>
     <div class="overlay page-title">
       <h1>Audio Lab</h1>
-      <p>@openvtt/audio · soundboard</p>
+      <p>@diegesis/audio · soundboard</p>
     </div>
     <div class="overlay dice-status pill audio-status" id="status" data-state="busy">
       <span class="dot"></span><span id="status-text">rendering loops…</span>

@@ -1,12 +1,13 @@
 import type { TextureEntry } from '../constants/texturelist';
 import type { DiceTheme } from '../constants/themes';
-import { defaultRegistries, type DiceRegistries } from '../registries';
-import { resolveAssetPath } from '@openvtt/render3d';
+import { createDiceRegistries, type DiceRegistries } from '../registries';
+import { resolveAssetPath } from '@diegesis/render3d';
 
 interface DiceColorsOptions {
   assetPath?: string;
   resolver?: (url: string) => string;
   registries?: DiceRegistries;
+  loadBlob?: (url: string) => Promise<Blob>;
 }
 
 interface ColorSetOptions {
@@ -50,24 +51,32 @@ export class DiceColors {
   #colorsets: Map<string, ColorSet> = new Map();
   #assetPath?: string;
   #resolver: (url: string) => string;
+  #loadBlob: (url: string) => Promise<Blob>;
   #registries: DiceRegistries;
 
   constructor(options: DiceColorsOptions = {}) {
     this.#assetPath = options.assetPath;
     this.#resolver = options.resolver ?? ((url) => url);
-    this.#registries = options.registries ?? defaultRegistries;
+    this.#loadBlob = options.loadBlob ?? (async (url) => (await fetch(this.#resolver(url))).blob());
+    this.#registries = options.registries ?? createDiceRegistries();
   }
 
   async #loadImage(src: string): Promise<HTMLImageElement> {
+    const url = resolveAssetPath(this.#assetPath, src);
+    const blob = await this.#loadBlob(url);
+    const objectUrl = URL.createObjectURL(blob);
     return new Promise((resolve, reject) => {
       const img = new Image();
-      img.onload = () => resolve(img);
+      img.onload = () => {
+        URL.revokeObjectURL(objectUrl);
+        resolve(img);
+      };
       img.onerror = (error) => {
+        URL.revokeObjectURL(objectUrl);
         console.error('Unable to load image texture:', error);
         reject(new Error('Image loading failed'));
       };
-      img.crossOrigin = 'anonymous';
-      img.src = this.#resolver(resolveAssetPath(this.#assetPath, src));
+      img.src = objectUrl;
     });
   }
 

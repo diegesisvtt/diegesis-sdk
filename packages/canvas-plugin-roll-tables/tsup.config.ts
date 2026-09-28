@@ -7,5 +7,5 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  external: ['pixi.js', 'valibot', 'uuid', '@openvtt/events', '@openvtt/canvas', '@openvtt/roll-tables'],
+  external: ['pixi.js', 'valibot', 'uuid', '@diegesis/events', '@diegesis/canvas', '@diegesis/roll-tables'],
 });

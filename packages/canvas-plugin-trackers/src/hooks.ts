@@ -1,4 +1,4 @@
-import { dynamicBus, type CanvasBus } from '@openvtt/canvas';
+import { dynamicBus, type CanvasBus } from '@diegesis/canvas';
 import type {
   TrackersAppliedEvent,
   TrackersChangedEvent,

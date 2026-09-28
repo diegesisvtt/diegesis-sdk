@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
-import { RollTablesRegistry } from '@openvtt/canvas-plugin-roll-tables';
+import { RollTablesRegistry } from '@diegesis/canvas-plugin-roll-tables';
 import { buildRollTablesWindow, tableToDef } from '../src/pages/rolltables-window';
 
 const treasure = {

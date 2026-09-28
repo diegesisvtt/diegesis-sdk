@@ -1,4 +1,4 @@
-# `@openvtt/hotkeys` — Design
+# `@diegesis/hotkeys` — Design
 
 Data: 2026-08-20
 Status: aprovado
@@ -22,7 +22,7 @@ validada por schema. Paridade com o sistema de keybindings do Foundry VTT
   validado com Valibot e aplicado atomicamente.
 - **Observabilidade** — eventos (`hotkeyTriggered`, `bindsChanged`,
   `contextsChanged`, `hotkeyError`) e hook de veto (`beforeHotkey`,
-  syncWaterfall) via `@openvtt/events`.
+  syncWaterfall) via `@diegesis/events`.
 
 ## Arquitetura
 

@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-audio",
+  "name": "@diegesis/canvas-plugin-audio",
   "version": "0.1.0",
-  "description": "Spatial audio plugin for @openvtt/canvas — ambient sound placeables, camera/token listener and sound:sources contributions.",
+  "description": "Spatial audio plugin for @diegesis/canvas — ambient sound placeables, camera/token listener and sound:sources contributions.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-audio"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,8 +28,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/audio": "workspace:*",
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/audio": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -41,5 +46,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "audio", "spatial", "howler", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "audio", "spatial", "howler", "vtt", "tabletop"]
 }

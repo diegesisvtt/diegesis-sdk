@@ -1,4 +1,4 @@
-import { toHex } from '@openvtt/canvas';
+import { toHex } from '@diegesis/canvas';
 import type { RangePreset, RangeRingSpec, RangeTheme } from './schemas';
 
 export interface ResolvedRing {

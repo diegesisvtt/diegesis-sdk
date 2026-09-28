@@ -1,4 +1,4 @@
-import { definePlugin, type PluginContext } from '@openvtt/canvas';
+import { definePlugin, type PluginContext } from '@diegesis/canvas';
 import { AmbientLight } from './placeables/AmbientLight';
 import { LightTool } from './tools/LightTool';
 import { registerLightsContextMenu } from './context';

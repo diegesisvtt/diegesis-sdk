@@ -1,4 +1,4 @@
-import type { DialectConfig } from '@openvtt/dice-notation-core';
+import type { DialectConfig } from '@diegesis/dice-notation-core';
 import { Roll20NotationError } from './errors';
 import { CANONICAL_TO_SIGIL, MODIFIER_PATTERNS } from './keywords';
 

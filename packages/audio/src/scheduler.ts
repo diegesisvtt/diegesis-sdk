@@ -1,5 +1,5 @@
 import * as v from 'valibot';
-import { newId } from '@openvtt/events';
+import { newId } from '@diegesis/events';
 import type { AudioEngine, ScheduledHandle } from './engine';
 import { TimelineTrackSchema } from './schemas';
 import type { TimelineTrackInput } from './schemas';

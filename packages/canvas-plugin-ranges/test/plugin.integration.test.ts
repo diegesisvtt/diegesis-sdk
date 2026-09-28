@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'bun:test';
-import type { Canvas } from '@openvtt/canvas';
-import { dynamicBus } from '@openvtt/canvas';
+import type { Canvas } from '@diegesis/canvas';
+import { dynamicBus } from '@diegesis/canvas';
 import { RangesPlugin } from '../src/plugin';
 import { rangesControllerFor } from '../src/controller';
 
@@ -9,7 +9,7 @@ let canvas: Canvas;
 let plugin: RangesPlugin;
 
 beforeAll(async () => {
-  ({ Canvas: CanvasCtor } = await import('@openvtt/canvas'));
+  ({ Canvas: CanvasCtor } = await import('@diegesis/canvas'));
   canvas = new CanvasCtor({} as HTMLElement);
   plugin = new RangesPlugin();
   await canvas.use(plugin);

@@ -1,6 +1,6 @@
 import { Graphics } from 'pixi.js';
-import { PlaceableObject, dynamicBus } from '@openvtt/canvas';
-import type { CanvasLike } from '@openvtt/canvas';
+import { PlaceableObject, dynamicBus } from '@diegesis/canvas';
+import type { CanvasLike } from '@diegesis/canvas';
 import type { MapData } from '../schemas';
 import type { MapSourceRegistry } from '../MapSourceRegistry';
 import type { TiledSource } from '../tiled/TiledSource';

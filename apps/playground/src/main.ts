@@ -38,7 +38,7 @@ const app = document.querySelector<HTMLDivElement>('#app')!;
 
 app.innerHTML = `
   <aside class="rail">
-    <div class="rail-brand" title="openvtt">${ICONS.sigil}</div>
+    <div class="rail-brand" title="diegesis">${ICONS.sigil}</div>
     <nav class="rail-nav">
       ${PAGES.map(
         (p) => `
@@ -48,7 +48,7 @@ app.innerHTML = `
         </a>`,
       ).join('')}
     </nav>
-    <span class="rail-foot">OPENVTT · PLAYGROUND</span>
+    <span class="rail-foot">DIEGESIS · PLAYGROUND</span>
   </aside>
   <div id="page"></div>
   <div class="grain"></div>

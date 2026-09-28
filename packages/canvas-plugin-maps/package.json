@@ -1,9 +1,14 @@
 {
-  "name": "@openvtt/canvas-plugin-maps",
+  "name": "@diegesis/canvas-plugin-maps",
   "version": "0.1.0",
-  "description": "Maps plugin for @openvtt/canvas — streaming tiled map loading with LOD mipmaps, viewport culling, LRU tile cache and flyweight source sharing.",
+  "description": "Maps plugin for @diegesis/canvas — streaming tiled map loading with LOD mipmaps, viewport culling, LRU tile cache and flyweight source sharing.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegesisvtt/diegesis-sdk.git",
+    "directory": "packages/canvas-plugin-maps"
+  },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -23,7 +28,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@openvtt/canvas": "workspace:*",
+    "@diegesis/canvas": "workspace:*",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
@@ -40,5 +45,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["openvtt", "canvas", "plugin", "maps", "tiles", "vtt", "tabletop"]
+  "keywords": ["diegesis", "canvas", "plugin", "maps", "tiles", "vtt", "tabletop"]
 }

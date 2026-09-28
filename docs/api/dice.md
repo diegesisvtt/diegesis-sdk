@@ -1,19 +1,19 @@
-# @openvtt/dice
+# @diegesis/dice
 
-Framework-agnostic 3D dice roller built on three.js for rendering and cannon-es for physics, with physics executed inside a Web Worker via `@openvtt/physics`. It provides a high-level `DiceBox` API (roll dice with RPG notation, watch them settle, read results) plus lower-level services for notation parsing, dice geometry, themes, and physics-shape configuration. The package lives in `packages/3ddice` but is published as `@openvtt/dice`.
+Framework-agnostic 3D dice roller built on three.js for rendering and cannon-es for physics, with physics executed inside a Web Worker via `@diegesis/physics`. It provides a high-level `DiceBox` API (roll dice with RPG notation, watch them settle, read results) plus lower-level services for notation parsing, dice geometry, themes, and physics-shape configuration. The package lives in `packages/3ddice` but is published as `@diegesis/dice`.
 
 **Version:** 0.1.0
-**Dependencies:** `@openvtt/assets`, `@openvtt/events`, `@openvtt/physics`, `@openvtt/render3d`, `valibot`
+**Dependencies:** `@diegesis/assets`, `@diegesis/events`, `@diegesis/physics`, `@diegesis/render3d`, `valibot`
 **Peer dependencies:** `three`, `cannon-es`
 
 ## Installation
 
 ```bash
-bun add @openvtt/dice three cannon-es
+bun add @diegesis/dice three cannon-es
 ```
 
 ```ts
-import { DiceBox, createDiceBox } from '@openvtt/dice';
+import { DiceBox, createDiceBox } from '@diegesis/dice';
 ```
 
 See the [3D dice guide](../guides/3d-dice.md) for a conceptual walkthrough, and the [assets and rendering guide](../guides/assets-and-rendering.md) for how themes and textures are resolved.
@@ -23,7 +23,7 @@ See the [3D dice guide](../guides/3d-dice.md) for a conceptual walkthrough, and 
 Adapted from `apps/playground`:
 
 ```ts
-import { DiceBox } from '@openvtt/dice';
+import { DiceBox } from '@diegesis/dice';
 
 const box = new DiceBox(container, {
   assetPath: '/',
@@ -112,7 +112,7 @@ class DiceBox {
 
 | Name | Type | Description |
 |------|------|-------------|
-| bus | `DiceBus` (readonly) | Underlying `@openvtt/events` bus for this box. |
+| bus | `DiceBus` (readonly) | Underlying `@diegesis/events` bus for this box. |
 | initialized | `boolean` | Whether `initialize()` has completed. |
 | disposed | `boolean` | Whether `destroy()` has been called. |
 | rolling | `boolean` | Whether a roll is currently in flight. |
@@ -545,7 +545,7 @@ function listDiceModels(): string[];
 
 ## Bus
 
-The package defines an `@openvtt/events` contract used by every `DiceBox`.
+The package defines an `@diegesis/events` contract used by every `DiceBox`.
 
 ### `diceContract`
 
@@ -587,7 +587,7 @@ class AssetLoadError extends DiceError {
 
 ## `buildDiceManifest(config, surface): AssetManifest`
 
-Builds an `@openvtt/assets` manifest for the assets a given configuration needs (theme textures, environments, sounds, models). Useful for preloading; see the [assets and rendering guide](../guides/assets-and-rendering.md).
+Builds an `@diegesis/assets` manifest for the assets a given configuration needs (theme textures, environments, sounds, models). Useful for preloading; see the [assets and rendering guide](../guides/assets-and-rendering.md).
 
 ## Constants
 
@@ -695,9 +695,9 @@ interface MaterialOptions {
 
 The package re-exports selected APIs from its dependencies for convenience:
 
-- From `@openvtt/assets`: `AssetManager` and asset types (`AssetManifest`, `AssetEntry`, etc.). See [assets API](./assets.md).
-- From `@openvtt/physics`: `createPhysicsHost` and physics types (`PhysicsHost`, `ShapeDescriptor`, etc.). See [physics API](./physics.md).
-- From `@openvtt/render3d`: `AntialiasMode`, `BloomOptions`, `OutlineOptions`, `PostFXOptions`, `EnvironmentSpec`, `EnvironmentName`, `EnvironmentHandle`. See [render3d API](./render3d.md).
+- From `@diegesis/assets`: `AssetManager` and asset types (`AssetManifest`, `AssetEntry`, etc.). See [assets API](./assets.md).
+- From `@diegesis/physics`: `createPhysicsHost` and physics types (`PhysicsHost`, `ShapeDescriptor`, etc.). See [physics API](./physics.md).
+- From `@diegesis/render3d`: `AntialiasMode`, `BloomOptions`, `OutlineOptions`, `PostFXOptions`, `EnvironmentSpec`, `EnvironmentName`, `EnvironmentHandle`. See [render3d API](./render3d.md).
 
 ## Behavior notes
 
@@ -713,4 +713,4 @@ The package re-exports selected APIs from its dependencies for convenience:
 - [3D dice guide](../guides/3d-dice.md)
 - [Assets and rendering guide](../guides/assets-and-rendering.md)
 - [Getting started](../guides/getting-started.md)
-- [@openvtt/assets](./assets.md), [@openvtt/physics](./physics.md), [@openvtt/render3d](./render3d.md), [@openvtt/events](./events.md)
+- [@diegesis/assets](./assets.md), [@diegesis/physics](./physics.md), [@diegesis/render3d](./render3d.md), [@diegesis/events](./events.md)

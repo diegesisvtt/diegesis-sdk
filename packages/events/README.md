@@ -1,7 +1,7 @@
-# @openvtt/events
+# @diegesis/events
 
-Mature, schema-validated **event + hook bus** for OpenVTT — the foundation of the
-OpenVTT hook system. A capable, reliable foundation for events and hooks that
+Mature, schema-validated **event + hook bus** for Diegesis — the foundation of the
+Diegesis hook system. A capable, reliable foundation for events and hooks that
 stays drop-in simple, **cross-VTT interoperable**, and friendly to
 **browser extensions** and injected scripts.
 
@@ -9,7 +9,7 @@ stays drop-in simple, **cross-VTT interoperable**, and friendly to
 - **Hooks** (interception / pipelines) — powered by [`tapable`](https://github.com/webpack/tapable): `sync`, `syncBail`, `syncWaterfall`, `asyncSeries`, `asyncSeriesBail`, `asyncSeriesWaterfall`, `asyncParallel`, `asyncParallelBail`.
 - **Validation** — every event/hook payload is validated with [`valibot`](https://valibot.dev) schemas.
 - **IDs** — UUID **v7** (time-ordered, sortable) for every event/correlation.
-- **Bridge** — exposes the bus to `globalThis.__OPENVTT_EVENTS__` and dispatches DOM `CustomEvent`s, so content scripts and extensions can participate with plain `addEventListener`.
+- **Bridge** — exposes the bus to `globalThis.__DIEGESIS_EVENTS__` and dispatches DOM `CustomEvent`s, so content scripts and extensions can participate with plain `addEventListener`.
 - **Broadcast** — optional cross-tab propagation via `BroadcastChannel`.
 - **Robust** — a throwing handler never crashes the bus; errors are isolated and observable.
 - SSR-safe (no `window`/`document` access at import time), ESM + CJS, tree-shakeable.
@@ -17,7 +17,7 @@ stays drop-in simple, **cross-VTT interoperable**, and friendly to
 ## Install
 
 ```bash
-bun add @openvtt/events
+bun add @diegesis/events
 ```
 
 ## Quick start
@@ -25,7 +25,7 @@ bun add @openvtt/events
 ### Freeform (no contract)
 
 ```ts
-import { createBus } from '@openvtt/events';
+import { createBus } from '@diegesis/events';
 
 const bus = createBus();
 
@@ -40,7 +40,7 @@ off();
 
 ```ts
 import * as v from 'valibot';
-import { createBus, defineContract } from '@openvtt/events';
+import { createBus, defineContract } from '@diegesis/events';
 
 const contract = defineContract({
   namespace: 'dice',
@@ -127,11 +127,11 @@ const bus = createBus(contract, { bridge: true });
 
 This does two things:
 
-**1. A global handle** at `globalThis.__OPENVTT_EVENTS__` (constant: `GLOBAL_KEY`):
+**1. A global handle** at `globalThis.__DIEGESIS_EVENTS__` (constant: `GLOBAL_KEY`):
 
 ```js
 // from a content script, page script, or extension
-const bus = window.__OPENVTT_EVENTS__.get('dice');
+const bus = window.__DIEGESIS_EVENTS__.get('dice');
 bus.on('rolled', (payload, meta) => console.log(payload, meta.id));
 bus.emit('rolled', { result: 42 }); // validated against the contract schema
 bus.events(); // → ['rolled']
@@ -158,7 +158,7 @@ bus stays reliable even when untrusted scripts participate.
 ## Cross-tab broadcast
 
 ```ts
-const bus = createBus(contract, { broadcast: true }); // channel defaults to `openvtt:<namespace>`
+const bus = createBus(contract, { broadcast: true }); // channel defaults to `diegesis:<namespace>`
 ```
 
 Emits are mirrored to other tabs/windows on the same origin via

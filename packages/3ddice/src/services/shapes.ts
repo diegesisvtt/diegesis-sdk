@@ -3,7 +3,7 @@ import * as CANNON from 'cannon-es';
 
 import { DICE_GEOM } from '../constants/dice';
 import type { DiceShape } from '../constants/dice';
-import type { ShapeDescriptor } from '@openvtt/physics';
+import type { ShapeDescriptor } from '@diegesis/physics';
 import type { DiceGeometryType } from './geometry';
 
 export type DicePhysicsShape = CANNON.Cylinder | CANNON.ConvexPolyhedron;

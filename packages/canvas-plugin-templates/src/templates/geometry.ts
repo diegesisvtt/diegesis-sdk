@@ -1,4 +1,4 @@
-import type { Point } from '@openvtt/canvas';
+import type { Point } from '@diegesis/canvas';
 
 export const CONE_ANGLE = Math.PI / 3;
 
