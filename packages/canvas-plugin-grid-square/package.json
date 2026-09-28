@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-grid-square",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Square grid plugin for @diegesis/canvas — renders and configures square-grid scenes.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -45,5 +47,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "plugin", "grid", "square", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "plugin",
+    "grid",
+    "square",
+    "vtt",
+    "tabletop"
+  ]
 }

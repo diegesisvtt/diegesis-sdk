@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-ranges",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Range rings plugin for @diegesis/canvas — extensible presets, color-blind themes and sticky range overlays for distance checks at a glance.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -45,5 +47,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "plugin", "ranges", "measure", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "plugin",
+    "ranges",
+    "measure",
+    "vtt",
+    "tabletop"
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/audio",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Howler-based audio engine for Diegesis: channels with mute/solo, fades, random groups, spatial sound and timelines.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -40,5 +42,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "audio", "howler", "spatial", "ambience", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "audio",
+    "howler",
+    "spatial",
+    "ambience",
+    "vtt",
+    "tabletop"
+  ]
 }

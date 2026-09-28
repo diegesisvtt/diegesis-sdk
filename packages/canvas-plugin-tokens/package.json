@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-tokens",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Token document plugin for @diegesis/canvas — Token placeable, token tool, vision and light sources.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -45,5 +47,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "plugin", "token", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "plugin",
+    "token",
+    "vtt",
+    "tabletop"
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Framework-agnostic, PixiJS-powered game canvas for Diegesis — Foundry-inspired Canvas/Layer/PlaceableObject API.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -53,5 +55,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "pixi", "vtt", "tabletop", "scene", "token", "foundry"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "pixi",
+    "vtt",
+    "tabletop",
+    "scene",
+    "token",
+    "foundry"
+  ]
 }

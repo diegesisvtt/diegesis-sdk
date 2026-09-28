@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/assets",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Declarative asset packs for Diegesis: content-addressed caching, persistent storage adapters, preload with progress events.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -39,5 +41,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "assets", "cache", "offline", "vtt", "preload"]
+  "keywords": [
+    "diegesis",
+    "assets",
+    "cache",
+    "offline",
+    "vtt",
+    "preload"
+  ]
 }

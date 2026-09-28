@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-fog",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Fog of war plugin for @diegesis/canvas — token-vision reveal, manual paint/reveal tools and control panel.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -43,5 +45,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "plugin", "fog", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "plugin",
+    "fog",
+    "vtt",
+    "tabletop"
+  ]
 }
