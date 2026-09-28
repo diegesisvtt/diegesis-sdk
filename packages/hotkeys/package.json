@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/hotkeys",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Declarative, context-aware hotkey management for Diegesis — rebindable keymaps, conflict detection and schema-validated persistence.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -39,5 +41,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "hotkeys", "keybindings", "shortcuts", "vtt"]
+  "keywords": [
+    "diegesis",
+    "hotkeys",
+    "keybindings",
+    "shortcuts",
+    "vtt"
+  ]
 }

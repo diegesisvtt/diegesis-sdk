@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-walls",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Walls document plugin for @diegesis/canvas — walls, doors and bezier curves with movement/sight blocking.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -43,5 +45,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "plugin", "wall", "door", "curves", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "plugin",
+    "wall",
+    "door",
+    "curves",
+    "vtt",
+    "tabletop"
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-grid",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Grid plugin for @diegesis/canvas — renders the scene grid (square, hex, isometric) and contributes grid configuration via context menu.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -45,5 +47,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "plugin", "grid", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "plugin",
+    "grid",
+    "vtt",
+    "tabletop"
+  ]
 }

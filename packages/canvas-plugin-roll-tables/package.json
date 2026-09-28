@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-roll-tables",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Placeable roll-table anchors for @diegesis/canvas — drop weighted random tables on the map, draw from the context menu, and persist the last result on the document.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -44,5 +46,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "canvas", "plugin", "rolltable", "random-tables", "vtt", "tabletop"]
+  "keywords": [
+    "diegesis",
+    "canvas",
+    "plugin",
+    "rolltable",
+    "random-tables",
+    "vtt",
+    "tabletop"
+  ]
 }

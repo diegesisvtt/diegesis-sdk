@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/events",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Mature, schema-validated event & hook bus for Diegesis — cross-VTT interoperability and browser-extension friendly.",
   "type": "module",
   "license": "MIT",
@@ -19,7 +19,9 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -40,5 +42,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["diegesis", "events", "hooks", "vtt", "eventemitter", "pubsub"]
+  "keywords": [
+    "diegesis",
+    "events",
+    "hooks",
+    "vtt",
+    "eventemitter",
+    "pubsub"
+  ]
 }
