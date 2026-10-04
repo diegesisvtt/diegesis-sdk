@@ -1,5 +1,11 @@
 # @diegesis/assets
 
+## 0.1.3
+
+### Patch Changes
+
+- Fix published dependency ranges: `@diegesis/events` was still declared as `workspace:*` in the published manifests of these packages (leftover from the initial release, before the workspace-protocol cleanup). npm consumers cannot install `workspace:*` specs, which broke downstream installs.
+
 ## 0.1.2
 
 ### Patch Changes

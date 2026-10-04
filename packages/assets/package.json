@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/assets",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Declarative asset packs for Diegesis: content-addressed caching, persistent storage adapters, preload with progress events.",
   "type": "module",
   "license": "MIT",
