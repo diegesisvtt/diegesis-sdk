@@ -57,7 +57,8 @@ describe('termsFromRoll', () => {
     expect(terms.length).toBe(1);
     expect(terms[0].faces).toEqual({ kind: 'coin' });
     expect(terms[0].results.length).toBe(1);
-    expect([1, 2]).toContain(terms[0].results[0]);
+    const coin = terms[0].results[0] as number;
+    expect(coin === 1 || coin === 2).toBe(true);
   });
 
   test('plain d100 decomposes like a percentile', () => {
