@@ -1,5 +1,13 @@
 # @diegesis/sheet
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [e1632da]
+  - @diegesis/dice-core@0.2.0
+  - @diegesis/dice-notation@0.1.2
+
 ## 0.1.2
 
 ### Patch Changes

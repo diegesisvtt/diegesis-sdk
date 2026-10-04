@@ -1,5 +1,13 @@
 # @diegesis/dice-roll20-notation
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [e1632da]
+  - @diegesis/dice-core@0.2.0
+  - @diegesis/dice-notation-core@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

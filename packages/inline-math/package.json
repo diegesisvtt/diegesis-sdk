@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/inline-math",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Zero-dependency inline math commands for numeric inputs — apply +5, -5, *2, /2 or =10 against a current value.",
   "type": "module",
   "license": "MIT",
