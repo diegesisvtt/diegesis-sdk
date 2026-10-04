@@ -39,6 +39,25 @@ describe('parseInlineMath', () => {
     expect(parseInlineMath('/0')).toBeNull();
   });
 
+  test('parses comma decimal separator', () => {
+    expect(parseInlineMath('2,5')).toEqual({ kind: 'set', value: 2.5 });
+    expect(parseInlineMath(',5')).toEqual({ kind: 'set', value: 0.5 });
+    expect(parseInlineMath('+1,5')).toEqual({ kind: 'add', operand: 1.5 });
+    expect(parseInlineMath('=3,75')).toEqual({ kind: 'set', value: 3.75 });
+    expect(parseInlineMath('/2,5')).toEqual({ kind: 'divide', operand: 2.5 });
+  });
+
+  test('treats separator + exactly 3 trailing digits as thousands', () => {
+    expect(parseInlineMath('1,000')).toEqual({ kind: 'set', value: 1000 });
+    expect(parseInlineMath('1.000')).toEqual({ kind: 'set', value: 1000 });
+    expect(parseInlineMath('12,500')).toEqual({ kind: 'set', value: 12500 });
+    expect(parseInlineMath('=2,000')).toEqual({ kind: 'set', value: 2000 });
+    expect(parseInlineMath('+1,500')).toEqual({ kind: 'add', operand: 1500 });
+    // longer/shorter fractions stay decimal
+    expect(parseInlineMath('1,25')).toEqual({ kind: 'set', value: 1.25 });
+    expect(parseInlineMath('1,2345')).toEqual({ kind: 'set', value: 1.2345 });
+  });
+
   test('rejects invalid input', () => {
     expect(parseInlineMath('')).toBeNull();
     expect(parseInlineMath('   ')).toBeNull();

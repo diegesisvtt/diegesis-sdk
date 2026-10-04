@@ -8,7 +8,9 @@ export const documentRefSchema = v.object({
 });
 
 export const tableEntrySchema = v.object({
-  id: v.optional(v.pipe(v.string(), v.uuid())),
+  // caller-provided ids only need to be unique within the table — generated
+  // ids are uuid v7, but host apps may use their own id scheme
+  id: v.optional(v.pipe(v.string(), v.minLength(1))),
   type: v.optional(entryTypeSchema, 'text'),
   weight: v.optional(v.pipe(v.number(), v.minValue(0)), 1),
   range: v.optional(
@@ -24,7 +26,8 @@ export const tableEntrySchema = v.object({
 export const reshuffleSchema = v.picklist(['never', 'auto', 'manual']);
 
 export const rollTableSchema = v.object({
-  id: v.optional(v.pipe(v.string(), v.uuid())),
+  // same rationale as entry ids: any non-empty string is accepted
+  id: v.optional(v.pipe(v.string(), v.minLength(1))),
   name: v.pipe(v.string(), v.minLength(1)),
   description: v.optional(v.string()),
   img: v.optional(v.string()),

@@ -31,6 +31,7 @@ export { DiceError, RollCancelledError, AssetLoadError } from './errors';
 export { createDiceBus, diceContract, RolledDieSchema, RolledTermSchema, RollOutcomeSchema } from './bus';
 export type { DiceBus, DiceBusEvents } from './bus';
 export { buildDiceManifest } from './assets';
+export { termsFromRoll } from './terms-from-roll';
 
 export { THEMES } from './constants/themes';
 export type { DiceTheme, DiceStyle } from './constants/themes';

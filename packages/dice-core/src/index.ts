@@ -40,6 +40,9 @@ export type {
 export { evaluateRoll } from './evaluate';
 export type { EvaluateOptions } from './evaluate';
 
+export { exprBounds, exprMax, exprMin } from './bounds';
+export type { ExprBounds } from './bounds';
+
 export { rollSchema, buildRollSchema } from './schema';
 
 export { DiceError } from './errors';
