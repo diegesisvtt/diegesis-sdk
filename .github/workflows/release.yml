@@ -8,7 +8,6 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 permissions:
   contents: write
-  pull-requests: write
 
 jobs:
   release:
@@ -21,13 +20,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          registry-url: "https://registry.npmjs.org"
       - run: bun install
-      - uses: changesets/action@v1
-        with:
-          version: bun run version
-          publish: bun run release
-          commit: "chore: version packages"
-          title: "chore: version packages"
+      # Consome os changesets e commita o bump direto na main (sem PR). O push
+      # re-dispara este workflow, mas sem changesets o version é no-op e o
+      # publish não encontra nada novo — sai limpo.
+      - name: Version packages
+        run: |
+          bun run version
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore: version packages"
+            git push
+          fi
+      - name: Publish to npm
+        run: bun run release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
