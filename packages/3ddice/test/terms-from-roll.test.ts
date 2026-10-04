@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'bun:test';
 import { evaluateRoll } from '@diegesis/dice-core';
 import { fromFormula } from '@diegesis/dice-notation';
-import { termsFromRoll } from './terms-from-roll';
+import { termsFromRoll } from '../src/terms-from-roll';
 
 describe('termsFromRoll', () => {
   test('simple dice map 1:1', () => {

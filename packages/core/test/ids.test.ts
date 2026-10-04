@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 import { validate, version } from 'uuid';
-import { newId } from './ids';
+import { newId } from '../src/ids';
 
 describe('newId', () => {
   test('generates valid UUID v7', () => {

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 import { fromFormula } from '@diegesis/dice-notation';
-import { exprBounds } from './bounds';
+import { exprBounds } from '../src/bounds';
 
 describe('exprBounds', () => {
   test('static numbers', () => {
