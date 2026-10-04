@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/roll-tables",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Weighted random roll tables for Diegesis — Foundry-grade draws plus seeded RNG, conditional entries, deck policies, nested resolution with cycle detection, and probability analysis.",
   "type": "module",
   "license": "MIT",
@@ -30,8 +30,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@diegesis/dice-core": "^0.1.1",
-    "@diegesis/dice-notation": "^0.1.1",
+    "@diegesis/dice-core": "^0.2.0",
+    "@diegesis/dice-notation": "^0.1.2",
     "@diegesis/events": "^0.2.1",
     "@diegesis/formula": "^0.1.1",
     "uuid": "^11.1.1",

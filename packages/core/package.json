@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/core",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Shared primitives for Diegesis — canonical id generation (UUID v7), result types and common helpers.",
   "type": "module",
   "license": "MIT",

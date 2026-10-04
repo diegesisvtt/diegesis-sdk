@@ -1,5 +1,14 @@
 # @diegesis/roll-tables
 
+## 0.2.2
+
+### Patch Changes
+
+- e1632da: Relax entry/table id validation from strict UUID to any non-empty string. Host applications use their own id schemes (base36, ULID, etc.) for table rows; ids are only used as lookup keys internally, so the UUID restriction was needlessly strict. Generated ids remain UUID v7.
+- Updated dependencies [e1632da]
+  - @diegesis/dice-core@0.2.0
+  - @diegesis/dice-notation@0.1.2
+
 ## 0.2.1
 
 ### Patch Changes
