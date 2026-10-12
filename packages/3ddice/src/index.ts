@@ -15,7 +15,7 @@ export {
 export type { DiceBoxOptions, NormalizedConfig, QueueMode, ShadowQuality } from './box/config';
 export type { DiceBoxDeps } from './box/deps';
 
-export { DiceTermSchema, DiceTermsSchema, FacesSpecSchema, assertResultInRange, isTensDie } from './contract';
+export { DiceTermSchema, DiceTermsSchema, FacesSpecSchema, assertResultInRange, has3dPreset, isTensDie } from './contract';
 export type { DiceTerm, DieResultInput, FacesInput } from './contract';
 export type { RerollRequest, RolledDie, RolledTerm, RollOutcome } from './results';
 

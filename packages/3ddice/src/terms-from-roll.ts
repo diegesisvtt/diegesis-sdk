@@ -8,11 +8,12 @@
 // - plain d100 (numeric 100 faces, 1..100 in dice-core) decompose the same way,
 //   because the 3D contract treats number-100 dice as tens-only;
 // - coin dice (1..2 in dice-core) map verbatim to the d2 preset (1/2);
-// - fate dice and expression faces have no 3D representation → null (caller
-//   should roll without animation).
+// - fate dice, expression faces and numeric dice without a 3D preset (d3,
+//   d5, d7, …) have no 3D representation → null (caller should roll without
+//   animation).
 
 import type { DieTerm, RollExpr, RollResult, TermResult } from '@diegesis/dice-core';
-import type { DiceTerm } from './contract';
+import { has3dPreset, type DiceTerm } from './contract';
 
 /** collects die terms of the IR in document order (ops → args, pool → entries) */
 function collectDieExprs(expr: RollExpr, out: DieTerm[]): void {
@@ -72,8 +73,12 @@ export function termsFromRoll(expr: RollExpr, roll: RollResult): DiceTerm[] | nu
         // (d100 preset = tens die) → decompose like a percentile
         if (faces.value === 100) {
           for (const v of values) terms.push(...percentileTerms(v));
-        } else {
+        } else if (has3dPreset(faces)) {
           terms.push({ faces, results: values });
+        } else {
+          // numeric die without a 3D preset (d3, d5, d7, …): like fate dice,
+          // the caller rolls without animation
+          return null;
         }
         break;
       case 'percentile':

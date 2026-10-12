@@ -50,6 +50,18 @@ describe('termsFromRoll', () => {
     expect(termsFromRoll(expr, roll)).toBeNull();
   });
 
+  test('numeric dice without a 3D preset are not animatable', () => {
+    const expr = fromFormula('1d5');
+    const roll = evaluateRoll(expr);
+    expect(termsFromRoll(expr, roll)).toBeNull();
+  });
+
+  test('one unsupported die skips the whole animation', () => {
+    const expr = fromFormula('1d5 + 1d6');
+    const roll = evaluateRoll(expr);
+    expect(termsFromRoll(expr, roll)).toBeNull();
+  });
+
   test('coin dice map verbatim to d2 (1..2)', () => {
     const expr = fromFormula('1dc');
     const roll = evaluateRoll(expr);

@@ -68,6 +68,19 @@ function dieTypeFor(faces: FacesSpec): string {
   }
 }
 
+/** true when the die has a 3D preset (d2..d100); false for fate/expr and
+ *  numeric dice without a physical preset (d3, d5, d7, …) */
+export function has3dPreset(faces: FacesSpec): boolean {
+  switch (faces.kind) {
+    case 'number':
+    case 'percentile':
+    case 'coin':
+      return NUMBER_DICE_TYPES.has(dieTypeFor(faces));
+    default:
+      return false;
+  }
+}
+
 export function isTensDie(faces: FacesSpec): boolean {
   return faces.kind === 'percentile' || (faces.kind === 'number' && faces.value === 100);
 }
