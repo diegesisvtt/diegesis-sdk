@@ -1,5 +1,13 @@
 # @diegesis/canvas-plugin-grid-isometric
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [565d3c0]
+  - @diegesis/canvas@0.3.0
+  - @diegesis/canvas-plugin-grid@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-window",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Window manager for @diegesis/canvas — floating, modal, dockable, snappable windows with taskbar and state persistence.",
   "type": "module",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@diegesis/canvas": "^0.2.1",
+    "@diegesis/canvas": "^0.3.0",
     "uuid": "^11.1.1",
     "valibot": "^1.4.2"
   },

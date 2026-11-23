@@ -1,5 +1,12 @@
 # @diegesis/canvas-plugin-templates
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [565d3c0]
+  - @diegesis/canvas@0.3.0
+
 ## 0.2.1
 
 ### Patch Changes

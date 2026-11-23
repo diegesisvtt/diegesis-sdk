@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-lights",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Ambient light plugin for @diegesis/canvas — light documents, AmbientLight placeable, light tool and light:sources contributions.",
   "type": "module",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@diegesis/canvas": "^0.2.1",
+    "@diegesis/canvas": "^0.3.0",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {

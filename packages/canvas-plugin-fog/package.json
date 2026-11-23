@@ -1,6 +1,6 @@
 {
   "name": "@diegesis/canvas-plugin-fog",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Fog of war plugin for @diegesis/canvas — token-vision reveal, manual paint/reveal tools and control panel.",
   "type": "module",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@diegesis/canvas": "^0.2.1",
+    "@diegesis/canvas": "^0.3.0",
     "valibot": "^1.4.2"
   },
   "peerDependencies": {
