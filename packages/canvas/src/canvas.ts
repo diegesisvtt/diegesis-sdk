@@ -38,6 +38,13 @@ export interface CanvasOptions {
   contextMenu?: boolean;
   /** Manager de hotkeys compartilhado; se omitido, o canvas cria e gerencia o próprio. */
   hotkeys?: HotkeyManager;
+  /**
+   * Pausa o loop de render automaticamente quando o canvas fica invisível
+   * (host com 0×0 — ex.: aba oculta — ou a aba do navegador em segundo
+   * plano) e retoma ao voltar a ser visível. Desative para render
+   * contínuo/offscreen. Default: `true`.
+   */
+  autoPause?: boolean;
 }
 
 type AnyPlaceablesLayer = PlaceablesLayer<any, PlaceableObject<any>, any>;
@@ -94,10 +101,16 @@ export class Canvas implements CanvasLike {
   private lastToolId = 'select';
   private readonly ownsHotkeys: boolean;
   private attachedHotkeys = false;
+  private _paused = false;
+  private readonly _autoPause: boolean;
+  private _hostHidden = false;
+  private _docHidden = false;
+  private _onVisibilityChange: (() => void) | null = null;
 
   constructor(container: HTMLElement, options: CanvasOptions = {}) {
     this.container = container;
     this.options = options;
+    this._autoPause = options.autoPause !== false;
     this.app = new Application();
     this.bus = createCanvasBus();
     this.hotkeys = options.hotkeys ?? createHotkeyManager({ namespace: 'canvas' });
@@ -384,9 +397,21 @@ export class Canvas implements CanvasLike {
     this.stage.sortableChildren = true;
 
     this._resizeObserver = new ResizeObserver(() => {
-      this.viewport?.resize(this.container.clientWidth, this.container.clientHeight);
+      const width = this.container.clientWidth;
+      const height = this.container.clientHeight;
+      this._hostHidden = !(width > 0 && height > 0);
+      this.viewport?.resize(width, height);
+      this.updateRunning();
     });
     this._resizeObserver.observe(this.container);
+    if (typeof document !== 'undefined') {
+      this._docHidden = document.visibilityState === 'hidden';
+      this._onVisibilityChange = () => {
+        this._docHidden = document.visibilityState === 'hidden';
+        this.updateRunning();
+      };
+      document.addEventListener('visibilitychange', this._onVisibilityChange);
+    }
 
     this.tools = new ToolManager(this, this.pendingTools, this.options.tools);
     this.pendingTools.length = 0;
@@ -412,11 +437,39 @@ export class Canvas implements CanvasLike {
     }
 
     this.initialized = true;
+    this.updateRunning();
     this.bus.emit('ready', { width, height });
   }
 
   private tickInputs(): void {
     this.inputs.tick();
+  }
+
+  /* --------------------------- auto-pause --------------------------- */
+
+  /** `true` quando o loop de render está pausado (manualmente ou por invisibilidade). */
+  get paused(): boolean {
+    return this._paused || (this._autoPause && (this._hostHidden || this._docHidden));
+  }
+
+  /** Pausa o loop de render manualmente. */
+  pause(): void {
+    this._paused = true;
+    this.updateRunning();
+  }
+
+  /** Retoma o loop de render (o auto-pause por invisibilidade continua valendo). */
+  resume(): void {
+    this._paused = false;
+    this.updateRunning();
+  }
+
+  private updateRunning(): void {
+    if (!this.initialized) return;
+    const ticker = this.app.ticker;
+    if (!ticker) return;
+    if (this.paused) ticker.stop();
+    else ticker.start();
   }
 
   private dispatchInput(name: StateEventName, info?: unknown): void {
@@ -572,6 +625,10 @@ export class Canvas implements CanvasLike {
 
   destroy(): void {
     this._resizeObserver?.disconnect();
+    if (this._onVisibilityChange) {
+      document.removeEventListener('visibilitychange', this._onVisibilityChange);
+      this._onVisibilityChange = null;
+    }
     this.app.ticker?.remove(this.tickInputs, this);
     this.inputs?.destroy();
     this.contextMenu.destroy();
